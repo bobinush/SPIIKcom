@@ -1,0 +1,10 @@
+c:\Users\Robin\OneDrive\Skola\1DV430 Individuellt mjukvaruutvecklingsprojekt\SPIIKcom\bin\Debug\netcoreapp1.1\SPIIKcom.db
+c:\Users\Robin\OneDrive\Skola\1DV430 Individuellt mjukvaruutvecklingsprojekt\SPIIKcom\bin\Debug\netcoreapp1.1\SPIIKcom.deps.json
+c:\Users\Robin\OneDrive\Skola\1DV430 Individuellt mjukvaruutvecklingsprojekt\SPIIKcom\bin\Debug\netcoreapp1.1\SPIIKcom.runtimeconfig.json
+c:\Users\Robin\OneDrive\Skola\1DV430 Individuellt mjukvaruutvecklingsprojekt\SPIIKcom\bin\Debug\netcoreapp1.1\SPIIKcom.runtimeconfig.dev.json
+c:\Users\Robin\OneDrive\Skola\1DV430 Individuellt mjukvaruutvecklingsprojekt\SPIIKcom\bin\Debug\netcoreapp1.1\SPIIKcom.dll
+c:\Users\Robin\OneDrive\Skola\1DV430 Individuellt mjukvaruutvecklingsprojekt\SPIIKcom\bin\Debug\netcoreapp1.1\SPIIKcom.pdb
+c:\Users\Robin\OneDrive\Skola\1DV430 Individuellt mjukvaruutvecklingsprojekt\SPIIKcom\obj\Debug\netcoreapp1.1\UserSecretsAssemblyInfo.cs
+c:\Users\Robin\OneDrive\Skola\1DV430 Individuellt mjukvaruutvecklingsprojekt\SPIIKcom\obj\Debug\netcoreapp1.1\SPIIKcom.AssemblyInfo.cs
+c:\Users\Robin\OneDrive\Skola\1DV430 Individuellt mjukvaruutvecklingsprojekt\SPIIKcom\obj\Debug\netcoreapp1.1\SPIIKcom.dll
+c:\Users\Robin\OneDrive\Skola\1DV430 Individuellt mjukvaruutvecklingsprojekt\SPIIKcom\obj\Debug\netcoreapp1.1\SPIIKcom.pdb

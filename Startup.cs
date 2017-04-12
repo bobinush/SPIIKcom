@@ -13,7 +13,6 @@ using SPIIKcom.Data;
 using SPIIKcom.Models;
 using SPIIKcom.Services;
 
-
 namespace SPIIKcom
 {
 	public class Startup
@@ -42,7 +41,7 @@ namespace SPIIKcom
 		{
 			// Add framework services.
 			services.AddDbContext<ApplicationDbContext>(options =>
-				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+				options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
 			services.AddIdentity<ApplicationUser, IdentityRole>()
 				.AddEntityFrameworkStores<ApplicationDbContext>()
@@ -71,21 +70,19 @@ namespace SPIIKcom
 			{
 				app.UseExceptionHandler("/Home/Error");
 			}
-			app.UseDefaultFiles();
+
 			app.UseStaticFiles();
 
 			app.UseIdentity();
 
 			// Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
 
-			app.UseMvc(RouteConfig.ConfigureRoute);
-			// app.UseMvcWithDefaultRoute();
-			// app.UseMvc(routes =>
-			// {
-			// 	routes.MapRoute(
-			// 		name: "default_route",
-			// 		template: "{controller=Home}/{action=Index}/{id?}");
-			// });
+			app.UseMvc(routes =>
+			{
+				routes.MapRoute(
+					name: "default",
+					template: "{controller=Home}/{action=Index}/{id?}");
+			});
 		}
 	}
 }
