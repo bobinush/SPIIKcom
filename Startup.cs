@@ -46,7 +46,7 @@ namespace SPIIKcom
 
 			services.AddIdentity<ApplicationUser, IdentityRole>(x =>
 				{
-					x.Password.RequiredLength = 6
+					x.Password.RequiredLength = 6;
 					x.Password.RequireUppercase = false;
 					x.Password.RequireLowercase = false;
 					x.Password.RequireNonAlphanumeric = false;
