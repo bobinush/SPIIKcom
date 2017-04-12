@@ -7,7 +7,7 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}\\rn222hk-project.csproj"
+                "${workspaceRoot}\\SPIIKcom.csproj"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"

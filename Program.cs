@@ -5,20 +5,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 
-namespace rn222hk_project
+namespace SPIIKcom
 {
-	public class Program
-	{
-		public static void Main(string[] args)
-		{
-			var host = new WebHostBuilder()
-				.UseKestrel()
-				.UseContentRoot(Directory.GetCurrentDirectory())
-				.UseIISIntegration()
-				.UseStartup<Startup>()
-				.Build();
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var host = new WebHostBuilder()
+                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseIISIntegration()
+                .UseStartup<Startup>()
+                .UseApplicationInsights()
+                .Build();
 
-			host.Run();
-		}
-	}
+            host.Run();
+        }
+    }
 }
