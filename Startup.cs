@@ -39,11 +39,19 @@ namespace SPIIKcom
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			// TODO : as
 			// Add framework services.
 			services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
-			services.AddIdentity<ApplicationUser, IdentityRole>()
+			services.AddIdentity<ApplicationUser, IdentityRole>(x =>
+				{
+					x.Password.RequiredLength = 6
+					x.Password.RequireUppercase = false;
+					x.Password.RequireLowercase = false;
+					x.Password.RequireNonAlphanumeric = false;
+					x.Password.RequireDigit = false;
+				})
 				.AddEntityFrameworkStores<ApplicationDbContext>()
 				.AddDefaultTokenProviders();
 
