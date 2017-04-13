@@ -74,6 +74,13 @@ namespace SPIIKcom
 				app.UseDeveloperExceptionPage();
 				app.UseDatabaseErrorPage();
 				app.UseBrowserLink();
+
+				// Apply all migrations and seed database with testdata
+				using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+				{
+					serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.Migrate();
+					serviceScope.ServiceProvider.GetService<ApplicationDbContext>().EnsureSeedData();
+}
 			}
 			else
 			{
