@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace SPIIKcom.Models.ManageViewModels
 {
-    public class FactorViewModel
-    {
-        public string Purpose { get; set; }
-    }
+	public class FactorViewModel
+	{
+		public string Purpose { get; set; }
+	}
 }

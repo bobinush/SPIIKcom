@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace SPIIKcom.Models.ManageViewModels
 {
-    public class AddPhoneNumberViewModel
-    {
-        [Required]
-        [Phone]
-        [Display(Name = "Phone number")]
-        public string PhoneNumber { get; set; }
-    }
+	public class AddPhoneNumberViewModel
+	{
+		[Required]
+		[Phone]
+		[Display(Name = "Phone number")]
+		public string PhoneNumber { get; set; }
+	}
 }

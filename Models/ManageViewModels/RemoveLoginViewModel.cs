@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SPIIKcom.Models.ManageViewModels
 {
-    public class RemoveLoginViewModel
-    {
-        public string LoginProvider { get; set; }
-        public string ProviderKey { get; set; }
-    }
+	public class RemoveLoginViewModel
+	{
+		public string LoginProvider { get; set; }
+		public string ProviderKey { get; set; }
+	}
 }

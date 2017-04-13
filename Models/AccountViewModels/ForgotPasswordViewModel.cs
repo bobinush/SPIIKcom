@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace SPIIKcom.Models.AccountViewModels
 {
-    public class ForgotPasswordViewModel
-    {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-    }
+	public class ForgotPasswordViewModel
+	{
+		[Required]
+		[EmailAddress]
+		public string Email { get; set; }
+	}
 }

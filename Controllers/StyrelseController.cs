@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SPIIKcom.Controllers
 {
-	public class HomeController : Controller
+	public class StyrelseController : Controller
 	{
 		public IActionResult Index()
 		{

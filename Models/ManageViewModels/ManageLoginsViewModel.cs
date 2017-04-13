@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Identity;
 
 namespace SPIIKcom.Models.ManageViewModels
 {
-    public class ManageLoginsViewModel
-    {
-        public IList<UserLoginInfo> CurrentLogins { get; set; }
+	public class ManageLoginsViewModel
+	{
+		public IList<UserLoginInfo> CurrentLogins { get; set; }
 
-        public IList<AuthenticationDescription> OtherLogins { get; set; }
-    }
+		public IList<AuthenticationDescription> OtherLogins { get; set; }
+	}
 }
