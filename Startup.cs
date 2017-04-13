@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +39,11 @@ namespace SPIIKcom
 			// Add framework services.
 			services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+
+			// services.AddEntityFramework()
+			// 	.AddEntityFrameworkSqlServer()
+			// 	.AddDbContext<ApplicationDbContext>(options =>
+			// 		options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 			services.AddIdentity<ApplicationUser, IdentityRole>(x =>
 				{

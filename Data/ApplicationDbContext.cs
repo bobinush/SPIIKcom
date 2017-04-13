@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SPIIKcom.Models;
 
@@ -13,7 +9,12 @@ namespace SPIIKcom.Data
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
 			: base(options)
 		{
+			//this.Configuration.LazyLoadingEnabled = true;
+			//this.Configuration.ProxyCreationEnabled = false;
 		}
+
+		public DbSet<Member> Members { get; set; }
+		public DbSet<MembershipType> MembershipTypes { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
@@ -22,5 +23,29 @@ namespace SPIIKcom.Data
 			// For example, you can rename the ASP.NET Identity table names and more.
 			// Add your customizations after calling base.OnModelCreating(builder);
 		}
+
+		static ApplicationDbContext()
+		{
+			// Set the database intializer which is run once during application start
+			// This seeds the database with admin user credentials and admin role
+			// Database.SetInitializer<ApplicationDbContext>(new ApplicationDbInitializer());
+			//Database.Initialize(true);
+			//Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Migrationsx.Configurationx>());
+			//Database.SetInitializer(new ApplicationDbInitializer());
+		}
+
+		// public static ApplicationDbContext Create()
+		// {
+		// 	return new ApplicationDbContext();
+		// }
+
+		// protected override void OnModelCreating(DbModelBuilder modelBuilder)
+		// {
+		// 	//Database.SetInitializer<ApplicationDbContext>(null);   // Annars fick man error på att databasen har ändrats etc.
+		// 	// modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();  // För att den ska leta efter Adress och inte Adress(s)
+		// 	// modelBuilder.Properties<DateTime>().Configure(c => c.HasColumnType("datetime2"));
+
+		// 	base.OnModelCreating(modelBuilder);
+		// }
 	}
 }
