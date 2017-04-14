@@ -18,7 +18,7 @@ namespace SPIIKcom.Data
 				if (!context.MembershipTypes.Any())
 				{
 					context.MembershipTypes.AddRange(
-						new MembershipType { Name = "1 termin", Price = 50m, LengthInYears = 0.5d },
+						new MembershipType { Name = "Halvår", Price = 50m, LengthInYears = 0.5d },
 						new MembershipType { Name = "1 år", Price = 100m, LengthInYears = 1d },
 						new MembershipType { Name = "2 år", Price = 150m, LengthInYears = 2d }
 					);

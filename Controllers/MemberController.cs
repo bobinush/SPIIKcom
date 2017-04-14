@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SPIIKcom.Data;
+using SPIIKcom.Models;
+using SPIIKcom.ViewModels;
 
 namespace SPIIKcom.Controllers
 {
@@ -58,9 +62,53 @@ namespace SPIIKcom.Controllers
 					allMembers = allMembers.OrderBy(m => m.Name);
 					break;
 			}
-
-
 			return View(await allMembers.AsNoTracking().ToListAsync());
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> Create()
+		{
+			// var model = new CreateMemberViewModel();
+			// model.MembershipTypes = _db.MembershipTypes
+			// 	.Select(x => new SelectListItem
+			// 	{
+			// 		Text = x.Price + ":- | " + x.Name,
+			// 		Value = x.ID.ToString()
+			// 	})
+			// 		.ToList();
+			// model.MembershipTypes.Add((new SelectListItem{Text="Välj typ av medlemskap", Value = "-1"});
+			// return View(model);
+			var model = new CreateMemberViewModel();
+			var membershipTypes = await _db.MembershipTypes.ToListAsync();
+			var dict = new Dictionary<double, string>();
+			dict.Add(-1, "Välj typ av medlemskap");
+			for (int i = 0; i < membershipTypes.Count; i++)
+			{
+				dict.Add(membershipTypes[i].ID, membershipTypes[i].Price + ":- | " + membershipTypes[i].Name);
+			}
+			var selectList = new SelectList(dict, "Key", "Value", selectedValue: -1);
+			model.MembershipTypes = selectList;
+			return View(model);
+		}
+		[HttpPost]
+		public async Task<IActionResult> Create(CreateMemberViewModel viewModel)
+		{
+			if (ModelState.IsValid)
+			{
+				var membershipType = await _db.MembershipTypes.FindAsync((int)viewModel.MembershipTypeId);
+				var member = new Member(viewModel);
+				int daysInYear = 365;
+				double membershipDays = Math.Ceiling(daysInYear * membershipType.LengthInYears);
+
+				member.ExpireDate = member.JoinDate.AddDays(membershipDays);
+
+				await _db.AddAsync(member);
+				await _db.SaveChangesAsync();
+				return RedirectToAction("Index");
+
+				// TODO : Postback Selectlist MembershipTypes so we can return the viewmodel if error.
+			}
+			return View(viewModel);
 		}
 	}
 }
