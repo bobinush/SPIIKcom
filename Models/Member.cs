@@ -11,11 +11,13 @@ namespace SPIIKcom.Models
 		public string PersonalNumber { get; set; }
 		[Required]
 		public string Name { get; set; }
+		[Required]
+		public string LastName { get; set; }
 		public string Address { get; set; }
 		[DataType(DataType.PostalCode)]
 		public string PostalCode { get; set; }
 		public string City { get; set; }
-		[Required]		
+		[Required]
 		[DataType(DataType.EmailAddress)]
 		public string Email { get; set; }
 		[DataType(DataType.PhoneNumber)]
@@ -23,10 +25,13 @@ namespace SPIIKcom.Models
 		[DataType(DataType.ImageUrl)]
 		public string Picture { get; set; }
 		[DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 		public DateTime JoinDate { get; set; }
 		[DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 		public DateTime ExpireDate { get; set; }
+
+
+		public string FullName { get { return Name + " " + LastName; } }
 	}
 }

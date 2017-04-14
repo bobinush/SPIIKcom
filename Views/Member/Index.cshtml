@@ -2,17 +2,31 @@
 @{
 	ViewData["Title"] = "Members";
 }
-<h2>@ViewData["Title"].</h2>
+<!--<h2>@ViewData["Title"].</h2>-->
 <h3>@ViewData["Message"]</h3>
-
+<form asp-action="Index" method="get">
+	<div class="form-actions no-color">
+		<p>
+			<input type="text" name="name" class="form-control" value="@ViewData["CurrentFilterName"]" placeholder="Find by name.." autofocus>
+			<input type="submit" value="Search" class="btn btn-default">
+			<a asp-action="Index" class="btn btn-default">Reset</a>
+		</p>
+	</div>
+</form>
 <table class="table">
 	<thead>
 		<tr>
 			<th>
-				<a asp-action="Index">@Html.DisplayNameFor(model => model.Name)</a>
+				<a asp-action="Index" asp-route-sort="@ViewData["FNameSortParam"]">@Html.DisplayNameFor(model => model.Name) ↕</a>
 			</th>
 			<th>
-				<a asp-action="Index">@Html.DisplayNameFor(model => model.JoinDate)</a>
+				<a asp-action="Index" asp-route-sort="@ViewData["LNameSortParam"]">@Html.DisplayNameFor(model => model.LastName) ↕</a>
+			</th>
+			<th>
+				<a asp-action="Index" asp-route-sort="@ViewData["JoinDateSortParam"]">@Html.DisplayNameFor(model => model.JoinDate) ↕</a>
+			</th>
+			<th>
+				<a asp-action="Index" asp-route-sort="@ViewData["ExpDateSortParam"]">@Html.DisplayNameFor(model => model.ExpireDate) ↕</a>
 			</th>
 			<th></th>
 		</tr>
@@ -24,7 +38,13 @@
 					@Html.DisplayFor(modelItem => member.Name)
 				</td>
 				<td>
+					@Html.DisplayFor(modelItem => member.LastName)
+				</td>
+				<td>
 					@Html.DisplayFor(modelItem => member.JoinDate)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => member.ExpireDate)
 				</td>
 				<td>
 					<a asp-action="Edit" asp-route-id="@member.ID">Edit</a> |

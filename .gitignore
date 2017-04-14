@@ -294,5 +294,7 @@ __pycache__/
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# Custom stuff
 bin/
 obj/
+*.db
