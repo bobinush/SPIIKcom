@@ -11,10 +11,10 @@ using SPIIKcom.ViewModels;
 
 namespace SPIIKcom.Controllers
 {
-	public class MemberController : Controller
+	public class MedlemmarController : Controller
 	{
 		private readonly ApplicationDbContext _db;
-		public MemberController(ApplicationDbContext context)
+		public MedlemmarController(ApplicationDbContext context)
 		{
 			_db = context;
 		}

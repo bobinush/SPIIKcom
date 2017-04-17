@@ -298,3 +298,4 @@ __pycache__/
 bin/
 obj/
 *.db
+devTestConfig.json
