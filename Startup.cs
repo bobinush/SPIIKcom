@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -18,8 +19,7 @@ namespace SPIIKcom
 			var builder = new ConfigurationBuilder()
 				.SetBasePath(env.ContentRootPath)
 				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-				.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-				.AddJsonFile("devTestConfig.json", optional: true);
+				.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
 			if (env.IsDevelopment())
 			{
@@ -74,13 +74,6 @@ namespace SPIIKcom
 				app.UseDeveloperExceptionPage();
 				app.UseDatabaseErrorPage();
 				app.UseBrowserLink();
-
-				// Apply all migrations and seed database with testdata
-				using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-				{
-					serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.Migrate();
-					serviceScope.ServiceProvider.GetService<ApplicationDbContext>().EnsureSeedData(Configuration);
-}
 			}
 			else
 			{
@@ -99,6 +92,18 @@ namespace SPIIKcom
 					name: "default",
 					template: "{controller=Home}/{action=Index}/{id?}");
 			});
+
+			if (env.IsDevelopment())
+			{
+				var serviceProvider = app.ApplicationServices.GetService<IServiceProvider>();
+				Seed.EnsureSeedData(Configuration, serviceProvider);
+				// Apply all migrations and seed database with testdata
+				// using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+				// {
+				// 	serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.Migrate();
+				// 	serviceScope.ServiceProvider.GetService<ApplicationDbContext>().EnsureSeedData(Configuration, serviceScope.ServiceProvider);
+				// }
+			}
 		}
 	}
 }
