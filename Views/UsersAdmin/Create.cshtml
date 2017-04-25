@@ -1,0 +1,78 @@
+﻿@model Kakelspecialisten.ViewModels.RegisterViewModel
+@{
+	ViewBag.Title = "Skapa ny användare";
+}
+
+<div class="edit">
+	<div class="webshop-top clearfix">
+		<div class="webshop-choice">
+		<h3>Administration/Kunder</h3>
+			</div>
+	</div>
+	<div class="row useradmin">
+	<div class="textholder clearfix">
+		<h3>@ViewBag.Title.</h3>
+	</div>
+
+<div class="useradmin-form">
+@using (Html.BeginForm("Create", "UsersAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+	
+	@Html.AntiForgeryToken()
+	
+	
+	@Html.ValidationSummary("", new { @class = "text-error" })
+	<div class="form-group">
+		@Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+		</div>
+	</div>
+	<div class="form-group">
+		@Html.LabelFor(m => m.ConfirmEmail, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.TextBoxFor(m => m.ConfirmEmail, new { @class = "form-control" })
+		</div>
+	</div>
+	<div class="form-group">
+		@Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+		</div>
+	</div>
+	<div class="form-group">
+		@Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-2 control-label">
+			Användarroll
+		</label>
+		<div class="col-md-10">
+			<span class="checkbox">
+			@foreach (var item in (SelectList)ViewBag.RoleId)
+			{
+			@* checkboxen måste ha samma värde i ID som i label-taggen  *@
+				<input type="checkbox" name="SelectedRoles" value="@item.Value" id="@item.Value" class="checkbox-inline" />
+				@Html.Label(item.Value, new { @class = "control-label" })
+			}
+			</span>
+
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-10">
+			<input type="submit" class="btn btn-orange" value="Skapa ny användare" />
+		</div>
+	</div>
+		
+}
+</div>
+@Html.ActionLink("Tillbaka till listan", "Index")
+</div>
+	</div>
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+}

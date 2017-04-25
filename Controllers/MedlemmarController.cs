@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -65,19 +66,11 @@ namespace SPIIKcom.Controllers
 			return View(await allMembers.AsNoTracking().ToListAsync());
 		}
 
+		// TODO : Add the role Styrelse
 		[HttpGet]
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Create()
 		{
-			// var model = new CreateMemberViewModel();
-			// model.MembershipTypes = _db.MembershipTypes
-			// 	.Select(x => new SelectListItem
-			// 	{
-			// 		Text = x.Price + ":- | " + x.Name,
-			// 		Value = x.ID.ToString()
-			// 	})
-			// 		.ToList();
-			// model.MembershipTypes.Add((new SelectListItem{Text="Välj typ av medlemskap", Value = "-1"});
-			// return View(model);
 			var model = new CreateMemberViewModel();
 			var membershipTypes = await _db.MembershipTypes.ToListAsync();
 			var dict = new Dictionary<double, string>();
@@ -90,7 +83,9 @@ namespace SPIIKcom.Controllers
 			model.MembershipTypes = selectList;
 			return View(model);
 		}
+
 		[HttpPost]
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Create(CreateMemberViewModel viewModel)
 		{
 			if (ModelState.IsValid)

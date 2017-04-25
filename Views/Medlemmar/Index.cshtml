@@ -29,7 +29,10 @@
 			<th>
 				<a asp-action="Index" asp-route-sort="@ViewData["ExpDateSortParam"]">@Html.DisplayNameFor(model => model.ExpireDate) ↕</a>
 			</th>
-			<th></th>
+			@if(User.IsInRole("Admin"))
+			{
+				<th></th>
+			}
 		</tr>
 	</thead>
 	<tbody>
@@ -47,11 +50,14 @@
 				<td>
 					@Html.DisplayFor(modelItem => member.ExpireDate)
 				</td>
-				<td>
-					<a asp-action="Edit" asp-route-id="@member.ID">Edit</a> |
-					<a asp-action="Details" asp-route-id="@member.ID">Details</a> |
-					<a asp-action="Delete" asp-route-id="@member.ID">Delete</a>
-				</td>
+				@if(User.IsInRole("Admin"))
+				{
+					<td>
+						<a asp-action="Edit" asp-route-id="@member.ID">Edit</a> |
+						<a asp-action="Details" asp-route-id="@member.ID">Details</a> |
+						<a asp-action="Delete" asp-route-id="@member.ID">Delete</a>
+					</td>
+				}
 			</tr>
 		}
 	</tbody>

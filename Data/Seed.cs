@@ -13,9 +13,8 @@ using SPIIKcom.Data;
 
 namespace SPIIKcom
 {
-	public static class Seed
+	public class Seed
 	{
-
 		/// <summary>
 		/// Ensures that there is testdata in the database.
 		/// </summary>
@@ -24,20 +23,28 @@ namespace SPIIKcom
 		{
 			string adminName = config["AdminEmail"];
 			string adminPass = config["AdminPass"];
-			string adminRole = config["AdminRole"];
-
+			string styrelseName = "rn222hk@student.lnu.se";
+			string[] roles = { "Admin", "Styrelse", "Medlem" };
 			var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 			var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-
-			var roleResult = await RoleManager.CreateAsync(new IdentityRole(adminRole));
+			foreach (var role in roles)
+			{
+				var roleResult = await RoleManager.CreateAsync(new IdentityRole(role));
+			}
 			var adminUser = new ApplicationUser { UserName = adminName, Email = adminName };
 			var _user = await UserManager.FindByEmailAsync(adminName);
 			if (_user == null)
 			{
-				var createPowerUser = await UserManager.CreateAsync(adminUser, adminPass);
-				if (createPowerUser.Succeeded)
-					await UserManager.AddToRoleAsync(adminUser, adminRole);
+				await UserManager.CreateAsync(adminUser, adminPass);
+				// if (createPowerUser.Succeeded)
+				await UserManager.AddToRoleAsync(adminUser, "Admin");
+				
+				var styrelseUser = new ApplicationUser { UserName = styrelseName, Email = styrelseName };
+				await UserManager.CreateAsync(styrelseUser, adminPass);
+				await UserManager.AddToRoleAsync(styrelseUser, "Styrelse");
 			}
+
+			// TODO : Seed with testdata.
 			// if (context.AllMigrationsApplied())
 			// {
 			// 	if (!context.MembershipTypes.Any())
