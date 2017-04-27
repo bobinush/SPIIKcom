@@ -21,14 +21,15 @@ namespace SPIIKcom
 				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
 				.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
-			if (env.IsDevelopment())
-			{
-				// For more details on using the user secret store see https://go.microsoft.com/fwlink/?LinkID=532709
-				builder.AddUserSecrets<Startup>();
-			}
+			// if (env.IsDevelopment())
+			// {
+			// 	// For more details on using the user secret store see https://go.microsoft.com/fwlink/?LinkID=532709
+			// 	builder.AddUserSecrets<Startup>();
+			// }
 
 			builder.AddEnvironmentVariables();
 			Configuration = builder.Build();
+
 		}
 
 		public IConfigurationRoot Configuration { get; }
@@ -36,6 +37,10 @@ namespace SPIIKcom
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			// Make the configuration available in the app globally through Dependency Injection
+			// https://joonasw.net/view/asp-net-core-1-configuration-deep-dive
+			services.AddSingleton<IConfiguration>(Configuration);
+
 			// Add framework services.
 			services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
@@ -93,16 +98,13 @@ namespace SPIIKcom
 					template: "{controller=Home}/{action=Index}/{id?}");
 			});
 
-			if (env.IsDevelopment())
+
+			// Apply all migrations and seed database with testdata
+			using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
 			{
-				var serviceProvider = app.ApplicationServices.GetService<IServiceProvider>();
-				Seed.EnsureSeedData(Configuration, serviceProvider);
-				// Apply all migrations and seed database with testdata
-				// using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-				// {
-				// 	serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.Migrate();
-				// 	serviceScope.ServiceProvider.GetService<ApplicationDbContext>().EnsureSeedData(Configuration, serviceScope.ServiceProvider);
-				// }
+				var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+				context.Database.Migrate();
+				SampleData.Seed(app.ApplicationServices).Wait();
 			}
 		}
 	}
