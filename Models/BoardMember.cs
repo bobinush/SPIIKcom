@@ -2,7 +2,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SPIIKcom.Models
 {
-	// Add profile data for application users by adding properties to the ApplicationUser class
 	public class BoardMember
 	{
 		public int ID { get; set; }

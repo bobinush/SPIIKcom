@@ -4,7 +4,6 @@ using SPIIKcom.ViewModels;
 
 namespace SPIIKcom.Models
 {
-	// Add profile data for application users by adding properties to the ApplicationUser class
 	public class Member
 	{
 		public Member()
@@ -13,7 +12,7 @@ namespace SPIIKcom.Models
 		public Member(CreateMemberViewModel vm)
 		{
 			PersonalNumber = vm.PersonalNumber;
-			Name = vm.Name;
+			FirstName = vm.Name;
 			LastName = vm.LastName;
 			Address = vm.Address;
 			PostalCode = vm.PostalCode;
@@ -27,7 +26,7 @@ namespace SPIIKcom.Models
 		[Required]
 		public string PersonalNumber { get; set; }
 		[Required]
-		public string Name { get; set; }
+		public string FirstName { get; set; }
 		[Required]
 		public string LastName { get; set; }
 		public string Address { get; set; }
@@ -41,6 +40,7 @@ namespace SPIIKcom.Models
 		public string Phone { get; set; }
 		[DataType(DataType.ImageUrl)]
 		public string Picture { get; set; }
+		public string Program { get; set; }
 		[DataType(DataType.Date)]
 		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 		public DateTime JoinDate { get; set; }
@@ -49,6 +49,6 @@ namespace SPIIKcom.Models
 		public DateTime ExpireDate { get; set; }
 
 
-		public string FullName { get { return Name + " " + LastName; } }
+		public string FullName { get { return FirstName + " " + LastName; } }
 	}
 }

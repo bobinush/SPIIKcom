@@ -18,16 +18,16 @@
 	<thead>
 		<tr>
 			<th>
-				<a asp-action="Index" asp-route-sort="@ViewData["FNameSortParam"]">@Html.DisplayNameFor(model => model.Name) ↕</a>
+				<a asp-action="Index" asp-route-sort="@ViewData["FirstNameSort"]">@Html.DisplayNameFor(model => model.FirstName) ↕</a>
 			</th>
 			<th>
-				<a asp-action="Index" asp-route-sort="@ViewData["LNameSortParam"]">@Html.DisplayNameFor(model => model.LastName) ↕</a>
+				<a asp-action="Index" asp-route-sort="@ViewData["LastNameSort"]">@Html.DisplayNameFor(model => model.LastName) ↕</a>
 			</th>
 			<th>
-				<a asp-action="Index" asp-route-sort="@ViewData["JoinDateSortParam"]">@Html.DisplayNameFor(model => model.JoinDate) ↕</a>
+				<a asp-action="Index" asp-route-sort="@ViewData["JoinDateSort"]">@Html.DisplayNameFor(model => model.JoinDate) ↕</a>
 			</th>
 			<th>
-				<a asp-action="Index" asp-route-sort="@ViewData["ExpDateSortParam"]">@Html.DisplayNameFor(model => model.ExpireDate) ↕</a>
+				<a asp-action="Index" asp-route-sort="@ViewData["ExpireDateSort"]">@Html.DisplayNameFor(model => model.ExpireDate) ↕</a>
 			</th>
 			@if(User.IsInRole("Admin"))
 			{
@@ -39,7 +39,7 @@
 		@foreach (var member in Model) {
 			<tr>
 				<td>
-					@Html.DisplayFor(modelItem => member.Name)
+					@Html.DisplayFor(modelItem => member.FirstName)
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => member.LastName)

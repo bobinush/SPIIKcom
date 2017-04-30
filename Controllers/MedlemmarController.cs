@@ -14,55 +14,69 @@ namespace SPIIKcom.Controllers
 {
 	public class MedlemmarController : Controller
 	{
-		private readonly ApplicationDbContext _db;
+		private readonly ApplicationDbContext db;
 		public MedlemmarController(ApplicationDbContext context)
 		{
-			_db = context;
+			db = context;
 		}
 
 		public async Task<IActionResult> Index(string sort, string name)
 		{
-			ViewData["FNameSortParam"] = string.IsNullOrEmpty(sort) ? "fNameDesc" : "";
-			ViewData["LNameSortParam"] = sort == "lNameDesc" ? "lName" : "lNameDesc";
-			ViewData["JoinDateSortParam"] = sort == "joinDateDesc" ? "joinDate" : "joinDateDesc";
-			ViewData["ExpDateSortParam"] = sort == "expDateDesc" ? "expDate" : "expDateDesc";
+			ViewData["FirstNameSort"] = string.IsNullOrEmpty(sort) ? "FirstNameDesc" : "";
+			ViewData["LastNameSort"] = sort == "LastNameDesc" ? "LastName" : "LastNameDesc";
+			ViewData["JoinDateSort"] = sort == "JoinDateDesc" ? "JoinDate" : "JoinDateDesc";
+			ViewData["ExpireDateSort"] = sort == "ExpireDateDesc" ? "ExpireDate" : "ExpireDateDesc";
 			ViewData["CurrentFilterName"] = name;
 
-			var allMembers = from m in _db.Members select m;
+			var allMembers = db.Members.AsQueryable();
 
 			if (!string.IsNullOrWhiteSpace(name))
 			{
-				allMembers = allMembers.Where(m => m.Name.IndexOf(name, StringComparison.OrdinalIgnoreCase) > -1
+				allMembers = allMembers.Where(m => m.FirstName.IndexOf(name, StringComparison.OrdinalIgnoreCase) > -1
 												|| m.LastName.IndexOf(name, StringComparison.OrdinalIgnoreCase) > -1);
+				// var filter = Builders<BsonDocument>.Filter.Matches("FirstName", name);
 			}
 
-			switch (sort)
+			bool descending = false;
+			if (sort.EndsWith("desc"))
 			{
-				case "fNameDesc":
-					allMembers = allMembers.OrderByDescending(m => m.Name);
-					break;
-				case "lName":
-					allMembers = allMembers.OrderBy(m => m.LastName);
-					break;
-				case "lNameDesc":
-					allMembers = allMembers.OrderByDescending(m => m.LastName);
-					break;
-				case "joinDateDesc":
-					allMembers = allMembers.OrderByDescending(m => m.JoinDate);
-					break;
-				case "joinDate":
-					allMembers = allMembers.OrderBy(m => m.JoinDate);
-					break;
-				case "expDateDesc":
-					allMembers = allMembers.OrderByDescending(m => m.ExpireDate);
-					break;
-				case "expDate":
-					allMembers = allMembers.OrderBy(m => m.ExpireDate);
-					break;
-				default:
-					allMembers = allMembers.OrderBy(m => m.Name);
-					break;
+				sort = sort.Substring(0, sort.Length - 4);
+				descending = true;
 			}
+
+			// Hitta kolumnen med hjälp av en sträng med kolumnens namn.
+			if (descending)
+				allMembers = allMembers.OrderByDescending(e => EF.Property<object>(e, sort));
+			else
+				allMembers = allMembers.OrderBy(e => EF.Property<object>(e, sort));
+
+			// switch (sort)
+			// {
+			// 	case "fNameDesc":
+			// 		allMembers = allMembers.OrderByDescending(m => m.FirstName);
+			// 		break;
+			// 	case "lName":
+			// 		allMembers = allMembers.OrderBy(m => m.LastName);
+			// 		break;
+			// 	case "lNameDesc":
+			// 		allMembers = allMembers.OrderByDescending(m => m.LastName);
+			// 		break;
+			// 	case "joinDateDesc":
+			// 		allMembers = allMembers.OrderByDescending(m => m.JoinDate);
+			// 		break;
+			// 	case "joinDate":
+			// 		allMembers = allMembers.OrderBy(m => m.JoinDate);
+			// 		break;
+			// 	case "expDateDesc":
+			// 		allMembers = allMembers.OrderByDescending(m => m.ExpireDate);
+			// 		break;
+			// 	case "expDate":
+			// 		allMembers = allMembers.OrderBy(m => m.ExpireDate);
+			// 		break;
+			// 	default:
+			// 		allMembers = allMembers.OrderBy(m => m.FirstName);
+			// 		break;
+			// }
 			return View(await allMembers.AsNoTracking().ToListAsync());
 		}
 
@@ -72,7 +86,7 @@ namespace SPIIKcom.Controllers
 		public async Task<IActionResult> Create()
 		{
 			var model = new CreateMemberViewModel();
-			var membershipTypes = await _db.MembershipTypes.ToListAsync();
+			var membershipTypes = await db.MembershipTypes.ToListAsync();
 			var dict = new Dictionary<double, string>();
 			dict.Add(-1, "Välj typ av medlemskap");
 			for (int i = 0; i < membershipTypes.Count; i++)
@@ -90,15 +104,13 @@ namespace SPIIKcom.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var membershipType = await _db.MembershipTypes.FindAsync((int)viewModel.MembershipTypeId);
+				var membershipType = await db.MembershipTypes.FindAsync((int)viewModel.MembershipTypeId);
 				var member = new Member(viewModel);
-				int daysInYear = 365;
-				double membershipDays = Math.Ceiling(daysInYear * membershipType.LengthInYears);
 
-				member.ExpireDate = member.JoinDate.AddDays(membershipDays);
+				member.ExpireDate = member.JoinDate.AddYears(membershipType.LengthInYears);
 
-				await _db.AddAsync(member);
-				await _db.SaveChangesAsync();
+				await db.AddAsync(member);
+				await db.SaveChangesAsync();
 				return RedirectToAction("Index");
 
 				// TODO : Postback Selectlist MembershipTypes so we can return the viewmodel if error.
