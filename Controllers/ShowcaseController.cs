@@ -3,10 +3,10 @@ using SPIIKcom.Data;
 
 namespace SPIIKcom.Controllers
 {
-	public class StyrelseController : Controller
+	public class ShowcaseController : Controller
 	{
 		private readonly ApplicationDbContext db;
-		public StyrelseController(ApplicationDbContext context)
+		public ShowcaseController(ApplicationDbContext context)
 		{
 			db = context;
 		}

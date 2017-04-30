@@ -38,7 +38,7 @@ namespace SPIIKcom.Models
 				var db = scopeServiceProvider.GetService<ApplicationDbContext>();
 				
 				// Delete and create database
-				await db.Database.EnsureDeletedAsync();
+				//await db.Database.EnsureDeletedAsync();
 				if (await db.Database.EnsureCreatedAsync())
 				{
 					await InsertTestDataAsync(scopeServiceProvider);

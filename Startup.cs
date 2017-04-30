@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -94,6 +95,11 @@ namespace SPIIKcom
 			app.UseMvc(routes =>
 			{
 				routes.MapRoute(
+					name: "Root",
+					template: "{action}",
+					defaults: new { controller = "Home", action = "Index" }
+				);
+				routes.MapRoute(
 					name: "default",
 					template: "{controller=Home}/{action=Index}/{id?}");
 			});
@@ -104,7 +110,7 @@ namespace SPIIKcom
 			// {
 			// 	var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
 			// 	context.Database.Migrate();
-				SampleData.Seed(app.ApplicationServices).Wait();
+			SampleData.Seed(app.ApplicationServices).Wait();
 			// }
 		}
 	}

@@ -15,7 +15,7 @@ namespace SPIIKcom.Controllers
 			return View();
 		}
 
-		public IActionResult Contact()
+		public IActionResult Kontakt()
 		{
 			ViewData["Message"] = "Your contact page.";
 

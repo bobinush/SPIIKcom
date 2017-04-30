@@ -7,7 +7,7 @@ namespace SPIIKcom.ViewModels
 	public class CreateMemberViewModel
 	{
 		[Required]
-		[RegularExpression(@"^[0-9]+$")] // This accepts one or more digits.
+		[RegularExpression(@"^[0-9]+$", ErrorMessage = "Endast siffror tillåtna i personnummer")] // This accepts one or more digits.
 		public string PersonalNumber { get; set; }
 		[Required]
 		public string Name { get; set; }

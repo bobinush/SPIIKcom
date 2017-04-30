@@ -12,10 +12,10 @@ using SPIIKcom.ViewModels;
 
 namespace SPIIKcom.Controllers
 {
-	public class MedlemmarController : Controller
+	public class MedlemsregisterController : Controller
 	{
 		private readonly ApplicationDbContext db;
-		public MedlemmarController(ApplicationDbContext context)
+		public MedlemsregisterController(ApplicationDbContext context)
 		{
 			db = context;
 		}
@@ -89,7 +89,7 @@ namespace SPIIKcom.Controllers
 		// TODO : Add the role Styrelse
 		[HttpGet]
 		[Authorize(Roles = "Admin")]
-		public async Task<IActionResult> Create()
+		public async Task<IActionResult> Skapa()
 		{
 			var model = new CreateMemberViewModel();
 			var membershipTypes = await db.MembershipTypes.ToListAsync();
@@ -106,7 +106,7 @@ namespace SPIIKcom.Controllers
 
 		[HttpPost]
 		[Authorize(Roles = "Admin")]
-		public async Task<IActionResult> Create(CreateMemberViewModel viewModel)
+		public async Task<IActionResult> Skapa(CreateMemberViewModel viewModel)
 		{
 			if (ModelState.IsValid)
 			{
