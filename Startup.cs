@@ -100,12 +100,12 @@ namespace SPIIKcom
 
 
 			// Apply all migrations and seed database with testdata
-			using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-			{
-				var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
-				context.Database.Migrate();
+			// using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+			// {
+			// 	var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+			// 	context.Database.Migrate();
 				SampleData.Seed(app.ApplicationServices).Wait();
-			}
+			// }
 		}
 	}
 }

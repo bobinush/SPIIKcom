@@ -20,35 +20,41 @@ namespace SPIIKcom.Controllers
 			db = context;
 		}
 
-		public async Task<IActionResult> Index(string sort, string name)
+		public async Task<IActionResult> Index(string sort = "", string name = "")
 		{
-			ViewData["FirstNameSort"] = string.IsNullOrEmpty(sort) ? "FirstNameDesc" : "";
+			ViewData["FirstNameSort"] = string.IsNullOrWhiteSpace(sort) ? "FirstNameDesc" : "";
 			ViewData["LastNameSort"] = sort == "LastNameDesc" ? "LastName" : "LastNameDesc";
 			ViewData["JoinDateSort"] = sort == "JoinDateDesc" ? "JoinDate" : "JoinDateDesc";
 			ViewData["ExpireDateSort"] = sort == "ExpireDateDesc" ? "ExpireDate" : "ExpireDateDesc";
 			ViewData["CurrentFilterName"] = name;
 
-			var allMembers = db.Members.AsQueryable();
+			var model = db.Members.AsQueryable();
 
 			if (!string.IsNullOrWhiteSpace(name))
 			{
-				allMembers = allMembers.Where(m => m.FirstName.IndexOf(name, StringComparison.OrdinalIgnoreCase) > -1
-												|| m.LastName.IndexOf(name, StringComparison.OrdinalIgnoreCase) > -1);
-				// var filter = Builders<BsonDocument>.Filter.Matches("FirstName", name);
+				model = model.Where(m => m.FirstName.IndexOf(name, StringComparison.OrdinalIgnoreCase) > -1
+								|| m.LastName.IndexOf(name, StringComparison.OrdinalIgnoreCase) > -1);
 			}
-
-			bool descending = false;
-			if (sort.EndsWith("desc"))
+			if (string.IsNullOrWhiteSpace(sort))
 			{
-				sort = sort.Substring(0, sort.Length - 4);
-				descending = true;
+				model = model.OrderBy(m => m.FirstName);
+			}
+			else
+			{
+				bool descending = false;
+				if (sort?.EndsWith("desc", StringComparison.OrdinalIgnoreCase) == true)
+				{
+					sort = sort.Substring(0, sort.Length - 4);
+					descending = true;
+				}
+				// Find the column based on a string with the columname.
+				if (descending)
+					model = model.OrderByDescending(e => EF.Property<object>(e, sort));
+				else
+					model = model.OrderBy(e => EF.Property<object>(e, sort));
+
 			}
 
-			// Hitta kolumnen med hjälp av en sträng med kolumnens namn.
-			if (descending)
-				allMembers = allMembers.OrderByDescending(e => EF.Property<object>(e, sort));
-			else
-				allMembers = allMembers.OrderBy(e => EF.Property<object>(e, sort));
 
 			// switch (sort)
 			// {
@@ -77,7 +83,7 @@ namespace SPIIKcom.Controllers
 			// 		allMembers = allMembers.OrderBy(m => m.FirstName);
 			// 		break;
 			// }
-			return View(await allMembers.AsNoTracking().ToListAsync());
+			return View(await model.AsNoTracking().ToListAsync());
 		}
 
 		// TODO : Add the role Styrelse

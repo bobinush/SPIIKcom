@@ -36,12 +36,14 @@ namespace SPIIKcom.Models
 			{
 				var scopeServiceProvider = serviceScope.ServiceProvider;
 				var db = scopeServiceProvider.GetService<ApplicationDbContext>();
-
-				// if (await db.Database.EnsureCreatedAsync())
-				// {
-				await InsertTestDataAsync(scopeServiceProvider);
-				await CreateAdminUserAsync(scopeServiceProvider);
-				// }
+				
+				// Delete and create database
+				await db.Database.EnsureDeletedAsync();
+				if (await db.Database.EnsureCreatedAsync())
+				{
+					await InsertTestDataAsync(scopeServiceProvider);
+					await CreateAdminUserAsync(scopeServiceProvider);
+				}
 			}
 		}
 		private static async Task InsertTestDataAsync(IServiceProvider serviceProvider)
