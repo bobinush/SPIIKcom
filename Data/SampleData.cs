@@ -52,16 +52,16 @@ namespace SPIIKcom.Models
 				if (!context.MembershipTypes.Any())
 				{
 					context.MembershipTypes.AddRange(
-						new MembershipType { Name = "1 år", Price = 100m, LengthInYears = 1d },
-						new MembershipType { Name = "2 år", Price = 150m, LengthInYears = 2d }
+						new MembershipType { Name = "1 år", Price = 100m, LengthInYears = 1 },
+						new MembershipType { Name = "2 år", Price = 150m, LengthInYears = 2 }
 					);
 				}
 				if (!context.Members.Any())
 				{
 					context.Members.AddRange(
-						new Member { PersonalNumber = "20170101-0101", Name = "Kalle", LastName = "Anka", Email = "kalle@anka.se", JoinDate = DateTime.Today.AddDays(-1), ExpireDate = DateTime.Today.AddYears(1) },
-						new Member { PersonalNumber = "20170102-0101", Name = "Kajsa", LastName = "Anka", Email = "kajsa@anka.se", JoinDate = DateTime.Today.AddDays(-2), ExpireDate = DateTime.Today.AddYears(1) },
-						new Member { PersonalNumber = "20170103-0101", Name = "Musse", LastName = "Pigg", Email = "musse@pigg.se", JoinDate = DateTime.Today.AddDays(-3), ExpireDate = DateTime.Today.AddYears(1) }
+						new Member { PersonalNumber = "20170101-0101", FirstName = "Kalle", LastName = "Anka", Email = "kalle@anka.se", JoinDate = DateTime.Today.AddDays(-1), ExpireDate = DateTime.Today.AddYears(1) },
+						new Member { PersonalNumber = "20170102-0101", FirstName = "Kajsa", LastName = "Anka", Email = "kajsa@anka.se", JoinDate = DateTime.Today.AddDays(-2), ExpireDate = DateTime.Today.AddYears(1) },
+						new Member { PersonalNumber = "20170103-0101", FirstName = "Musse", LastName = "Pigg", Email = "musse@pigg.se", JoinDate = DateTime.Today.AddDays(-3), ExpireDate = DateTime.Today.AddYears(1) }
 					);
 				}
 
