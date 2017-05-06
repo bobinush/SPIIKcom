@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using SPIIKcom.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using SPIIKcom.Enums;
 
 namespace SPIIKcom.Controllers
 {
@@ -10,13 +14,25 @@ namespace SPIIKcom.Controllers
 		{
 			db = context;
 		}
-		public IActionResult Styrelse()
+		public async Task<IActionResult> Om()
 		{
 			return View();
 		}
-		public IActionResult Sexmasteri()
+		public async Task<IActionResult> Styrelse()
 		{
-			return View();
+			var model = await db.BoardMembers
+				.Where(x => x.BoardType == BoardType.Styrelse)
+				.ToListAsync();
+
+			return View(model);
+		}
+		public async Task<IActionResult> Sexmasteri()
+		{
+			var model = await db.BoardMembers
+				.Where(x => x.BoardType == BoardType.Sexmasteri)
+				.ToListAsync();
+
+			return View(model);
 		}
 	}
 }

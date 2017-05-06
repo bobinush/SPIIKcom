@@ -295,6 +295,4 @@ __pycache__/
 !.vscode/extensions.json
 
 # Custom stuff
-bin/
-obj/
 Thumbs.db
