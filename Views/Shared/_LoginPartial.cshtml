@@ -11,11 +11,10 @@
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">@UserManager.GetUserName(User) <b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					@if ((bool?)ViewData["Edit"] == true) {
-						<li><a asp-action="Edit">Redigera sida</a></li>			
-					}	
-					<li><a asp-controller="Manage" asp-action="Index" title="Manage">Konto</a></li>
+					<li><a asp-controller="Manage" asp-action="Index" title="Hantera ditt konto">Ändra ditt konto</a></li>
 					<li>&nbsp;</li>
+					<li><a asp-controller="Admin" asp-action="Index" title="Adminpanelen">Adminpanelen</a></li>
+					<li>&nbsp;</li>					
 					<li>
 						<a href="javascript:document.getElementById('logoutForm').submit()">Logga ut</a>
 						<noscript>

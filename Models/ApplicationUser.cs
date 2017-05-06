@@ -6,7 +6,5 @@ namespace SPIIKcom.Models
 	public class ApplicationUser : IdentityUser
 	{
 		public string Name { get; set; }
-		public string BoardRole { get; set; }
-		public string BoardEmail { get; set; }
 	}
 }

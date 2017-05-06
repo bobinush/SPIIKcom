@@ -117,8 +117,7 @@ namespace SPIIKcom.Controllers
 				return RedirectToAction("Index");
 
 			var userRoles = await _userManager.GetRolesAsync(user);
-
-			return View(new EditUserViewModel()
+			var model = new EditUserViewModel()
 			{
 				Id = user.Id,
 				Email = user.Email,
@@ -128,7 +127,8 @@ namespace SPIIKcom.Controllers
 					Text = x.Name,
 					Value = x.Name
 				})
-			});
+			};
+			return View(model);
 		}
 
 		//

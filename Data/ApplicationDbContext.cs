@@ -15,15 +15,19 @@ namespace SPIIKcom.Data
 
 		public DbSet<Member> Members { get; set; }
 		public DbSet<MembershipType> MembershipTypes { get; set; }
-		public DbSet<StaticContent> StaticContents { get; set; }
+		public DbSet<StaticPage> StaticPages { get; set; }
 		public DbSet<BoardMember> BoardMembers { get; set; }
-		
-		protected override void OnModelCreating(ModelBuilder builder)
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			base.OnModelCreating(builder);
 			// Customize the ASP.NET Identity model and override the defaults if needed.
 			// For example, you can rename the ASP.NET Identity table names and more.
 			// Add your customizations after calling base.OnModelCreating(builder);
+
+			base.OnModelCreating(modelBuilder);
+			//Database.SetInitializer<ApplicationDbContext>(null);   // Annars fick man error på att databasen har ändrats etc.
+			// modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();  // För att den ska leta efter Adress och inte Adress(s)
+			// modelBuilder.Properties<DateTime>().Configure(c => c.HasColumnType("datetime2"));
 		}
 
 		// static ApplicationDbContext()
@@ -39,15 +43,6 @@ namespace SPIIKcom.Data
 		// public static ApplicationDbContext Create()
 		// {
 		// 	return new ApplicationDbContext();
-		// }
-
-		// protected override void OnModelCreating(DbModelBuilder modelBuilder)
-		// {
-		// 	//Database.SetInitializer<ApplicationDbContext>(null);   // Annars fick man error på att databasen har ändrats etc.
-		// 	// modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();  // För att den ska leta efter Adress och inte Adress(s)
-		// 	// modelBuilder.Properties<DateTime>().Configure(c => c.HasColumnType("datetime2"));
-
-		// 	base.OnModelCreating(modelBuilder);
 		// }
 	}
 }

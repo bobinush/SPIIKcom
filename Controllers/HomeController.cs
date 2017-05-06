@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SPIIKcom.Controllers
 {
@@ -17,7 +18,6 @@ namespace SPIIKcom.Controllers
 
 		public IActionResult Kontakt()
 		{
-			ViewData["Edit"] = true;
 			ViewData["Message"] = "Your contact page.";
 
 			return View();
@@ -27,5 +27,12 @@ namespace SPIIKcom.Controllers
 		{
 			return View();
 		}
+
+		[Authorize(Roles = "Admin")]
+		public IActionResult Admin()
+		{
+			return View();
+		}
+
 	}
 }

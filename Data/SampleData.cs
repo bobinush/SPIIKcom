@@ -13,18 +13,11 @@ using SPIIKcom.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using System.Security.Claims;
-using SPIIKcom.Enums;
 
 namespace SPIIKcom.Models
 {
 	public class SampleData
 	{
-		// public IServiceProvider serviceProvider;
-		// public Seed(IServiceProvider sp)
-		// {
-		// 	serviceProvider = sp;
-		// }
-
 		/// <summary>
 		/// Ensures that there is testdata in the database		
 		/// </summary>
@@ -40,7 +33,7 @@ namespace SPIIKcom.Models
 
 				// Delete and create database
 				// uncomment this below when adding new data to seed.
-				//await db.Database.EnsureDeletedAsync();
+				// await db.Database.EnsureDeletedAsync();
 				if (await db.Database.EnsureCreatedAsync())
 				{
 					await InsertTestDataAsync(scopeServiceProvider);
@@ -69,13 +62,13 @@ namespace SPIIKcom.Models
 					);
 				}
 				context.BoardMembers.AddRange(
-					new BoardMember { Name = "Pernilla Johansson", Role = "Ordförande", BoardType = BoardType.Styrelse, Email = "ordf@spiik.com", Quote = "Quote?" , Picture ="http://placehold.it/200x200" },
-					new BoardMember { Name = "Didrik Fasth", Role = "Vice Ordförande Studiesocialt", BoardType = BoardType.Styrelse, Email = "vordfss@spiik.com", Quote = "Quote?" , Picture ="http://placehold.it/200x200" },
-					new BoardMember { Name = "Sofia Björkesjö", Role = "Vice Ordförande Utbildningsansvarig", BoardType = BoardType.Styrelse, Email = "vordfuu@spiik.com", Quote = "Quote?" , Picture ="http://placehold.it/200x200" },
-					new BoardMember { Name = "Robin Nowakowski", Role = "Kassör", BoardType = BoardType.Styrelse, Email = "kassor@spiik.com", Quote = "Quote?" , Picture ="http://placehold.it/200x200" },
-					new BoardMember { Name = "Simon Österdahl", Role = "Vice Kassör", BoardType = BoardType.Styrelse, Email = "vkassor@spiik.com", Quote = "Quote?" , Picture ="http://placehold.it/200x200" },
-					new BoardMember { Name = "Emma Lövgren", Role = "Sekreterare", BoardType = BoardType.Styrelse, Email = "sekreterare@spiik.com", Quote = "Quote?" , Picture ="http://placehold.it/200x200" },
-					new BoardMember { Name = "William Robertsson", Role = "Sexmästare", BoardType = BoardType.Styrelse, Email = "sexmaster@spiik.com", Quote = "Quote?" , Picture ="http://placehold.it/200x200" }
+					new BoardMember { Name = "Pernilla Johansson", Title = "Ordförande", Email = "ordf@spiik.com", Quote = "Quote?", Picture = "http://placehold.it/200x200" },
+					new BoardMember { Name = "Didrik Fasth", Title = "Vice Ordförande Studiesocialt", Email = "vordfss@spiik.com", Quote = "Quote?", Picture = "http://placehold.it/200x200" },
+					new BoardMember { Name = "Sofia Björkesjö", Title = "Vice Ordförande Utbildningsansvarig", Email = "vordfuu@spiik.com", Quote = "Quote?", Picture = "http://placehold.it/200x200" },
+					new BoardMember { Name = "Robin Nowakowski", Title = "Kassör", Email = "kassor@spiik.com", Quote = "Quote?", Picture = "http://placehold.it/200x200" },
+					new BoardMember { Name = "Simon Österdahl", Title = "Vice Kassör", Email = "vkassor@spiik.com", Quote = "Quote?", Picture = "http://placehold.it/200x200" },
+					new BoardMember { Name = "Emma Lövgren", Title = "Sekreterare", Email = "sekreterare@spiik.com", Quote = "Quote?", Picture = "http://placehold.it/200x200" },
+					new BoardMember { Name = "William Robertsson", Title = "Sexmästare", Email = "sexmaster@spiik.com", Quote = "Quote?", Picture = "http://placehold.it/200x200" }
 				);
 				await context.SaveChangesAsync();
 			}
@@ -93,7 +86,8 @@ namespace SPIIKcom.Models
 			var userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
 			string adminName = configuration["AdminEmail"];
 			string adminPass = configuration["AdminPass"];
-			string[] roles = { "Admin", "Styrelse", "Medlem" };
+			// string[] roles = { "Admin", "Styrelse", "Sexmästeri", "Revisor", "Valberedningen", "Medlem" };
+			string[] roles = { "Admin", "Styrelse" };
 			string styrelseName = "rn222hk@student.lnu.se";
 
 			var roleManager = serviceProvider.GetService<RoleManager<IdentityRole>>();

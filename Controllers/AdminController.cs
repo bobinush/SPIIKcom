@@ -6,10 +6,10 @@ using System.Linq;
 
 namespace SPIIKcom.Controllers
 {
-	public class ForeningController : Controller
+	public class AdminController : Controller
 	{
 		private readonly ApplicationDbContext db;
-		public ForeningController(ApplicationDbContext context)
+		public AdminController(ApplicationDbContext context)
 		{
 			db = context;
 		}

@@ -1,6 +1,6 @@
 namespace SPIIKcom.Models
 {
-	public class StaticContent
+	public class StaticPage
 	{
 		public int ID { get; set; }
 		public string Namn { get; set; }
