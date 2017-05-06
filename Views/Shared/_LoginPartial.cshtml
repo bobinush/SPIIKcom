@@ -6,21 +6,31 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-            </li>
-            <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>
-            </li>
-        </ul>
-    </form>
+	<form asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
+		<ul class="nav navbar-nav navbar-right">
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">@UserManager.GetUserName(User) <b class="caret"></b></a>
+				<ul class="dropdown-menu">
+					@if ((bool?)ViewData["Edit"] == true) {
+						<li><a asp-action="Edit">Redigera sida</a></li>			
+					}	
+					<li><a asp-controller="Manage" asp-action="Index" title="Manage">Konto</a></li>
+					<li>&nbsp;</li>
+					<li>
+						<a href="javascript:document.getElementById('logoutForm').submit()">Logga ut</a>
+						<noscript>
+							<button type="submit" class="btn btn-link navbar-btn navbar-link">Logga ut</button>
+						</noscript>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</form>
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
-        <li><a asp-area="" asp-controller="Account" asp-action="Login">Log in</a></li>
-    </ul>
+	<ul class="nav navbar-nav navbar-right">
+		<!--<li><a asp-controller="Account" asp-action="Register">Registrera</a></li>-->
+		<li><a asp-controller="Account" asp-action="Login">Logga in</a></li>
+	</ul>
 }

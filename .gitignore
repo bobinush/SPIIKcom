@@ -297,4 +297,4 @@ __pycache__/
 # Custom stuff
 bin/
 obj/
-*.db
+Thumbs.db
