@@ -40,7 +40,18 @@ textarea {
 .carousel-inner .item img[src$=".svg"] {
     width: 100%;
 }
-
+#myCarousel{
+	height: 400px;
+}
+.slider-size {
+	height:100%;  /*This is your slider height */
+	background-size:cover;
+	background-position: center;
+}
+.carousel {
+	width:100%; 
+	margin:0 auto; /* center your carousel if other than 100% */ 
+}
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */

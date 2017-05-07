@@ -101,7 +101,7 @@ namespace SPIIKcom.Controllers
 				}
 				return RedirectToAction("Index");
 			}
-			ViewBag.Roles = new SelectList(_roleManager.Roles, "Name", "Name");
+			ViewData["Roles"] = new SelectList(_roleManager.Roles, "Name", "Name");
 			return View();
 		}
 

@@ -1,8 +1,7 @@
-﻿@model RegisterViewModel
+@model RegisterViewModel
 @{
-	ViewBag.Title = "Skapa ny användare";
+	ViewData["Title"] = "Skapa ny användare";
 }
-
 <div class="edit">
 	<div class="webshop-top clearfix">
 		<div class="webshop-choice">
@@ -11,7 +10,7 @@
 	</div>
 	<div class="row useradmin">
 	<div class="textholder clearfix">
-		<h3>@ViewBag.Title.</h3>
+		<h3>@ViewData["Title"].</h3>
 	</div>
 
 <div class="useradmin-form">
@@ -52,7 +51,7 @@
 		</label>
 		<div class="col-md-10">
 			<span class="checkbox">
-			@foreach (var item in (SelectList)ViewBag.RoleId)
+			@foreach (var item in (SelectList)ViewData["Roles"])
 			{
 			@* checkboxen måste ha samma värde i ID som i label-taggen  *@
 				<input type="checkbox" name="SelectedRoles" value="@item.Value" id="@item.Value" class="checkbox-inline" />

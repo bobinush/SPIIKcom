@@ -22,7 +22,7 @@ namespace SPIIKcom.Models
 			JoinDate = DateTime.Today;
 		}
 
-		public int ID { get; set; }
+		public int Id { get; set; }
 		[Required]
 		public string PersonalNumber { get; set; }
 		[Required]

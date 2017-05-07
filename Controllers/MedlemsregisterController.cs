@@ -97,7 +97,7 @@ namespace SPIIKcom.Controllers
 			dict.Add(-1, "Välj typ av medlemskap");
 			for (int i = 0; i < membershipTypes.Count; i++)
 			{
-				dict.Add(membershipTypes[i].ID, membershipTypes[i].Price + ":- | " + membershipTypes[i].Name);
+				dict.Add(membershipTypes[i].Id, membershipTypes[i].Price + ":- | " + membershipTypes[i].Name);
 			}
 			var selectList = new SelectList(dict, "Key", "Value", selectedValue: -1);
 			model.MembershipTypes = selectList;

@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SPIIKcom.Enums
 {
@@ -8,10 +9,15 @@ namespace SPIIKcom.Enums
 	public enum BoardType
 	{
 		None = 0,
+		[Display(Name = "Styrelsen")]
 		Styrelse = 1,
+		[Display(Name = "Sexmästeriet")]		
 		Sexmasteri = 2,
+		[Display(Name = "Revisor")]		
 		Revisor = 4,
+		[Display(Name = "Valberedningen")]		
 		Valberedningen = 8
+		//16, 32 osv..
 	}
 }
 // public static MvcHtmlString VisaUtrymme(this HtmlHelper helper, int utrymme = 0)

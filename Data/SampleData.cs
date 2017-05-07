@@ -100,7 +100,7 @@ namespace SPIIKcom.Models
 			var adminUser = await userManager.FindByNameAsync(adminName);
 			if (adminUser == null)
 			{
-				adminUser = new ApplicationUser { UserName = adminName };
+				adminUser = new ApplicationUser { UserName = adminName, Email = adminName };
 				await userManager.CreateAsync(adminUser, adminPass);
 				await userManager.AddToRoleAsync(adminUser, "Admin");
 

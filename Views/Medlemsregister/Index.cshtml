@@ -1,65 +1,61 @@
 @model IEnumerable<Member>
 @{
-    ViewData["Title"] = "Medlemsregister";
+	ViewData["Title"] = "Medlemsregister";
 }
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
-
-<form asp-action="Index" method="get">
-	<div class="form-actions no-color">
-		<p>
-			<input type="text" name="name" class="form-control" value="@ViewData["CurrentFilterName"]" placeholder="Find by name.." autofocus>
-			<input type="submit" value="Search" class="btn btn-default">
-			<a asp-action="Index" class="btn btn-default">Reset</a>
-		</p>
-	</div>
-</form>
-<a asp-action="Skapa" id="addMember" class="btn btn-default">Add New Member</a>
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th>
-				<a asp-action="Index" asp-route-sort="@ViewData["FirstNameSort"]">@Html.DisplayNameFor(model => model.FirstName) ↕</a>
-			</th>
-			<th>
-				<a asp-action="Index" asp-route-sort="@ViewData["LastNameSort"]">@Html.DisplayNameFor(model => model.LastName) ↕</a>
-			</th>
-			<th>
-				<a asp-action="Index" asp-route-sort="@ViewData["JoinDateSort"]">@Html.DisplayNameFor(model => model.JoinDate) ↕</a>
-			</th>
-			<th>
-				<a asp-action="Index" asp-route-sort="@ViewData["ExpireDateSort"]">@Html.DisplayNameFor(model => model.ExpireDate) ↕</a>
-			</th>
-			@if(User.IsInRole("Admin"))
-			{
-				<th></th>
-			}
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var member in Model) {
+	<h2>@ViewData["Title"]</h2>
+	<h3>@ViewData["Message"]</h3>
+	
+	<form asp-action="Index" method="get" class="form-inline">
+			<input type="text" class="form-control" placeholder="Find by name.." name="name" value="@ViewData["CurrentFilterName"]" autofocus>
+		<input type="submit" value="Search" class="btn btn-default">
+		<a asp-action="Index" class="btn btn-default">Reset</a>
+		<a asp-action="Skapa" id="addMember" class="btn btn-default">Add New Member</a>
+	</form>
+	<table class="table table-striped">
+		<thead>
 			<tr>
-				<td>
-					@Html.DisplayFor(modelItem => member.FirstName)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => member.LastName)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => member.JoinDate)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => member.ExpireDate)
-				</td>
+				<th>
+					<a asp-action="Index" asp-route-sort="@ViewData["FirstNameSort"]">@Html.DisplayNameFor(model => model.FirstName) ↕</a>
+				</th>
+				<th>
+					<a asp-action="Index" asp-route-sort="@ViewData["LastNameSort"]">@Html.DisplayNameFor(model => model.LastName) ↕</a>
+				</th>
+				<th>
+					<a asp-action="Index" asp-route-sort="@ViewData["JoinDateSort"]">@Html.DisplayNameFor(model => model.JoinDate) ↕</a>
+				</th>
+				<th>
+					<a asp-action="Index" asp-route-sort="@ViewData["ExpireDateSort"]">@Html.DisplayNameFor(model => model.ExpireDate) ↕</a>
+				</th>
 				@if(User.IsInRole("Admin"))
 				{
-					<td>
-						<a asp-action="Edit" asp-route-id="@member.ID">Edit</a> |
-						<a asp-action="Details" asp-route-id="@member.ID">Details</a> |
-						<a asp-action="Delete" asp-route-id="@member.ID">Delete</a>
-					</td>
+					<th></th>
 				}
 			</tr>
-		}
-	</tbody>
-</table>
+		</thead>
+		<tbody>
+			@foreach (var member in Model) {
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => member.FirstName)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => member.LastName)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => member.JoinDate)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => member.ExpireDate)
+					</td>
+					@if(User.IsInRole("Admin"))
+					{
+						<td>
+							<a asp-action="Edit" asp-route-id="@member.ID">Edit</a> |
+							<a asp-action="Details" asp-route-id="@member.ID">Details</a> |
+							<a asp-action="Delete" asp-route-id="@member.ID">Delete</a>
+						</td>
+					}
+				</tr>
+			}
+		</tbody>
+	</table>
