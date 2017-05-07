@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SPIIKcom.Data;
+using SPIIKcom.Enums;
+using SPIIKcom.Extensions;
 using SPIIKcom.Models;
 using SPIIKcom.Models.AccountViewModels;
 using SPIIKcom.Services;
@@ -63,9 +65,20 @@ namespace SPIIKcom.Controllers
 		// GET: /Users/Create
 		public async Task<ActionResult> Create()
 		{
-			//Get the list of Roles
-			ViewData["Roles"] = new SelectList(await _roleManager.Roles.ToListAsync(), "Name", "Name");
-			return View();
+			//Get the list of Roles as a list with SelectListItems
+			var items = Enum.GetValues(typeof(BoardType))
+				.Cast<BoardType>()
+				.Where(x => x > 0)
+				.Select(x => new SelectListItem()
+				{
+					Text = x.GetDisplayName(),
+					Value = ((int)x).ToString()
+				}).ToList();
+
+			var model = new RegisterViewModel{
+				RolesList = new SelectList(items, "Value", "Text")
+			};
+			return View(model);
 		}
 
 		//
@@ -73,6 +86,8 @@ namespace SPIIKcom.Controllers
 		[HttpPost]
 		public async Task<ActionResult> Create(RegisterViewModel userViewModel, params string[] selectedRoles)
 		{
+			var roles = Enum.GetValues(typeof(BoardType)).Cast<BoardType>();
+			ViewData["Roles"] = new SelectList(roles, "Name", "Name");
 			if (ModelState.IsValid)
 			{
 				var user = new ApplicationUser { UserName = userViewModel.Email, Email = userViewModel.Email };
@@ -87,7 +102,7 @@ namespace SPIIKcom.Controllers
 						if (!result.Succeeded)
 						{
 							ModelState.AddModelError(string.Empty, result.Errors.First().Description);
-							ViewData["Roles"] = new SelectList(await _roleManager.Roles.ToListAsync(), "Name", "Name");
+							// ViewData["Roles"] = new SelectList(await _roleManager.Roles.ToListAsync(), "Name", "Name");
 							return View();
 						}
 					}
@@ -95,13 +110,13 @@ namespace SPIIKcom.Controllers
 				else
 				{
 					ModelState.AddModelError(string.Empty, adminresult.Errors.First().Description);
-					ViewData["Roles"] = new SelectList(_roleManager.Roles, "Name", "Name");
+					// ViewData["Roles"] = new SelectList(_roleManager.Roles, "Name", "Name");
 					return View();
 
 				}
 				return RedirectToAction("Index");
 			}
-			ViewData["Roles"] = new SelectList(_roleManager.Roles, "Name", "Name");
+			// ViewData["Roles"] = new SelectList(_roleManager.Roles, "Name", "Name");
 			return View();
 		}
 

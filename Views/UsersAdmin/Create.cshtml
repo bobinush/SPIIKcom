@@ -1,77 +1,66 @@
-@model RegisterViewModel
+@model RegisterViewModel 
 @{
 	ViewData["Title"] = "Skapa ny användare";
 }
 <div class="edit">
 	<div class="webshop-top clearfix">
 		<div class="webshop-choice">
-		<h3>Administration/Kunder</h3>
-			</div>
+			<h3>Administration/Kunder</h3>
+		</div>
 	</div>
 	<div class="row useradmin">
-	<div class="textholder clearfix">
-		<h3>@ViewData["Title"].</h3>
-	</div>
+		<div class="textholder clearfix">
+			<h3>@ViewData["Title"].</h3>
+		</div>
 
-<div class="useradmin-form">
-@using (Html.BeginForm("Create", "UsersAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-	
-	@Html.AntiForgeryToken()
-	
-	
-	@Html.ValidationSummary("", new { @class = "text-error" })
-	<div class="form-group">
-		@Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-		<div class="col-md-10">
-			@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-		</div>
-	</div>
-	<div class="form-group">
-		@Html.LabelFor(m => m.ConfirmEmail, new { @class = "col-md-2 control-label" })
-		<div class="col-md-10">
-			@Html.TextBoxFor(m => m.ConfirmEmail, new { @class = "form-control" })
-		</div>
-	</div>
-	<div class="form-group">
-		@Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-		<div class="col-md-10">
-			@Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-		</div>
-	</div>
-	<div class="form-group">
-		@Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-		<div class="col-md-10">
-			@Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-md-2 control-label">
-			Användarroll
-		</label>
-		<div class="col-md-10">
-			<span class="checkbox">
-			@foreach (var item in (SelectList)ViewData["Roles"])
-			{
-			@* checkboxen måste ha samma värde i ID som i label-taggen  *@
-				<input type="checkbox" name="SelectedRoles" value="@item.Value" id="@item.Value" class="checkbox-inline" />
-				@Html.Label(item.Value, new { @class = "control-label" })
+		<div class="useradmin-form">
+			@using (Html.BeginForm("Create", "UsersAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) { @Html.AntiForgeryToken()
+			@Html.ValidationSummary("", new { @class = "text-error" })
+			<div class="form-group">
+				@Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+				<div class="col-md-10">
+					@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+				</div>
+			</div>
+			<div class="form-group">
+				@Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+				<div class="col-md-10">
+					@Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+				</div>
+			</div>
+			<div class="form-group">
+				@Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+				<div class="col-md-10">
+					@Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label">
+					Användarroll
+				</label>
+				<div class="col-md-10">
+					<div class="btn-group" data-toggle="buttons">
+						@foreach (var item in Model.RolesList)
+						{
+							<label class="btn btn-default">
+								<input type="checkbox" name="SelectedRoles" value="@item.Value" autocomplete="off">@item.Text
+							</label> 
+						}
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-10">
+					<a asp-action="Index" class="btn btn-default" role="button">Tillbaka till listan</a>
+					<input type="submit" class="btn btn-primary" value="Skapa ny användare" />
+				</div>
+			</div>
 			}
-			</span>
+		</div>
+	</div>
+</div>
 
-		</div>
-	</div>
-	<div class="form-group">
-		<div class="col-md-offset-2 col-md-10">
-			<input type="submit" class="btn btn-orange" value="Skapa ny användare" />
-		</div>
-	</div>
-		
-}
-</div>
-@Html.ActionLink("Tillbaka till listan", "Index")
-</div>
-	</div>
 @section Scripts {
-	@Scripts.Render("~/bundles/jqueryval")
+	@{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
