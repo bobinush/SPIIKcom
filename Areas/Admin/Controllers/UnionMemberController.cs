@@ -21,7 +21,6 @@ using SPIIKcom.ViewModels;
 namespace SPIIKcom.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	[Route("Index")]
 	// TODO : Add role Styrelse
 	[Authorize(Roles = "Admin")]
 	public class UnionMemberController : Controller
