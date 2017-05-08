@@ -19,14 +19,14 @@ namespace SPIIKcom.Controllers
 		}
 		public async Task<IActionResult> Styrelse()
 		{
-			var model = await db.BoardMembers
+			var model = await db.UnionMembers
 				.ToListAsync();
 
 			return View(model);
 		}
 		public async Task<IActionResult> Sexmasteri()
 		{
-			var model = await db.BoardMembers
+			var model = await db.UnionMembers
 				.ToListAsync();
 
 			return View(model);

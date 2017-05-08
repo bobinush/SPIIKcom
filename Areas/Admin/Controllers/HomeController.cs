@@ -3,13 +3,17 @@ using Microsoft.AspNetCore.Mvc;
 using SPIIKcom.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
-namespace SPIIKcom.Controllers
+namespace SPIIKcom.Areas.Admin.Controllers
 {
-	public class AdminController : Controller
+	[Area("Admin")]
+	// [Route("admin")]
+	[Authorize(Roles = "Admin")]
+	public class HomeController : Controller
 	{
 		private readonly ApplicationDbContext db;
-		public AdminController(ApplicationDbContext context)
+		public HomeController(ApplicationDbContext context)
 		{
 			db = context;
 		}
@@ -19,14 +23,14 @@ namespace SPIIKcom.Controllers
 		}
 		public async Task<IActionResult> Styrelse()
 		{
-			var model = await db.BoardMembers
+			var model = await db.UnionMembers
 				.ToListAsync();
 
 			return View(model);
 		}
 		public async Task<IActionResult> Sexmasteri()
 		{
-			var model = await db.BoardMembers
+			var model = await db.UnionMembers
 				.ToListAsync();
 
 			return View(model);

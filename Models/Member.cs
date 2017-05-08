@@ -9,7 +9,7 @@ namespace SPIIKcom.Models
 		public Member()
 		{
 		}
-		public Member(CreateMemberViewModel vm)
+		public Member(MemberViewModel vm)
 		{
 			PersonalNumber = vm.PersonalNumber;
 			FirstName = vm.Name;

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace SPIIKcom.ViewModels
 {
 	// Add profile data for application users by adding properties to the IdentityUser class
-	public class CreateMemberViewModel
+	public class MemberViewModel
 	{
 		[Required]
 		[RegularExpression(@"^[0-9]+$", ErrorMessage = "Endast siffror tillåtna i personnummer")] // This accepts one or more digits.

@@ -16,7 +16,7 @@ namespace SPIIKcom.Data
 		public DbSet<Member> Members { get; set; }
 		public DbSet<MembershipType> MembershipTypes { get; set; }
 		public DbSet<StaticPage> StaticPages { get; set; }
-		public DbSet<BoardMember> BoardMembers { get; set; }
+		public DbSet<UnionMember> UnionMembers { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

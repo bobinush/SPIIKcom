@@ -42,10 +42,11 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a asp-controller="Home" asp-action="Index" class="navbar-brand">SPIIKcom</a>
+				<a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">SPIIKcom</a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<!-- Almost all local links needs to have asp-area="" to not map against wrong area -->
 				@await Html.PartialAsync("_Menu")
 				@await Html.PartialAsync("_LoginPartial")
 			</div>

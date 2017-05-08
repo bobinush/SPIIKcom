@@ -91,7 +91,7 @@ namespace SPIIKcom.Controllers
 		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Skapa()
 		{
-			var model = new CreateMemberViewModel();
+			var model = new MemberViewModel();
 			var membershipTypes = await db.MembershipTypes.ToListAsync();
 			var dict = new Dictionary<double, string>();
 			dict.Add(-1, "Välj typ av medlemskap");
@@ -106,7 +106,7 @@ namespace SPIIKcom.Controllers
 
 		[HttpPost]
 		[Authorize(Roles = "Admin")]
-		public async Task<IActionResult> Skapa(CreateMemberViewModel viewModel)
+		public async Task<IActionResult> Skapa(MemberViewModel viewModel)
 		{
 			if (ModelState.IsValid)
 			{

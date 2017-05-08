@@ -61,10 +61,14 @@ namespace SPIIKcom
 				})
 				.AddEntityFrameworkStores<ApplicationDbContext>()
 				.AddDefaultTokenProviders();
-
-			services.AddMvc();
-			services.AddRouting(options => options.LowercaseUrls = true);
 			
+			// services.AddMvc();
+			services.AddMvc(options =>
+			{
+				options.ModelBinderProviders.Insert(0, new FlagsEnumBinderProvider());
+			});
+			services.AddRouting(options => options.LowercaseUrls = true);
+
 			// Add application services.
 			services.AddTransient<IEmailSender, AuthMessageSender>();
 			services.AddTransient<ISmsSender, AuthMessageSender>();
@@ -95,6 +99,10 @@ namespace SPIIKcom
 
 			app.UseMvc(routes =>
 			{
+				routes.MapRoute(
+					name: "areaRoute",
+					template: "{area:exists}/{controller=Admin}/{action=Index}/{id?}"
+					);
 				routes.MapRoute(
 					name: "Root",
 					template: "{action}",

@@ -33,7 +33,7 @@ namespace SPIIKcom.Models
 
 				// Delete and create database
 				// uncomment this below when adding new data to seed.
-				// await db.Database.EnsureDeletedAsync();
+				//await db.Database.EnsureDeletedAsync();
 				if (await db.Database.EnsureCreatedAsync())
 				{
 					await InsertTestDataAsync(scopeServiceProvider);
@@ -61,14 +61,14 @@ namespace SPIIKcom.Models
 						new Member { PersonalNumber = "20170103-0101", FirstName = "Musse", LastName = "Pigg", Email = "musse@pigg.se", JoinDate = DateTime.Today.AddDays(-3), ExpireDate = DateTime.Today.AddYears(1) }
 					);
 				}
-				context.BoardMembers.AddRange(
-					new BoardMember { Name = "Pernilla Johansson", Title = "Ordförande", Email = "ordf@spiik.com", Quote = "Quote?", Picture = "http://placehold.it/200x200" },
-					new BoardMember { Name = "Didrik Fasth", Title = "Vice Ordförande Studiesocialt", Email = "vordfss@spiik.com", Quote = "Quote?", Picture = "http://placehold.it/200x200" },
-					new BoardMember { Name = "Sofia Björkesjö", Title = "Vice Ordförande Utbildningsansvarig", Email = "vordfuu@spiik.com", Quote = "Quote?", Picture = "http://placehold.it/200x200" },
-					new BoardMember { Name = "Robin Nowakowski", Title = "Kassör", Email = "kassor@spiik.com", Quote = "Quote?", Picture = "http://placehold.it/200x200" },
-					new BoardMember { Name = "Simon Österdahl", Title = "Vice Kassör", Email = "vkassor@spiik.com", Quote = "Quote?", Picture = "http://placehold.it/200x200" },
-					new BoardMember { Name = "Emma Lövgren", Title = "Sekreterare", Email = "sekreterare@spiik.com", Quote = "Quote?", Picture = "http://placehold.it/200x200" },
-					new BoardMember { Name = "William Robertsson", Title = "Sexmästare", Email = "sexmaster@spiik.com", Quote = "Quote?", Picture = "http://placehold.it/200x200" }
+				context.UnionMembers.AddRange(
+					new UnionMember { Name = "Pernilla Johansson", Title = "Ordförande", Email = "ordf@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" },
+					new UnionMember { Name = "Didrik Fasth", Title = "Vice Ordförande Studiesocialt", Email = "vordfss@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" },
+					new UnionMember { Name = "Sofia Björkesjö", Title = "Vice Ordförande Utbildningsansvarig", Email = "vordfuu@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" },
+					new UnionMember { Name = "Robin Nowakowski", Title = "Kassör", Email = "kassor@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" },
+					new UnionMember { Name = "Simon Österdahl", Title = "Vice Kassör", Email = "vkassor@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" },
+					new UnionMember { Name = "Emma Lövgren", Title = "Sekreterare", Email = "sekreterare@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" },
+					new UnionMember { Name = "William Robertsson", Title = "Sexmästare", Email = "sexmaster@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" }
 				);
 				await context.SaveChangesAsync();
 			}
