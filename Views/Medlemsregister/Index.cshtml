@@ -34,7 +34,7 @@
 		</thead>
 		<tbody>
 			@foreach (var member in Model) {
-				@{
+				{
 					// Visar gul färg på de som håller på att gå ut
 					// Visar röd färg på de som har gått ut
 					// Måste ha @: nedan annars gnäller compilern
@@ -70,7 +70,7 @@
 							<a asp-action="Delete" asp-route-id="@member.Id">Delete</a>
 						</td>
 					}
-				@{
+				{
 					// Måste ha @: nedan annars gnäller compilern
 				}
 				@:</tr>
