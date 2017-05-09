@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace SPIIKcom.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	// [Route("admin")]
+	[Route("admin")]
 	[Authorize(Roles = "Admin")]
 	public class HomeController : Controller
 	{
@@ -17,23 +17,9 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		{
 			db = context;
 		}
-		public async Task<IActionResult> Om()
+		public async Task<IActionResult> Index()
 		{
 			return View();
-		}
-		public async Task<IActionResult> Styrelse()
-		{
-			var model = await db.UnionMembers
-				.ToListAsync();
-
-			return View(model);
-		}
-		public async Task<IActionResult> Sexmasteri()
-		{
-			var model = await db.UnionMembers
-				.ToListAsync();
-
-			return View(model);
 		}
 	}
 }

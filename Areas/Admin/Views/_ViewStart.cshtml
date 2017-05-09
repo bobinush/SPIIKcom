@@ -1,3 +1,22 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Admin";
 }
+
+<div class="row">
+	<div class="col-lg-12">
+		<h2>@ViewData["Title"]
+			<small>Subheading</small>
+		</h2>
+		<hr />
+		<ol class="breadcrumb">
+			<li><a asp-controller="Home">Home</a></li>
+			<li class="active">Sidebar Page</li>
+		</ol>
+	</div>
+</div>
+
+	<!-- Sidebar Column -->
+	@await Html.PartialAsync("_AdminMenu")
+
+
