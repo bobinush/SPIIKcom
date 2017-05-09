@@ -12,6 +12,7 @@ using SPIIKcom.ViewModels;
 
 namespace SPIIKcom.Controllers
 {
+	[Authorize(Roles="Admin")]
 	public class MedlemsregisterController : Controller
 	{
 		private readonly ApplicationDbContext db;

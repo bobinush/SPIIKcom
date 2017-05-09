@@ -27,12 +27,5 @@ namespace SPIIKcom.Controllers
 		{
 			return View();
 		}
-
-		[Authorize(Roles = "Admin")]
-		public IActionResult Admin()
-		{
-			return View();
-		}
-
 	}
 }
