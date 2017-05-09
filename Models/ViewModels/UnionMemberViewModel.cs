@@ -19,6 +19,7 @@ namespace SPIIKcom.ViewModels
 			Name = model.Name;
 			Title = model.Title;
 			Email = model.Email;
+			Phone = model.Phone;
 			Quote = model.Quote;
 			PictureSrc = model.PictureSrc;
 			UnionTypes = model.UnionTypes;
@@ -26,18 +27,25 @@ namespace SPIIKcom.ViewModels
 
 		public int Id { get; set; }
 		[Required]
+		[Display(Name = "Namn")]
 		public string Name { get; set; }
 		[Required]
+		[Display(Name = "Titel")]
 		public string Title { get; set; }
 		[Required]
 		[DataType(DataType.EmailAddress)]
+		[Display(Name = "E-post")]
 		public string Email { get; set; }
 		[DataType(DataType.PhoneNumber)]
+		[Display(Name="Telefonnummer")]
+		public string Phone { get; set; }
+		[Display(Name="Citat")]
 		public string Quote { get; set; }
 		[DataType(DataType.Upload)]
+		[Display(Name="Profilbild")]
 		public IFormFile Picture { get; set; }
 		public string PictureSrc { get; set; }
+		[Display(Name="Roller")]
 		public UnionTypeEnum UnionTypes { get; set; }
-		public UnionTypeEnum[] SelectedRoles { get; set; }
 	}
 }

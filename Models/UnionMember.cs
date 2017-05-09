@@ -14,6 +14,7 @@ namespace SPIIKcom.Models
 			Title = vm.Title;
 			UnionTypes = vm.UnionTypes;
 			Email = vm.Email;
+			Phone = vm.Phone;
 			Quote = vm.Quote;
 			PictureSrc = vm.PictureSrc;
 		}
@@ -26,6 +27,7 @@ namespace SPIIKcom.Models
 		[Required]
 		[DataType(DataType.EmailAddress)]
 		public string Email { get; set; }
+		public string Phone { get; set; }
 		public string Quote { get; set; }
 		public string PictureSrc { get; set; }
 	}

@@ -11,7 +11,7 @@
 		<a asp-action="Index" class="btn btn-default">Reset</a>
 		<a asp-action="Skapa" id="addMember" class="btn btn-default">Add New Member</a>
 	</form>
-	<table class="table table-striped">
+	<table class="table table-striped table-hover table-row-click">
 		<thead>
 			<tr>
 				<th>
@@ -50,9 +50,8 @@
 					@if(User.IsInRole("Admin"))
 					{
 						<td>
-							<a asp-action="Edit" asp-route-id="@member.ID">Edit</a> |
-							<a asp-action="Details" asp-route-id="@member.ID">Details</a> |
-							<a asp-action="Delete" asp-route-id="@member.ID">Delete</a>
+							<a asp-action="Edit" asp-route-id="@member.Id">Edit</a> |
+							<a asp-action="Delete" asp-route-id="@member.Id">Delete</a>
 						</td>
 					}
 				</tr>

@@ -70,6 +70,12 @@ textarea {
 	/* center your carousel if other than 100% */
 }
 
+/* Darker hover color on tables */
+
+.table-hover>tbody>tr:hover {
+	background-color: #f1f1f1;
+}
+
 /* Hide/rearrange for smaller screens */
 
 @media screen and (max-width: 767px) {

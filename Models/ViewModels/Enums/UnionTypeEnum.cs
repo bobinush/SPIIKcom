@@ -11,11 +11,11 @@ namespace SPIIKcom.Enums
 		// None = 0,
 		[Display(Name = "Styrelsen")]
 		Styrelse = 1,
-		[Display(Name = "Sexmästeriet")]		
+		[Display(Name = "Sexmästeriet")]
 		Sexmasteri = 2,
-		[Display(Name = "Revisor")]		
+		[Display(Name = "Revisor")]
 		Revisor = 4,
-		[Display(Name = "Valberedningen")]		
+		[Display(Name = "Valberedningen")]
 		Valberedningen = 8
 		//16, 32 osv..
 	}

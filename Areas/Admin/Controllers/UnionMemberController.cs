@@ -113,6 +113,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				model.Title = viewModel.Title;
 				model.UnionTypes = viewModel.UnionTypes;
 				model.Email = viewModel.Email;
+				model.Phone = viewModel.Phone;
 				model.Quote = viewModel.Quote;
 				model.PictureSrc = viewModel.PictureSrc;
 				await db.SaveChangesAsync();
