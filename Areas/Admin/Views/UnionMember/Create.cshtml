@@ -6,60 +6,59 @@
 	<div class="textholder clearfix">
 		<h3>@ViewData["Title"].</h3>
 	</div>
-
-		<form method="post" asp-action="Create" enctype="multipart/form-data" class="form-horizontal col-md-8" role="form">
-			<div asp-validation-summary="All" class="text-error"></div>
-			<input asp-for="Id" type="hidden" />
-			<div class="form-group">
-				<label asp-for="Name" class="control-label"></label>
-					@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-			</div>
-			<div class="form-group">
-				<label asp-for="Title" class="control-label"></label>
-					@Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
-			</div>
-			<div class="form-group">
-				<label asp-for="Email" class="control-label"></label>
-					@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-			</div>
-			<div class="form-group">
-				<label asp-for="Quote" class="control-label"></label>
-					@Html.TextBoxFor(m => m.Quote, new { @class = "form-control" })
-			</div>
-			<div class="form-group">
-					<label asp-for="Picture" class="btn btn btn-default"><i class="fa fa-upload fa-lg"></i>&nbsp; Ladda upp en profilbild</label>
-						<input asp-for="Picture" type="file" style="display: none;">
-			</div>
-			<div class="form-group">
-				<label asp-for="UnionTypes" class="control-label"></label>
-				<div class="btn-group" role="group" data-toggle="buttons">
-					@foreach (UnionTypeEnum item in Enum.GetValues(typeof(UnionTypeEnum)))
+	<form method="post" asp-action="Create" enctype="multipart/form-data" class="form-horizontal col-md-8" role="form">
+		<div asp-validation-summary="All" class="text-error"></div>
+		<input asp-for="Id" type="hidden" />
+		<div class="form-group">
+			<label asp-for="Name" class="control-label"></label>
+				@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+		</div>
+		<div class="form-group">
+			<label asp-for="Title" class="control-label"></label>
+				@Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+		</div>
+		<div class="form-group">
+			<label asp-for="Email" class="control-label"></label>
+				@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+		</div>
+		<div class="form-group">
+			<label asp-for="Quote" class="control-label"></label>
+				@Html.TextBoxFor(m => m.Quote, new { @class = "form-control" })
+		</div>
+		<div class="form-group">
+				<label asp-for="Picture" class="btn btn btn-default"><i class="fa fa-upload fa-lg"></i>&nbsp; Ladda upp en profilbild</label>
+					<input asp-for="Picture" type="file" style="display: none;">
+		</div>
+		<div class="form-group">
+			<label asp-for="UnionTypes" class="control-label"></label>
+			<div class="btn-group" role="group" data-toggle="buttons">
+				@foreach (UnionTypeEnum item in Enum.GetValues(typeof(UnionTypeEnum)))
+				{
+					if(Model?.UnionTypes.HasFlag(item) == true)
 					{
-						if(Model?.UnionTypes.HasFlag(item) == true)
-						{
-							<label class="btn btn-default active">
-								<input type="checkbox" name="UnionTypes" value="@item" checked="checked">
-								@item
-							</label>
-						}
-						else
-						{
-							<label class="btn btn-default">
-								<input type="checkbox" name="UnionTypes" value="@item">
-								@item
-							</label>
-						}
+						<label class="btn btn-default active">
+							<input type="checkbox" name="UnionTypes" value="@item" checked="checked">
+							@item
+						</label>
 					}
-				</div>
+					else
+					{
+						<label class="btn btn-default">
+							<input type="checkbox" name="UnionTypes" value="@item">
+							@item
+						</label>
+					}
+				}
 			</div>
-			<br>
-			<div class="form-group">
-					<a asp-action="Index" class="btn btn-default" role="button">Tillbaka till listan</a>
-					<button type="submit" class="btn btn-primary">
-						<i class="fa fa-floppy-o fa-lg"></i>&nbsp; Spara
-					</button>
-			</div>
-		</form>
+		</div>
+		<br>
+		<div class="form-group">
+				<a asp-action="Index" class="btn btn-default" role="button">Tillbaka till listan</a>
+				<button type="submit" class="btn btn-primary">
+					<i class="fa fa-floppy-o fa-lg"></i>&nbsp; Spara
+				</button>
+		</div>
+	</form>
 </div>
 
 @section Scripts {
