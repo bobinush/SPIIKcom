@@ -56,12 +56,12 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<ActionResult> Index()
 		{
-			return View(await db.UnionMembers.ToListAsync());
+			return View(await db.UnionMembers.AsNoTracking().ToListAsync());
 		}
 
 		//
 		// GET: /Users/Create
-		[HttpGet]		
+		[HttpGet]
 		public async Task<ActionResult> Create()
 		{
 			var model = new UnionMemberViewModel();
@@ -126,12 +126,12 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		//
 		// GET: /Users/Delete/
 		[HttpGet]		
-		public async Task<ActionResult> Delete(string id)
+		public async Task<ActionResult> Delete(int id)
 		{
 			if (id == null)
 				return RedirectToAction("Index");
 
-			var user = await _userManager.FindByIdAsync(id);
+			var user = await db.UnionMembers.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
 			if (user == null)
 				return RedirectToAction("Index");
 
@@ -142,23 +142,19 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		// POST: /Users/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> DeleteConfirmed(string id)
+		public async Task<ActionResult> DeleteConfirmed(int id)
 		{
 			if (ModelState.IsValid)
 			{
 				if (id == null)
 					return RedirectToAction("Index");
 
-				var user = await _userManager.FindByIdAsync(id);
+				var user = await db.UnionMembers.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
 				if (user == null)
 					return RedirectToAction("Index");
 
-				var result = await _userManager.DeleteAsync(user);
-				if (!result.Succeeded)
-				{
-					ModelState.AddModelError(string.Empty, result.Errors.First().Description);
-					return View();
-				}
+				db.UnionMembers.Remove(user);
+				await db.SaveChangesAsync();
 				return RedirectToAction("Index");
 			}
 			return View();

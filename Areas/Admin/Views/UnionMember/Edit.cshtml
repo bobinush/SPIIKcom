@@ -2,7 +2,7 @@
 @{
 	ViewData["Title"] = "Ändra användare";
 }
-<div class="row">
+<div class="col-md-9">
 	<div class="textholder clearfix">
 		<h3>@ViewData["Title"].</h3>
 	</div>
@@ -31,6 +31,7 @@
 		</div>
 		<div class="form-group">
 			<label asp-for="UnionTypes" class="control-label"></label>
+			<br>
 			<div class="btn-group" role="group" data-toggle="buttons">
 				@foreach (UnionTypeEnum item in Enum.GetValues(typeof(UnionTypeEnum)))
 				{
