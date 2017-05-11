@@ -1,0 +1,55 @@
+﻿@model EditUserViewModel
+@{
+	ViewData["Title"] = "Ändra login";
+}
+<div class="col-md-9">
+	<div class="textholder clearfix">
+		<h3>@ViewData["Title"].</h3>
+	</div>
+	<form method="post" asp-action="Edit" enctype="multipart/form-data" class="form-horizontal col-md-8" role="form">
+		<div asp-validation-summary="All" class="text-error"></div>
+		<input asp-for="Id" type="hidden" />
+		<div class="form-group">
+			<label asp-for="Name" class="control-label"></label>
+				@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+		</div>
+		<div class="form-group">
+			<label asp-for="Email" class="control-label"></label>
+				@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+		</div>
+		<div class="form-group">
+			<label asp-for="SelectedRoles" class="control-label"></label>
+			<br>
+			<div class="btn-group" role="group" data-toggle="buttons">
+				@foreach (var item in (IEnumerable<SelectListItem>)ViewData["RolesList"])
+				{
+					if(item.Selected)
+					{
+						<label class="btn btn-default active">
+							<input type="checkbox" name="SelectedRoles" value="@item.Value" checked="@item.Selected">
+							@item.Value
+						</label>
+					}
+					else
+					{
+						<label class="btn btn-default">
+							<input type="checkbox" name="SelectedRoles" value="@item.Value">
+							@item.Value
+						</label>
+					}
+				}
+			</div>
+		</div>
+		<br>
+		<div class="form-group">
+				<a asp-action="Index" class="btn btn-default" role="button">Tillbaka till listan</a>
+				<button type="submit" class="btn btn-primary">
+					<i class="fa fa-floppy-o fa-lg"></i>&nbsp; Spara
+				</button>
+		</div>
+	</form>
+</div>
+
+@section Scripts {
+	@{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

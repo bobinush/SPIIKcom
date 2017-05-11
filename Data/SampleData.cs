@@ -13,6 +13,7 @@ using SPIIKcom.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using System.Security.Claims;
+using SPIIKcom.Enums;
 
 namespace SPIIKcom.Models
 {
@@ -33,7 +34,7 @@ namespace SPIIKcom.Models
 
 				// Delete and create database
 				// uncomment this below when adding new data to seed.
-				await db.Database.EnsureDeletedAsync();
+				//await db.Database.EnsureDeletedAsync();
 				if (await db.Database.EnsureCreatedAsync())
 				{
 					await InsertTestDataAsync(scopeServiceProvider);
@@ -91,10 +92,10 @@ namespace SPIIKcom.Models
 			string styrelseName = "rn222hk@student.lnu.se";
 
 			var roleManager = serviceProvider.GetService<RoleManager<IdentityRole>>();
-			foreach (var role in roles)
+			foreach (UserTypeEnum role in Enum.GetValues(typeof(UserTypeEnum)))
 			{
-				if (!await roleManager.RoleExistsAsync(role))
-					await roleManager.CreateAsync(new IdentityRole(role));
+				if (!await roleManager.RoleExistsAsync(role.ToString()))
+					await roleManager.CreateAsync(new IdentityRole(role.ToString()));
 			}
 
 			var adminUser = await userManager.FindByNameAsync(adminName);
@@ -102,11 +103,11 @@ namespace SPIIKcom.Models
 			{
 				adminUser = new ApplicationUser { UserName = adminName, Email = adminName };
 				await userManager.CreateAsync(adminUser, adminPass);
-				await userManager.AddToRoleAsync(adminUser, "Admin");
+				await userManager.AddToRoleAsync(adminUser, UserTypeEnum.Admin.ToString());
 
 				var styrelseUser = new ApplicationUser { UserName = styrelseName, Email = styrelseName };
 				await userManager.CreateAsync(styrelseUser, adminPass);
-				await userManager.AddToRoleAsync(styrelseUser, "Styrelse");
+				await userManager.AddToRoleAsync(styrelseUser, UserTypeEnum.Styrelse.ToString());
 			}
 
 		}

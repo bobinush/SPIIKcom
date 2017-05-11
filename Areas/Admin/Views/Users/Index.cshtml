@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ApplicationUser>
+@{
+	ViewData["Title"] = "Logins";
+}
+<div class="col-md-9">
+	<div class="alert alert-success alert-dismissable">
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		<strong>Success!</strong> @ViewData["Message"]
+	</div>
+	<a asp-action="Create" id="addMember" class="btn btn-default">Skapa ny login</a>
+	<table class="table table-striped table-hover table-row-click">
+		<thead>
+			<tr>
+				<th>
+					<!--@Html.DisplayNameFor(model => model.Name)-->
+				</th>
+				<th>
+					<!--@Html.DisplayNameFor(model => model.Email)-->
+				</th>
+				<th>
+					<!--@Html.DisplayNameFor(model => model.Roles)-->
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var user in Model) {
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => user.Name)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => user.Email)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => user.Roles)
+					</td>
+					<td>
+						<a asp-action="Edit" asp-route-id="@user.Id">Edit</a> |
+						<a asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

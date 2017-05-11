@@ -26,35 +26,20 @@ namespace SPIIKcom.Areas.Admin.Controllers
 	public class UnionMemberController : Controller
 	{
 		private readonly ApplicationDbContext db;
-		private readonly UserManager<ApplicationUser> _userManager;
-		private readonly RoleManager<IdentityRole> _roleManager;
-		private readonly SignInManager<ApplicationUser> _signInManager;
-		private readonly IEmailSender _emailSender;
-		private readonly ISmsSender _smsSender;
 		private readonly ILogger _logger;
 
 		public UnionMemberController(
 			ApplicationDbContext context,
-			UserManager<ApplicationUser> userManager,
-			RoleManager<IdentityRole> roleManager,
-			SignInManager<ApplicationUser> signInManager,
-			IEmailSender emailSender,
-			ISmsSender smsSender,
 			ILoggerFactory loggerFactory)
 		{
 			db = context;
-			_userManager = userManager;
-			_roleManager = roleManager;
-			_signInManager = signInManager;
-			_emailSender = emailSender;
-			_smsSender = smsSender;
 			_logger = loggerFactory.CreateLogger<UnionMemberController>();
 		}
 
 		//
 		// GET: /Users/
 		[HttpGet]
-		public async Task<ActionResult> Index()
+		public async Task<IActionResult> Index()
 		{
 			return View(await db.UnionMembers.AsNoTracking().ToListAsync());
 		}
@@ -62,7 +47,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		//
 		// GET: /Users/Create
 		[HttpGet]
-		public async Task<ActionResult> Create()
+		public async Task<IActionResult> Create()
 		{
 			var model = new UnionMemberViewModel();
 			return View(model);
@@ -71,7 +56,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		//
 		// POST: /Users/Create
 		[HttpPost]
-		public async Task<ActionResult> Create(UnionMemberViewModel viewModel)
+		public async Task<IActionResult> Create(UnionMemberViewModel viewModel)
 		{
 			if (ModelState.IsValid)
 			{
@@ -86,7 +71,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		//
 		// GET: /Users/Edit/1
 		[HttpGet]		
-		public async Task<ActionResult> Edit(int id)
+		public async Task<IActionResult> Edit(int id)
 		{
 			var model = await db.UnionMembers.FindAsync(id);
 			if (model == null)
@@ -100,7 +85,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		// POST: /Users/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> Edit(UnionMemberViewModel viewModel)
+		public async Task<IActionResult> Edit(UnionMemberViewModel viewModel)
 		{
 			if (ModelState.IsValid)
 			{
@@ -126,11 +111,8 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		//
 		// GET: /Users/Delete/
 		[HttpGet]		
-		public async Task<ActionResult> Delete(int id)
+		public async Task<IActionResult> Delete(int id)
 		{
-			if (id == null)
-				return RedirectToAction("Index");
-
 			var user = await db.UnionMembers.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
 			if (user == null)
 				return RedirectToAction("Index");
@@ -142,13 +124,10 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		// POST: /Users/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> DeleteConfirmed(int id)
+		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
 			if (ModelState.IsValid)
 			{
-				if (id == null)
-					return RedirectToAction("Index");
-
 				var user = await db.UnionMembers.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
 				if (user == null)
 					return RedirectToAction("Index");

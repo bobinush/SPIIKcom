@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace SPIIKcom.Models
 {
@@ -6,5 +7,6 @@ namespace SPIIKcom.Models
 	public class ApplicationUser : IdentityUser
 	{
 		public string Name { get; set; }
+		public DateTime SignupDate { get; set; }
 	}
 }
