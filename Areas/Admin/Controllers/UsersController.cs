@@ -55,7 +55,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		// GET: /Users/
 		public async Task<IActionResult> Index()
 		{
-			var model = await _userManager.Users.Include(x => x.Roles).ToListAsync();
+			var model = await _userManager.Users.ToListAsync();
 			return View(model);
 		}
 
@@ -63,12 +63,15 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		// GET: /Users/Create
 		public async Task<IActionResult> Create()
 		{
-			ViewData["RolesList"] = _roleManager.Roles.ToList().Select(x => new SelectListItem()
+			var viewModel = new RegisterViewModel
 			{
-				Text = x.Name,
-				Value = x.Name
-			});
-			return View();
+				RolesList = _roleManager.Roles.ToList().Select(x => new SelectListItem()
+				{
+					Text = x.Name,
+					Value = x.Name
+				})
+			};
+			return View(viewModel);
 		}
 
 		//
@@ -76,8 +79,9 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Create(RegisterViewModel viewModel, params string[] selectedRoles)
 		{
-			ViewData["RolesList"] = _roleManager.Roles.ToList().Select(x => new SelectListItem()
+			viewModel.RolesList = _roleManager.Roles.ToList().Select(x => new SelectListItem()
 			{
+				Selected = viewModel.SelectedRoles.Contains(x.Name), // För att få de valda roller valda igen.
 				Text = x.Name,
 				Value = x.Name
 			});
@@ -113,11 +117,6 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		// GET: /Users/Edit/1
 		public async Task<IActionResult> Edit(string id)
 		{
-			ViewData["RolesList"] = _roleManager.Roles.ToList().Select(x => new SelectListItem()
-			{
-				Text = x.Name,
-				Value = x.Name
-			});
 			if (id == null)
 				return new StatusCodeResult(400); // BadRequest
 
@@ -132,6 +131,12 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				Id = user.Id,
 				Email = user.Email,
 				Name = user.Name,
+				RolesList = _roleManager.Roles.ToList().Select(x => new SelectListItem()
+				{
+					Selected = userRoles.Contains(x.Name),
+					Text = x.Name,
+					Value = x.Name
+				})
 			};
 			return View(model);
 		}
@@ -140,13 +145,15 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		// POST: /Users/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(EditUserViewModel viewModel)//, params string[] selectedRole)
+		public async Task<IActionResult> Edit(EditUserViewModel viewModel)
 		{
-			ViewData["RolesList"] = _roleManager.Roles.ToList().Select(x => new SelectListItem()
+			viewModel.RolesList = _roleManager.Roles.ToList().Select(x => new SelectListItem()
 			{
+				Selected = viewModel.SelectedRoles.Contains(x.Name), // För att få de valda roller valda igen.
 				Text = x.Name,
 				Value = x.Name
 			});
+
 			if (ModelState.IsValid)
 			{
 				var user = await _userManager.FindByIdAsync(viewModel.Id);
@@ -177,7 +184,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				return RedirectToAction("Index");
 			}
 			ModelState.AddModelError("", "Something failed.");
-			return View();
+			return View(viewModel);
 		}
 
 		//
@@ -190,6 +197,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			var user = await _userManager.FindByIdAsync(id);
 			if (user == null)
 				return new StatusCodeResult(404);
+
 			return View(user);
 		}
 

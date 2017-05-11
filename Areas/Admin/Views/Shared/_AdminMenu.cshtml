@@ -2,7 +2,7 @@
 @{var ctrlr = ViewContext.RouteData.Values["Controller"].ToString().ToLower();}
 <div class="list-group col-md-3">
 	<a asp-action="Index" asp-controller="Home" class="list-group-item @(ctrlr == "home" ? "active" : "")">Home</a>
-	<a asp-action="Index" asp-controller="UsersAdmin" class="list-group-item @(ctrlr == "usersadmin" ? "active" : "")">Hantera logins</a>
+	<a asp-action="Index" asp-controller="Users" class="list-group-item @(ctrlr == "users" ? "active" : "")">Hantera logins</a>
 	<a asp-action="Index" asp-controller="UnionMember" class="list-group-item @(ctrlr == "unionmember" ? "active" : "")">Hantera användare</a>
 	<a href="#" class="list-group-item">Menu 3</a>
 </div>

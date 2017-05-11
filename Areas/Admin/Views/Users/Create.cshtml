@@ -28,7 +28,7 @@
 			<label asp-for="SelectedRoles" class="control-label"></label>
 			<br>
 			<div class="btn-group" role="group" data-toggle="buttons">
-				@foreach (var item in (IEnumerable<SelectListItem>)ViewData["RolesList"])
+				@foreach (var item in Model.RolesList)
 				{
 					if(item.Selected)
 					{

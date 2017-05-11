@@ -15,6 +15,7 @@ namespace SPIIKcom.Models.AccountViewModels
 		public string Name { get; set; }
 		[Display(Name = "Användaroller")]
 		public string[] SelectedRoles { get; set; }
+		public IEnumerable<SelectListItem> RolesList { get; set; }
 		// public UserTypeEnum SelectedRoles { get; set; }
 	}
 }
