@@ -77,7 +77,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		//
 		// POST: /Users/Create
 		[HttpPost]
-		public async Task<IActionResult> Create(RegisterViewModel viewModel, params string[] selectedRoles)
+		public async Task<IActionResult> Create(RegisterViewModel viewModel)
 		{
 			viewModel.RolesList = _roleManager.Roles.ToList().Select(x => new SelectListItem()
 			{
@@ -93,9 +93,9 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				//Add User to the selected Roles
 				if (adminresult.Succeeded)
 				{
-					if (selectedRoles != null)
+					if (viewModel.SelectedRoles != null)
 					{
-						var result = await _userManager.AddToRolesAsync(user, selectedRoles);
+						var result = await _userManager.AddToRolesAsync(user, viewModel.SelectedRoles);
 						if (!result.Succeeded)
 						{
 							ModelState.AddModelError("", result.Errors.First().Description);

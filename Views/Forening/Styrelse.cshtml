@@ -29,9 +29,9 @@
 			@foreach (var member in Model)
 			{
 				<div class="col-lg-4 col-sm-6 text-center">
-					<img class="img-circle img-responsive img-center" src="@member.Picture" alt="">
+					<img class="img-circle img-responsive img-center" src="~/@member.PictureSrc" alt="">
 					<h3>@member.Name
-						<small>@member.Role</small>
+						<small>@member.UnionTypes</small>
 					</h3>
 						<a href="mailto:@member.Email"><i class="fa fa-envelope-o fa-lg"></i> @member.Email</a>
 					<p>@member.Quote</p>

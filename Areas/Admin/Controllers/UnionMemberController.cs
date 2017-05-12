@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -27,13 +28,16 @@ namespace SPIIKcom.Areas.Admin.Controllers
 	{
 		private readonly ApplicationDbContext db;
 		private readonly ILogger _logger;
+		private IHostingEnvironment _env;
 
 		public UnionMemberController(
 			ApplicationDbContext context,
-			ILoggerFactory loggerFactory)
+			ILoggerFactory loggerFactory,
+			IHostingEnvironment env)
 		{
 			db = context;
 			_logger = loggerFactory.CreateLogger<UnionMemberController>();
+			_env = env;
 		}
 
 		//
@@ -70,7 +74,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 
 		//
 		// GET: /Users/Edit/1
-		[HttpGet]		
+		[HttpGet]
 		public async Task<IActionResult> Edit(int id)
 		{
 			var model = await db.UnionMembers.FindAsync(id);
@@ -100,17 +104,20 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				model.Email = viewModel.Email;
 				model.Phone = viewModel.Phone;
 				model.Quote = viewModel.Quote;
-				model.PictureSrc = viewModel.PictureSrc;
+
+				var webRoot = _env.WebRootPath;
+				var file = await Code.SaveFile(viewModel.Picture, webRoot, viewModel.Name);
+				if (!string.IsNullOrWhiteSpace(file)) // Spara endast om en bild har blivit uppladdad.
+					model.PictureSrc = file;
+
 				await db.SaveChangesAsync();
 				return RedirectToAction("Index");
 			}
-			ModelState.AddModelError(string.Empty, "Something failed.");
 			return View();
 		}
-
 		//
 		// GET: /Users/Delete/
-		[HttpGet]		
+		[HttpGet]
 		public async Task<IActionResult> Delete(int id)
 		{
 			var user = await db.UnionMembers.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);

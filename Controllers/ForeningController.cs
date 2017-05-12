@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SPIIKcom.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using SPIIKcom.Enums;
 
 namespace SPIIKcom.Controllers
 {
@@ -20,6 +21,7 @@ namespace SPIIKcom.Controllers
 		public async Task<IActionResult> Styrelse()
 		{
 			var model = await db.UnionMembers
+				.Where(x => x.UnionTypes == UnionTypeEnum.Styrelse)
 				.ToListAsync();
 
 			return View(model);
