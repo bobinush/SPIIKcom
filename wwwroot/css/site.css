@@ -77,6 +77,14 @@ textarea {
 	background-color: #f1f1f1;
 }
 
+/* Start Bootstrap - Round About */
+.img-center {
+	height: 200px;
+	width: 200px;
+	object-fit: cover;
+}
+
+
 
 /* Hide/rearrange for smaller screens */
 

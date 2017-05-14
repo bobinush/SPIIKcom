@@ -21,7 +21,7 @@ namespace SPIIKcom.Controllers
 		public async Task<IActionResult> Styrelse()
 		{
 			var model = await db.UnionMembers
-				.Where(x => x.UnionTypes == UnionTypeEnum.Styrelse)
+				.Where(x => x.UnionTypes.HasFlag(UnionTypeEnum.Styrelse))
 				.ToListAsync();
 
 			return View(model);
@@ -29,6 +29,7 @@ namespace SPIIKcom.Controllers
 		public async Task<IActionResult> Sexmasteri()
 		{
 			var model = await db.UnionMembers
+				.Where(x => x.UnionTypes.HasFlag(UnionTypeEnum.Sexmasteri))
 				.ToListAsync();
 
 			return View(model);

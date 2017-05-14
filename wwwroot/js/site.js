@@ -9,3 +9,15 @@ $('.table-row-click tbody tr').click(function () {
 		window.location = href;
 	}
 });
+
+// Kontakform
+function success() {
+	// töm inputs
+	$("form input").each(function () {
+		$(this).val("");
+	});
+	$("form textarea").val("");
+	
+	$("#success").show();
+	setTimeout(() => $("#success").fadeOut(1000), 1000);
+}

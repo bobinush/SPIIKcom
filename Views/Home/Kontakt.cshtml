@@ -1,4 +1,5 @@
-﻿@{
+﻿@model ContactViewModel
+@{
 	ViewData["Title"] = "Kontakt";
 }
 <!-- Page Content -->
@@ -13,7 +14,7 @@
 		<!-- Map Column -->
 		<div class="col-md-8">
 			<!-- Embedded Google Map -->
-			<iframe width="100%" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" allowfullscreen src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2191.8769151534166!2d16.3543784!3d56.6763615!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4657d17358659c31%3A0x91e9e65710898956!2sGr%C3%B6ndalsv%C3%A4gen+21%2C+392+36+Kalmar%2C+Sverige!5e0!3m2!1ssv!2sgr!4v1494087146052"></iframe>
+			<iframe width="100%" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" allowfullscreen src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2191.7327291703023!2d16.356394316224733!3d56.67883948081119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4657d174a604055b%3A0xfe4433e0629fd92!2sStudentf%C3%B6reningen+SPIIK&#39;s+kontor!5e0!3m2!1ssv!2sse!4v1494768736486"></iframe>
 		</div>
 		<!-- Contact Details Column -->
 		<div class="col-md-4">
@@ -55,37 +56,42 @@
 	<div class="row">
 		<div class="col-md-8">
 			<h3>Send us a Message</h3>
-			<form name="sentMessage" id="contactForm" novalidate>
+			<form asp-controller="Home" asp-action="SendContactForm" id="contact-form" data-ajax="true" data-ajax-method="POST" data-ajax-success="success()" novalidate>
 				<div class="control-group form-group">
 					<div class="controls">
 						<label>Full Name:</label>
-						<input type="text" class="form-control" id="name" required data-validation-required-message="Please enter your name.">
-						<p class="help-block"></p>
+						<input asp-for="Name" class="form-control">
+						<p class="help-block"><span asp-validation-for="Name"></span></p>
 					</div>
 				</div>
 				<div class="control-group form-group">
 					<div class="controls">
 						<label>Phone Number:</label>
-						<input type="tel" class="form-control" id="phone" required data-validation-required-message="Please enter your phone number.">
+						<input asp-for="Phone"class="form-control">
 					</div>
 				</div>
 				<div class="control-group form-group">
 					<div class="controls">
 						<label>Email Address:</label>
-						<input type="email" class="form-control" id="email" required data-validation-required-message="Please enter your email address.">
+						<input asp-for="Email"class="form-control">
+						<p class="help-block"><span asp-validation-for="Email"></span></p>
 					</div>
 				</div>
 				<div class="control-group form-group">
 					<div class="controls">
 						<label>Message:</label>
-						<textarea rows="10" cols="100" class="form-control" id="message" required data-validation-required-message="Please enter your message" maxlength="999" style="resize:none"></textarea>
+						<textarea asp-for="Message" rows="10" cols="100" class="form-control" style="resize:none"></textarea>
 					</div>
 				</div>
-				<div id="success"></div>
 				<!-- For success/fail messages -->
 				<button type="submit" class="btn btn-primary">Send Message</button>
+				<span id="success" style="display: none;"><i id="fa-checkmark" class="fa fa-check fa-lg" aria-hidden="true"></i></span>
 			</form>
 		</div>
-
 	</div>
 	<!-- /.row -->
+
+@section Scripts {
+	@{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+	<script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+}

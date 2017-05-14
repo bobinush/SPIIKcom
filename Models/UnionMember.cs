@@ -7,7 +7,7 @@ namespace SPIIKcom.Models
 	public class UnionMember
 	{
 		public UnionMember() {
-		}		
+		}
 		public UnionMember(UnionMemberViewModel vm) {
 			Id = vm.Id;
 			Name = vm.Name;

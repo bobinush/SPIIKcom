@@ -63,13 +63,13 @@ namespace SPIIKcom.Models
 					);
 				}
 				context.UnionMembers.AddRange(
-					new UnionMember { Name = "Pernilla Johansson", Title = "Ordförande", Email = "ordf@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" },
-					new UnionMember { Name = "Didrik Fasth", Title = "Vice Ordförande Studiesocialt", Email = "vordfss@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" },
-					new UnionMember { Name = "Sofia Björkesjö", Title = "Vice Ordförande Utbildningsansvarig", Email = "vordfuu@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" },
-					new UnionMember { Name = "Robin Nowakowski", Title = "Kassör", Email = "kassor@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" },
-					new UnionMember { Name = "Simon Österdahl", Title = "Vice Kassör", Email = "vkassor@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" },
-					new UnionMember { Name = "Emma Lövgren", Title = "Sekreterare", Email = "sekreterare@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" },
-					new UnionMember { Name = "William Robertsson", Title = "Sexmästare", Email = "sexmaster@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" }
+					new UnionMember { Name = "Pernilla Johansson", Title = "Ordförande", UnionTypes = UnionTypeEnum.Styrelse, Email = "ordf@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" },
+					new UnionMember { Name = "Didrik Fasth", Title = "Vice Ordförande Studiesocialt", UnionTypes = UnionTypeEnum.Styrelse, Email = "vordfss@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" },
+					new UnionMember { Name = "Sofia Björkesjö", Title = "Vice Ordförande Utbildningsansvarig", UnionTypes = UnionTypeEnum.Styrelse, Email = "vordfuu@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" },
+					new UnionMember { Name = "Robin Nowakowski", Title = "Kassör", UnionTypes = UnionTypeEnum.Styrelse, Email = "kassor@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" },
+					new UnionMember { Name = "Simon Österdahl", Title = "Vice Kassör", UnionTypes = UnionTypeEnum.Styrelse | UnionTypeEnum.Sexmasteri, Email = "vkassor@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" },
+					new UnionMember { Name = "Emma Lövgren", Title = "Sekreterare", UnionTypes = UnionTypeEnum.Styrelse, Email = "sekreterare@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" },
+					new UnionMember { Name = "William Robertsson", Title = "Sexmästare", UnionTypes = UnionTypeEnum.Styrelse | UnionTypeEnum.Sexmasteri, Email = "sexmaster@spiik.com", Quote = "Quote?", PictureSrc = "http://placehold.it/200x200" }
 				);
 				await context.SaveChangesAsync();
 			}
