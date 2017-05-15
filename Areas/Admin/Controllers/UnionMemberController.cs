@@ -22,8 +22,7 @@ using SPIIKcom.ViewModels;
 namespace SPIIKcom.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	// TODO : Add role Styrelse
-	[Authorize(Roles = "Admin")]
+	[Authorize(Roles = "Admin,Styrelse")]
 	public class UnionMemberController : Controller
 	{
 		private readonly ApplicationDbContext db;

@@ -21,8 +21,7 @@ using SPIIKcom.ViewModels;
 namespace SPIIKcom.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	// TODO : Add role Styrelse
-	[Authorize(Roles = "Admin")]
+	[Authorize(Roles = "Admin,Styrelse")]
 	public class UsersController : Controller
 	{
 		private readonly ApplicationDbContext db;
@@ -125,7 +124,6 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				return new StatusCodeResult(404);
 
 			var userRoles = await _userManager.GetRolesAsync(user);
-
 			var model = new EditUserViewModel()
 			{
 				Id = user.Id,
@@ -162,11 +160,11 @@ namespace SPIIKcom.Areas.Admin.Controllers
 
 				user.UserName = viewModel.Email;
 				user.Email = viewModel.Email;
-
 				var userRoles = await _userManager.GetRolesAsync(user);
+				if (userRoles.Contains("Admin") && !User.IsInRole("Admin")) // Förhindra att någon annan än admin ändrar admin
+					return new StatusCodeResult(403); // Forbidden
 
 				viewModel.SelectedRoles = viewModel.SelectedRoles ?? new string[] { };
-
 				var result = await _userManager.AddToRolesAsync(user, viewModel.SelectedRoles.Except(userRoles).ToList<string>());
 
 				if (!result.Succeeded)
@@ -189,6 +187,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 
 		//
 		// GET: /Users/Delete/5
+		[Authorize(Roles = "Admin")] // Förhindra att någon tar bort admin
 		public async Task<IActionResult> Delete(string id)
 		{
 			if (id == null)
@@ -203,6 +202,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 
 		//
 		// POST: /Users/Delete/5
+		[Authorize(Roles = "Admin")] // Förhindra att någon tar bort admin
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(string id)

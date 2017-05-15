@@ -2,78 +2,71 @@
 @{
 	ViewData["Title"] = "Medlemsregister";
 }
-	<h2>@ViewData["Title"]</h2>
-	<h3>@ViewData["Message"]</h3>
-	
-	<form asp-action="Index" method="get" class="form-inline">
-			<input type="text" class="form-control" placeholder="Find by name.." name="name" value="@ViewData["CurrentFilterName"]" autofocus>
-		<input type="submit" value="Search" class="btn btn-default">
-		<a asp-action="Index" class="btn btn-default">Reset</a>
-		<a asp-action="Create" id="addMember" class="btn btn-default">Add New Member</a>
-	</form>
-	<table class="table table-striped table-condensed table-hover table-row-click">
-		<thead>
-			<tr>
-				<th>
-					<a asp-action="Index" asp-route-sort="@ViewData["FirstNameSort"]">@Html.DisplayNameFor(model => model.FirstName) ↕</a>
-				</th>
-				<th>
-					<a asp-action="Index" asp-route-sort="@ViewData["LastNameSort"]">@Html.DisplayNameFor(model => model.LastName) ↕</a>
-				</th>
-				<th>
-					<a asp-action="Index" asp-route-sort="@ViewData["JoinDateSort"]">@Html.DisplayNameFor(model => model.JoinDate) ↕</a>
-				</th>
-				<th>
-					<a asp-action="Index" asp-route-sort="@ViewData["ExpireDateSort"]">@Html.DisplayNameFor(model => model.ExpireDate) ↕</a>
-				</th>
-				@if(User.IsInRole("Admin"))
-				{
-					<th></th>
-				}
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var member in Model) {
-				{
-					// Visar gul färg på de som håller på att gå ut
-					// Visar röd färg på de som har gått ut
-					// Måste ha @: nedan annars gnäller compilern
-				}
-				@if (member.ExpireDate < DateTime.Today.AddMonths(-1))
-				{
-					@:<tr class="warning">
-				}
-				else if (member.ExpireDate < DateTime.Today)
-				{
-					@:<tr class="danger">
-				}
-				else
-				{
-					@:<tr>
-				}
-					<td>
-						@Html.DisplayFor(modelItem => member.FirstName)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => member.LastName)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => member.JoinDate)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => member.ExpireDate)
-					</td>
-					@if(User.IsInRole("Admin"))
-					{
-						<td>
-							<a asp-action="Edit" asp-route-id="@member.Id">Redigera</a> |
-							<a asp-action="Delete" asp-route-id="@member.Id">Radera</a>
-						</td>
-					}
-				{
-					// Måste ha @: nedan annars gnäller compilern
-				}
-				@:</tr>
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+<form asp-action="Index" method="get" class="form-inline">
+		<input type="text" class="form-control" placeholder="Find by name.." name="name" value="@ViewData["CurrentFilterName"]" autofocus>
+	<input type="submit" value="Search" class="btn btn-default">
+	<a asp-action="Index" class="btn btn-default">Reset</a>
+	<a asp-action="Create" id="addMember" class="btn btn-default">Add New Member</a>
+</form>
+<table class="table table-striped table-condensed table-hover table-row-click">
+	<thead>
+		<tr>
+			<th>
+				<a asp-action="Index" asp-route-sort="@ViewData["FirstNameSort"]">@Html.DisplayNameFor(model => model.FirstName) ↕</a>
+			</th>
+			<th>
+				<a asp-action="Index" asp-route-sort="@ViewData["LastNameSort"]">@Html.DisplayNameFor(model => model.LastName) ↕</a>
+			</th>
+			<th>
+				<a asp-action="Index" asp-route-sort="@ViewData["JoinDateSort"]">@Html.DisplayNameFor(model => model.JoinDate) ↕</a>
+			</th>
+			<th>
+				<a asp-action="Index" asp-route-sort="@ViewData["ExpireDateSort"]">@Html.DisplayNameFor(model => model.ExpireDate) ↕</a>
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var member in Model) {
+			{
+				// Visar gul färg på de som håller på att gå ut (1 månad)
+				// Visar röd färg på de som har gått ut
+				// Måste ha @: nedan annars gnäller compilern
 			}
-		</tbody>
-	</table>
+			@if (member.ExpireDate < DateTime.Today.AddMonths(-1))
+			{
+				@:<tr class="warning">
+			}
+			else if (member.ExpireDate < DateTime.Today)
+			{
+				@:<tr class="danger">
+			}
+			else
+			{
+				@:<tr>
+			}
+				<td>
+					@Html.DisplayFor(modelItem => member.FirstName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => member.LastName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => member.JoinDate)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => member.ExpireDate)
+				</td>
+				<td>
+					<a asp-action="Edit" asp-route-id="@member.Id">Redigera</a>
+				</td>
+			{
+				// Måste ha @: nedan annars gnäller compilern
+			}
+			@:</tr>
+		}
+	</tbody>
+</table>

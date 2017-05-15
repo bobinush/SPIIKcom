@@ -12,7 +12,7 @@ using SPIIKcom.ViewModels;
 
 namespace SPIIKcom.Controllers
 {
-	[Authorize(Roles = "Admin")]
+	[Authorize(Roles = "Admin,Styrelse")]
 	public class MedlemsregisterController : Controller
 	{
 		private readonly ApplicationDbContext db;
@@ -89,7 +89,6 @@ namespace SPIIKcom.Controllers
 
 		// TODO : Add the role Styrelse
 		[HttpGet]
-		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Create()
 		{
 			var viewModel = new CreateMemberViewModel();
@@ -98,7 +97,6 @@ namespace SPIIKcom.Controllers
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Create(CreateMemberViewModel viewModel)
 		{
 			if (ModelState.IsValid)
@@ -119,7 +117,6 @@ namespace SPIIKcom.Controllers
 		}
 
 		[HttpGet]
-		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Edit(int id)
 		{
 			var model = await db.Members.FindAsync(id);
@@ -132,7 +129,6 @@ namespace SPIIKcom.Controllers
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Edit(EditMemberViewModel viewModel)
 		{
 			if (ModelState.IsValid)
@@ -169,6 +165,43 @@ namespace SPIIKcom.Controllers
 			}
 			return View(viewModel);
 		}
+		//
+		// GET: /Users/Delete/5
+		[HttpGet]
+		public async Task<IActionResult> Delete(string id)
+		{
+			if (id == null)
+				return new StatusCodeResult(400); // BadRequest
+
+			var model = await db.Members.FindAsync(id);
+			if (model == null)
+				return new StatusCodeResult(404);
+
+			return View(model);
+		}
+
+		//
+		// POST: /Users/Delete/5
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> DeleteConfirmed(string id)
+		{
+			if (ModelState.IsValid)
+			{
+				if (id == null)
+					return new StatusCodeResult(400); // BadRequest
+
+				var model = await db.Members.FindAsync(id);
+				if (model == null)
+					return new StatusCodeResult(404);
+
+				db.Members.Remove(model);
+				await db.SaveChangesAsync();
+				return RedirectToAction("Index");
+			}
+			return View();
+		}
+
 		internal async Task<SelectList> GetMembershipTypes(string defaultText)
 		{
 			var membershipTypes = await db.MembershipTypes.ToListAsync();
