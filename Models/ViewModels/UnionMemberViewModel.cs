@@ -44,6 +44,7 @@ namespace SPIIKcom.ViewModels
 		[DataType(DataType.Upload)]
 		[Display(Name="Profilbild")]
 		public IFormFile Picture { get; set; }
+		[DataType(DataType.ImageUrl)]
 		public string PictureSrc { get; set; }
 		[Display(Name="Roller")]
 		public UnionTypeEnum UnionTypes { get; set; }

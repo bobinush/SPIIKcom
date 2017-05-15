@@ -57,9 +57,13 @@ namespace SPIIKcom.Models
 				if (!context.Members.Any())
 				{
 					context.Members.AddRange(
-						new Member { PersonalNumber = "20170101-0101", FirstName = "Kalle", LastName = "Anka", Email = "kalle@anka.se", JoinDate = DateTime.Today.AddDays(-1), ExpireDate = DateTime.Today.AddYears(1) },
-						new Member { PersonalNumber = "20170102-0101", FirstName = "Kajsa", LastName = "Anka", Email = "kajsa@anka.se", JoinDate = DateTime.Today.AddDays(-2), ExpireDate = DateTime.Today.AddYears(1) },
-						new Member { PersonalNumber = "20170103-0101", FirstName = "Musse", LastName = "Pigg", Email = "musse@pigg.se", JoinDate = DateTime.Today.AddDays(-3), ExpireDate = DateTime.Today.AddYears(1) }
+						new Member { PersonalNumber = "20170101-0101", FirstName = "Kalle", LastName = "Anka", Email = "kalle@anka.se", JoinDate = DateTime.Today.AddYears(-1), ExpireDate = DateTime.Today.AddMonths(-2) },
+						new Member { PersonalNumber = "20170102-0101", FirstName = "Kajsa", LastName = "Anka", Email = "kajsa@anka.se", JoinDate = DateTime.Today.AddYears(-1), ExpireDate = DateTime.Today.AddMonths(-1) },
+						new Member { PersonalNumber = "20170103-0101", FirstName = "Musse", LastName = "Pigg", Email = "musse@pigg.se", JoinDate = DateTime.Today.AddYears(-1), ExpireDate = DateTime.Today.AddDays(10) },
+						new Member { PersonalNumber = "20170103-0101", FirstName = "Mimmi", LastName = "Pigg", Email = "mimmi@pigg.se", JoinDate = DateTime.Today.AddYears(-1), ExpireDate = DateTime.Today.AddMonths(1) },
+						new Member { PersonalNumber = "20170103-0101", FirstName = "Knatte", LastName = "Anka", Email = "knatte@anka.se", JoinDate = DateTime.Today.AddYears(-1), ExpireDate = DateTime.Today.AddMonths(2) },
+						new Member { PersonalNumber = "20170103-0101", FirstName = "Fnatte", LastName = "Anka", Email = "fnatte@anka.se", JoinDate = DateTime.Today.AddYears(-1), ExpireDate = DateTime.Today.AddMonths(3) },
+						new Member { PersonalNumber = "20170103-0101", FirstName = "Tjatte", LastName = "Anka", Email = "tjatte@anka.se", JoinDate = DateTime.Today.AddYears(-1), ExpireDate = DateTime.Today.AddMonths(4) }
 					);
 				}
 				context.UnionMembers.AddRange(

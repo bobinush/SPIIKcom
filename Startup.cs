@@ -77,6 +77,7 @@ namespace SPIIKcom
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
 		{
+			app.UseIdentity();
 			loggerFactory.AddConsole(Configuration.GetSection("Logging"));
 			loggerFactory.AddDebug();
 
@@ -92,8 +93,6 @@ namespace SPIIKcom
 			}
 
 			app.UseStaticFiles();
-
-			app.UseIdentity();
 
 			// Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
 

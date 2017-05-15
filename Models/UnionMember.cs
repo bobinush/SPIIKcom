@@ -29,6 +29,7 @@ namespace SPIIKcom.Models
 		public string Email { get; set; }
 		public string Phone { get; set; }
 		public string Quote { get; set; }
+		[DataType(DataType.ImageUrl)]
 		public string PictureSrc { get; set; }
 	}
 }

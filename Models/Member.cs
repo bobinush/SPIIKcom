@@ -9,10 +9,10 @@ namespace SPIIKcom.Models
 		public Member()
 		{
 		}
-		public Member(MemberViewModel vm)
+		public Member(CreateMemberViewModel vm)
 		{
 			PersonalNumber = vm.PersonalNumber;
-			FirstName = vm.Name;
+			FirstName = vm.FirstName;
 			LastName = vm.LastName;
 			Address = vm.Address;
 			PostalCode = vm.PostalCode;
@@ -38,16 +38,11 @@ namespace SPIIKcom.Models
 		public string Email { get; set; }
 		[DataType(DataType.PhoneNumber)]
 		public string Phone { get; set; }
-		[DataType(DataType.ImageUrl)]
-		public string Picture { get; set; }
 		public string Program { get; set; }
 		[DataType(DataType.Date)]
-		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 		public DateTime JoinDate { get; set; }
 		[DataType(DataType.Date)]
-		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 		public DateTime ExpireDate { get; set; }
-
 
 		public string FullName { get { return FirstName + " " + LastName; } }
 	}
