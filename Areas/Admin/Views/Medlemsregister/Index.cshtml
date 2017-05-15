@@ -5,6 +5,13 @@
 <div class="col-md-9">
 	<h2>@ViewData["Title"]</h2>
 	<hr />
+	@if (TempData.ContainsKey("Message"))
+	{
+		<div class="alert alert-info alert-fixed alert-dismissable" role="alert">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong>@TempData["Message"]</strong>
+		</div>
+	}
 	<form asp-action="Index" method="get" class="form-inline">
 			<input type="text" class="form-control" placeholder="Find by name.." name="name" value="@ViewData["CurrentFilterName"]" autofocus>
 		<input type="submit" value="Search" class="btn btn-default">
@@ -12,13 +19,6 @@
 		<a asp-action="Create" id="addMember" class="btn btn-default">Add New Member</a>
 	</form>
 	<br>
-	@if (TempData.ContainsKey("Message"))
-	{
-		<div class="alert alert-info alert-dismissable" role="alert">
-			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong>@TempData["Message"]</strong>
-		</div>
-	}
 	<table class="table table-striped table-condensed table-hover table-row-click">
 		<thead>
 			<tr>

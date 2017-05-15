@@ -93,6 +93,16 @@ textarea {
 	object-fit: cover;
 }
 
+.alert-fixed {
+	position: fixed;
+	top: 10px;
+	margin: 0 auto;
+	width: 30%;
+	z-index: 9999;
+	border-radius: 0px;
+	box-shadow: 0 0 10px 2px;
+}
+
 
 /* Hide/rearrange for smaller screens */
 

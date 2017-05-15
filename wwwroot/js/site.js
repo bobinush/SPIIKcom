@@ -16,8 +16,8 @@ function success() {
 
 	// Checkkrysset bredvid knappen
 	$("#success").show();
-	setTimeout(() => $("#success").fadeOut(1000), 1000);
+	setTimeout(() => $("#success").fadeOut(500), 1000);
 }
 
 // FadeOut alertboxes
-setTimeout(() => $(".alert").fadeOut(500), 2000);
+setTimeout(() => $(".alert").fadeOut(500), 1000);

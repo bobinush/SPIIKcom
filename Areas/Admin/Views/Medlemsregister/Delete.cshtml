@@ -1,14 +1,12 @@
-﻿@model Medlem
+﻿@model Member
 @{
 	ViewData["Title"] = "Radera Medlem";
 }
 <div class="col-md-9">
-	<div class="textholder clearfix">
-		<h3>@ViewData["Title"].</h3>
-	</div>
+	<h2>@ViewData["Title"]</h2>
 	<hr />
 
-	<h3 class="page-header">@Html.DisplayFor(model => model.Name)</h3>
+	<h3 class="page-header">@Model.FullName (@Model.PersonalNumber) </h3>
 
 	<form method="post" asp-action="Delete" enctype="multipart/form-data" class="form-horizontal col-md-9" role="form">
 		@Html.AntiForgeryToken()

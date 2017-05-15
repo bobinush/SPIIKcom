@@ -1,31 +1,20 @@
-﻿@model Kakelspecialisten.Models.ApplicationUser
-
+﻿@model ApplicationUser
 @{
-	ViewBag.Title = "Delete";
+	ViewData["Title"] = "Radera login";
 }
-
-<h2>Delete.</h2>
-
-<h3>Are you sure you want to delete this User?</h3>
-<div>
-	<h4>User.</h4>
+<div class="col-md-9">
+	<h2>@ViewData["Title"]</h2>
 	<hr />
-	<dl class="dl-horizontal">
-		<dt>
-			@Html.DisplayNameFor(model => model.Email)
-		</dt>
 
-		<dd>
-			@Html.DisplayFor(model => model.UserName)
-		</dd>
-	</dl>
+	<h3 class="page-header">@Model.Name (@Model.Email) </h3>
 
-	@using (Html.BeginForm()) {
+	<form method="post" asp-action="Delete" enctype="multipart/form-data" class="form-horizontal col-md-9" role="form">
 		@Html.AntiForgeryToken()
-
-		<div class="form-actions no-color">
-			<input type="submit" value="Delete" class="btn btn-default" /> |
-			@Html.ActionLink("Back to List", "Index")
+		<div class="form-group">
+				<a asp-action="Index" class="btn btn-default" role="button">Tillbaka till listan</a>
+				<button type="submit" class="btn btn-danger">
+					<i class="fa fa-floppy-o fa-lg"></i>&nbsp; Radera
+				</button>
 		</div>
-	}
+	</form>
 </div>
