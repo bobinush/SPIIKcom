@@ -170,11 +170,8 @@ namespace SPIIKcom.Controllers
 		//
 		// GET: /Users/Delete/5
 		[HttpGet]
-		public async Task<IActionResult> Delete(string id)
+		public async Task<IActionResult> Delete(int id)
 		{
-			if (id == null)
-				return new StatusCodeResult(400); // BadRequest
-
 			var model = await db.Members.FindAsync(id);
 			if (model == null)
 				return new StatusCodeResult(404);
@@ -186,13 +183,10 @@ namespace SPIIKcom.Controllers
 		// POST: /Users/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> DeleteConfirmed(string id)
+		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
 			if (ModelState.IsValid)
 			{
-				if (id == null)
-					return new StatusCodeResult(400); // BadRequest
-
 				var model = await db.Members.FindAsync(id);
 				if (model == null)
 					return new StatusCodeResult(404);

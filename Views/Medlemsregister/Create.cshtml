@@ -25,7 +25,7 @@
 			<div class="form-group">
 				<label asp-for="PersonalNumber" class="col-md-2 control-label"></label>
 				<div class="col-md-10">
-					<input asp-for="PersonalNumber" class="form-control" />
+					<input asp-for="PersonalNumber" class="form-control" placeholder="YYYYMMDDXXXX"/>
 					<span asp-validation-for="PersonalNumber" class="text-danger"></span>
 				</div>
 			</div>
@@ -68,7 +68,7 @@
 				<label asp-for="MembershipTypeId" class="col-md-2 control-label"></label>
 				<div class="col-md-10">
 					<input type="hidden" asp-for="MembershipTypes">
-					<select asp-for="MembershipTypeId" asp-items="Model.MembershipTypes"></select>
+					<select asp-for="MembershipTypeId" asp-items="Model.MembershipTypes" class="form-control"></select>
 					<span asp-validation-for="MembershipTypeId" class="text-danger"></span>
 				</div>
 			</div>

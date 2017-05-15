@@ -18,10 +18,10 @@ function success() {
 	});
 	$("form textarea").val("");
 
-	// Checkboxen bredvid knappen
+	// Checkkrysset bredvid knappen
 	$("#success").show();
 	setTimeout(() => $("#success").fadeOut(1000), 1000);
 }
 
 // FadeOut alertboxes
-setTimeout(() => $(".alert").fadeOut(1000), 2000);
+setTimeout(() => $(".alert").fadeOut(500), 2000);
