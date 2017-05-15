@@ -108,6 +108,7 @@ namespace SPIIKcom.Controllers
 
 				await db.AddAsync(member);
 				await db.SaveChangesAsync();
+				TempData["Message"] = "Medlem registrerad!";
 				return RedirectToAction("Index");
 
 				// TODO : Postback Selectlist MembershipTypes so we can return the viewmodel if error.
@@ -161,6 +162,7 @@ namespace SPIIKcom.Controllers
 				}
 
 				await db.SaveChangesAsync();
+				TempData["Message"] = "Medlem uppdaterad!";
 				return RedirectToAction("Index");
 			}
 			return View(viewModel);
@@ -197,6 +199,7 @@ namespace SPIIKcom.Controllers
 
 				db.Members.Remove(model);
 				await db.SaveChangesAsync();
+				TempData["Message"] = "Medlem raderad!";
 				return RedirectToAction("Index");
 			}
 			return View();

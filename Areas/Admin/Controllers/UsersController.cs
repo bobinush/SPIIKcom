@@ -107,6 +107,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 					ModelState.AddModelError("", adminresult.Errors.First().Description);
 					return View();
 				}
+				TempData["Message"] = "Användare registrerad!";
 				return RedirectToAction("Index");
 			}
 			return View();
@@ -179,6 +180,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 					ModelState.AddModelError("", result.Errors.First().Description);
 					return View();
 				}
+				TempData["Message"] = "Användare uppdaterad!";
 				return RedirectToAction("Index");
 			}
 			ModelState.AddModelError("", "Something failed.");
@@ -222,6 +224,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 					ModelState.AddModelError("", result.Errors.First().Description);
 					return View();
 				}
+				TempData["Message"] = "Användare raderad!";
 				return RedirectToAction("Index");
 			}
 			return View();

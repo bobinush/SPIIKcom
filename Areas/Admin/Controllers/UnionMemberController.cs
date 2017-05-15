@@ -64,8 +64,16 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			if (ModelState.IsValid)
 			{
 				var model = new UnionMember(viewModel);
+				var webRoot = _env.WebRootPath;
+				if (viewModel.Picture != null)
+				{
+					var file = await Code.SaveFile(viewModel.Picture, webRoot, viewModel.Name);
+					if (!string.IsNullOrWhiteSpace(file)) // Spara endast om en bild har blivit uppladdad.
+						model.PictureSrc = file;
+				}
 				await db.UnionMembers.AddAsync(model);
 				await db.SaveChangesAsync();
+				TempData["Message"] = "Medlem skapad!";
 				return RedirectToAction("Index");
 			}
 			return View();
@@ -105,11 +113,15 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				model.Quote = viewModel.Quote;
 
 				var webRoot = _env.WebRootPath;
-				var file = await Code.SaveFile(viewModel.Picture, webRoot, viewModel.Name);
-				if (!string.IsNullOrWhiteSpace(file)) // Spara endast om en bild har blivit uppladdad.
-					model.PictureSrc = file;
+				if (viewModel.Picture != null)
+				{
+					var file = await Code.SaveFile(viewModel.Picture, webRoot, viewModel.Name);
+					if (!string.IsNullOrWhiteSpace(file)) // Spara endast om en bild har blivit uppladdad.
+						model.PictureSrc = file;
+				}
 
 				await db.SaveChangesAsync();
+				TempData["Message"] = "Medlem uppdaterad!";
 				return RedirectToAction("Index");
 			}
 			return View();
@@ -140,6 +152,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 
 				db.UnionMembers.Remove(user);
 				await db.SaveChangesAsync();
+				TempData["Message"] = "Medlem raderad!";
 				return RedirectToAction("Index");
 			}
 			return View();

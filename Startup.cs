@@ -61,13 +61,16 @@ namespace SPIIKcom
 				})
 				.AddEntityFrameworkStores<ApplicationDbContext>()
 				.AddDefaultTokenProviders();
-			
-			// services.AddMvc();
+
+			services.AddMemoryCache();
+			services.AddSession();
+			// services.AddDistributedMemoryCache();
 			services.AddMvc(options =>
 			{
 				options.ModelBinderProviders.Insert(0, new FlagsEnumBinderProvider());
 			});
 			services.AddRouting(options => options.LowercaseUrls = true);
+
 
 			// Add application services.
 			services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -93,9 +96,8 @@ namespace SPIIKcom
 			}
 
 			app.UseStaticFiles();
-
 			// Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
-
+			app.UseSession();
 			app.UseMvc(routes =>
 			{
 				routes.MapRoute(
