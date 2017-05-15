@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace SPIIKcom.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	[Route("admin")]
+	// [Route("admin")]
 	[Authorize(Roles = "Admin,Styrelse")]
 	public class HomeController : Controller
 	{

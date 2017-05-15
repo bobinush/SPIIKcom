@@ -12,6 +12,7 @@ using SPIIKcom.ViewModels;
 
 namespace SPIIKcom.Controllers
 {
+	[Area("Admin")]
 	[Authorize(Roles = "Admin,Styrelse")]
 	public class MedlemsregisterController : Controller
 	{

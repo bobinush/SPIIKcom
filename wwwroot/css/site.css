@@ -77,13 +77,21 @@ textarea {
 	background-color: #f1f1f1;
 }
 
+
+/* Table row clickable cursor pointer */
+
+.table-row-click tbody tr {
+	cursor: pointer;
+}
+
+
 /* Start Bootstrap - Round About */
+
 .img-center {
 	height: 200px;
 	width: 200px;
 	object-fit: cover;
 }
-
 
 
 /* Hide/rearrange for smaller screens */
