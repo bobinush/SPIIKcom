@@ -10,7 +10,7 @@ using SPIIKcom.Data;
 using SPIIKcom.Models;
 using SPIIKcom.ViewModels;
 
-namespace SPIIKcom.Controllers
+namespace SPIIKcom.Areas.Admin.Controllers
 {
 	[Area("Admin")]
 	[Authorize(Roles = "Admin,Styrelse")]

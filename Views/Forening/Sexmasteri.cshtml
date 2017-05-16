@@ -4,12 +4,12 @@
 	ViewData["Title"] = "Sexmästeriet";
 }
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-md-12">
 		<h2 class="page-header">@ViewData["Title"]</h2>
 	</div>
 	@foreach (var member in Model)
 	{
-		<div class="col-lg-4 col-sm-6 text-center">
+		<div class="col-md-4 col-sm-6 text-center">
 			<img class="img-circle img-responsive img-center" src="~/@member.PictureSrc" alt="">
 			<h3>@member.Name
 				<small>@member.Title</small>

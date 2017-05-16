@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SPIIKcom.ViewModels
 {
-	// Add profile data for application users by adding properties to the IdentityUser class
-	public class ContactViewModel
+	public class QuestionViewModel
 	{
 		[Required]
 		public string Name { get; set; }

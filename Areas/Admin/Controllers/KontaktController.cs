@@ -4,37 +4,35 @@ using SPIIKcom.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
-using SPIIKcom.Models;
+using SPIIKcom.ViewModels;
 
 namespace SPIIKcom.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	[Route("Admin")]
 	[Authorize(Roles = "Admin,Styrelse")]
-	public class HomeController : Controller
+	public class KontaktController : Controller
 	{
 		private readonly ApplicationDbContext db;
-		public HomeController(ApplicationDbContext context)
+		public KontaktController(ApplicationDbContext context)
 		{
 			db = context;
 		}
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
-			return View(await db.Organization.FirstOrDefaultAsync());
+			return View();
 		}
 		[HttpPost]
-		public async Task<IActionResult> Edit(Organization model)
+		public async Task<IActionResult> Edit(ContactPageViewModel viewModel)
 		{
 			if (ModelState.IsValid)
 			{
-				db.Entry(model).State = EntityState.Modified;
 
 				await db.SaveChangesAsync();
-				TempData["Message"] = "Uppgifter uppdaterade!";
+				TempData["Message"] = "Medlem uppdaterad!";
 				return RedirectToAction("Index");
 			}
-			return View("Index", model);
+			return View(viewModel);
 		}
 	}
 }

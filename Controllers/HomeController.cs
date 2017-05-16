@@ -26,7 +26,7 @@ namespace SPIIKcom.Controllers
 
 		[HttpPost]
 		//[AjaxOnly]
-		public IActionResult SendContactForm(ContactViewModel viewModel)
+		public IActionResult SendContactForm(QuestionViewModel viewModel)
 		{
 			string msg = "what what";
 			bool success = false;

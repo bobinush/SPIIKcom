@@ -1,11 +1,11 @@
 <!-- Sidebar -->
 @{var ctrlr = ViewContext.RouteData.Values["Controller"].ToString().ToLower();}
-<div class="list-group col-md-3">
-	<a asp-action="Index" asp-controller="Home" class="list-group-item @(ctrlr == "home" ? "active" : "")">Startsidan</a>
+<div class="list-group col-sm-3">
+	<a asp-action="Index" asp-controller="Home" class="list-group-item @(ctrlr == "home" ? "active" : "")">Föreningen</a>
 	<a asp-action="Index" asp-controller="Users" class="list-group-item @(ctrlr == "users" ? "active" : "")">Hantera användare</a>
 	<a asp-action="Index" asp-controller="UnionMember" class="list-group-item @(ctrlr == "unionmember" ? "active" : "")">Hantera föreningsmedlemmar</a>
 	<a asp-action="Index" asp-controller="Medlemsregister" class="list-group-item @(ctrlr == "medlemsregister" ? "active" : "")" >Medlemsregister</a>
-	<a asp-action="Index" asp-controller="Home" class="list-group-item @(ctrlr == "" ? "active" : "") disabled">Kontakt</a>
+	<a asp-action="Index" asp-controller="Home" class="list-group-item @(ctrlr == "" ? "active" : "")">Kontakt</a>
 	<a asp-action="Index" asp-controller="Home" class="list-group-item @(ctrlr == "" ? "active" : "") disabled">Stadgar, rutiner & protokoll</a>
 	<a asp-action="Index" asp-controller="Home" class="list-group-item @(ctrlr == "" ? "active" : "") disabled">Showcase</a>
 	<a asp-action="Index" asp-controller="Home" class="list-group-item @(ctrlr == "" ? "active" : "") disabled">Ovvar, mössor etc</a>
