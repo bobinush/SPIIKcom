@@ -115,7 +115,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				var webRoot = _env.WebRootPath;
 				if (viewModel.Picture != null)
 				{
-					var file = await Code.SaveFile(viewModel.Picture, webRoot, viewModel.Name);
+					var file = await Code.SaveFile(viewModel.Picture, webRoot, "images", viewModel.Name);
 					if (!string.IsNullOrWhiteSpace(file)) // Spara endast om en bild har blivit uppladdad.
 						model.PictureSrc = file;
 				}

@@ -21,3 +21,20 @@ function success() {
 
 // FadeOut alertboxes
 setTimeout(() => $(".alert").fadeOut(500), 1000);
+
+// upload profile picture
+function readURL(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			$('#profile-picture').attr('src', e.target.result);
+			$('#spinner').removeClass('spinner');
+		}
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+
+$("#Picture").change(function () {
+	$('#spinner').addClass('spinner');
+	readURL(this);
+});

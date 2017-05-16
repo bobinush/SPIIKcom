@@ -14,9 +14,9 @@
 	}
 	<form asp-action="Index" method="get" class="form-inline">
 			<input type="text" class="form-control" placeholder="Find by name.." name="name" value="@ViewData["CurrentFilterName"]" autofocus>
-		<input type="submit" value="Search" class="btn btn-default">
-		<a asp-action="Index" class="btn btn-default">Reset</a>
-		<a asp-action="Create" id="addMember" class="btn btn-default">Add New Member</a>
+		<input type="submit" value="Sök" class="btn btn-default">
+		<a asp-action="Index" class="btn btn-default btn-space">Rensa</a>
+		<a asp-action="Create" class="btn btn-default">Skapa ny medlem</a>
 	</form>
 	<br>
 	<table class="table table-striped table-condensed table-hover table-row-click">

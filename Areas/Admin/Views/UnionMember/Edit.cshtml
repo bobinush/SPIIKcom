@@ -5,7 +5,7 @@
 <div class="col-md-9">
 	<h2>@ViewData["Title"]</h2>
 	<hr />
-	<form method="post" asp-action="Edit" enctype="multipart/form-data" class="form-horizontal col-md-8" role="form">
+	<form method="post" asp-action="Edit" enctype="multipart/form-data" class="form-horizontal col-md-6" role="form">
 		<div asp-validation-summary="All" class="text-error"></div>
 		<input asp-for="Id" type="hidden" />
 		<div class="form-group">
@@ -24,9 +24,10 @@
 			<label asp-for="Quote" class="control-label"></label>
 				@Html.TextBoxFor(m => m.Quote, new { @class = "form-control" })
 		</div>
-		<div class="form-group">
-				<label asp-for="Picture" class="btn btn btn-default"><i class="fa fa-upload fa-lg"></i>&nbsp; Ladda upp en profilbild</label>
-				<input asp-for="Picture" type="file" style="display: none;">
+		<div class="form-group row">
+			<label asp-for="Picture" class="btn btn btn-default"><i class="fa fa-upload fa-lg"></i>&nbsp; Ladda upp en profilbild</label>
+			<input asp-for="Picture" type="file" style="display: none;">
+			<span id="spinner"></span>
 		</div>
 		<div class="form-group">
 			<label asp-for="UnionTypes" class="control-label"></label>
@@ -63,6 +64,9 @@
 				}
 		</div>
 	</form>
+	<div class="col-md-4">
+		<img id="profile-picture" class="img-circle img-responsive" src="~/images/@Model.PictureSrc" alt="">
+	</div>
 </div>
 
 @section Scripts {

@@ -44,13 +44,13 @@ namespace SPIIKcom
 		/// <param name="path">wwwroot</param>
 		/// <param name="fileName">Valfri: Överskrid filnamnet (utan filändelse)</param>
 		/// <returns>Filnamnet inkl. filändelse</returns>
-		internal static async Task<string> SaveFile(IFormFile file, string path, string fileName = null)
+		internal static async Task<string> SaveFile(IFormFile file, string path, string folder, string fileName = null)
 		{
 			// full path to file in temp location
 			string name = "";
 			if (file.Length > 0)
 			{
-				var filePath = Path.Combine(path, fileName ?? file.FileName);
+				var filePath = Path.Combine(path, folder, fileName ?? file.FileName);
 				if (!filePath.EndsWith(Path.GetExtension(file.FileName)))
 					filePath += Path.GetExtension(file.FileName);
 
