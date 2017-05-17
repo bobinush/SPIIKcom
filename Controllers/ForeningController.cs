@@ -22,6 +22,7 @@ namespace SPIIKcom.Controllers
 		{
 			var model = await db.UnionMembers
 				.Where(x => x.UnionTypes.HasFlag(UnionTypeEnum.Styrelse))
+				.AsNoTracking()
 				.ToListAsync();
 
 			return View(model);
@@ -30,6 +31,7 @@ namespace SPIIKcom.Controllers
 		{
 			var model = await db.UnionMembers
 				.Where(x => x.UnionTypes.HasFlag(UnionTypeEnum.Sexmasteri))
+				.AsNoTracking()
 				.ToListAsync();
 
 			return View(model);

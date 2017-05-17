@@ -1,5 +1,5 @@
 ﻿body {
-	padding-top: 50px;
+	padding-top: 50x;
 	padding-bottom: 20px;
 }
 
@@ -21,6 +21,10 @@ input,
 select,
 textarea {
 	max-width: 280px;
+}
+
+.navbar-fixed-top .navbar-brand.navbar-logo {
+	padding: 0 15px;
 }
 
 
@@ -85,7 +89,11 @@ textarea {
 }
 
 
-/* Start Bootstrap - Round About */
+/* Start Bootstrap - Round About (http://startbootstrap.com/) */
+
+.img-center {
+	margin: 0 auto;
+}
 
 .img-circle {
 	object-fit: cover;

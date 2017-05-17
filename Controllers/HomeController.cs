@@ -25,7 +25,7 @@ namespace SPIIKcom.Controllers
 
 		public async Task<IActionResult> Kontakt()
 		{
-			return View(await db.Organization.FirstOrDefaultAsync());
+			return View(await db.Organization.AsNoTracking().FirstOrDefaultAsync());
 		}
 
 		public IActionResult Error()

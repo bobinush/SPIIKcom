@@ -10,10 +10,10 @@
 
 	<environment names="Development">
 		<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-		<link rel="stylesheet" href="~/css/site.css" />
 		<!-- Custom CSS -->
 		<link rel="stylesheet" href="~/css/modern-business.css">
-		<link rel="stylesheet" href="~/css/round-about.css">
+		<link rel="stylesheet" href="~/css/site.css" />
+
 	</environment>
 	<environment names="Staging,Production">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css"
@@ -41,6 +41,15 @@
 		<div class="container">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand navbar-logo" href="#">
+					<img src="http://placehold.it/50x51&text=Logo" alt="SPIIK Logo">
+				</a>
 				<a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">SPIIKcom</a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
