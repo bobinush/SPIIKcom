@@ -143,7 +143,6 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		//
 		// POST: /Users/Edit/5
 		[HttpPost]
-		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(EditUserViewModel viewModel)
 		{
 			viewModel.RolesList = _roleManager.Roles.ToList().Select(x => new SelectListItem()
@@ -206,7 +205,6 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		// POST: /Users/Delete/5
 		[Authorize(Roles = "Admin")] // Förhindra att någon tar bort admin
 		[HttpPost, ActionName("Delete")]
-		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(string id)
 		{
 			if (ModelState.IsValid)

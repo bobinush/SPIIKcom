@@ -183,7 +183,6 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		//
 		// POST: /Users/Delete/5
 		[HttpPost, ActionName("Delete")]
-		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
 			if (ModelState.IsValid)

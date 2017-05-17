@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -68,6 +69,8 @@ namespace SPIIKcom
 			services.AddMvc(options =>
 			{
 				options.ModelBinderProviders.Insert(0, new FlagsEnumBinderProvider());
+				// https://docs.microsoft.com/en-us/aspnet/core/api/microsoft.aspnetcore.mvc.autovalidateantiforgerytokenattribute#Microsoft_AspNetCore_Mvc_AutoValidateAntiforgeryTokenAttribute
+				options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
 			});
 			services.AddRouting(options => options.LowercaseUrls = true);
 
