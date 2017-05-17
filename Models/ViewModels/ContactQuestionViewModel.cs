@@ -3,15 +3,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SPIIKcom.ViewModels
 {
-	public class QuestionViewModel
+	public class ContactQuestionViewModel
 	{
-		[Required]
 		public string Name { get; set; }
 		[Required]
 		[DataType(DataType.EmailAddress)]
 		public string Email { get; set; }
-		[DataType(DataType.PhoneNumber)]
-		public string Phone { get; set; }
+		[Required]
 		public string Message { get; set; }
 	}
 }

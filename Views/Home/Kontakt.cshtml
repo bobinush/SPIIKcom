@@ -1,4 +1,4 @@
-﻿@model ContactViewModel
+﻿@model Organization
 @{
 	ViewData["Title"] = "Kontakt";
 }
@@ -12,19 +12,27 @@
 			</h1>
 		</div>
 		<!-- Map Column -->
-		<div class="col-md-8">
+		<div class="col-md-8 google-maps-container">
 			<!-- Embedded Google Map -->
-			<iframe width="100%" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" allowfullscreen src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2191.7327291703023!2d16.356394316224733!3d56.67883948081119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4657d174a604055b%3A0xfe4433e0629fd92!2sStudentf%C3%B6reningen+SPIIK&#39;s+kontor!5e0!3m2!1ssv!2sse!4v1494768736486"></iframe>
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2191.7327291703023!2d16.356394316224733!3d56.67883948081119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4657d174a604055b%3A0xfe4433e0629fd92!2sStudentf%C3%B6reningen+SPIIK&#39;s+kontor!5e0!3m2!1ssv!2sse!4v1494768736486"
+				style="pointer-events: none;"
+				width="100%"
+				height="400"
+				frameborder="0"
+				scrolling="no"
+				marginheight="0"
+				marginwidth="0"
+				allowfullscreen></iframe>
 		</div>
 		<!-- Contact Details Column -->
-		<div class="col-md-4">
+		<div class="col-sm-4">
 			<h3>Contact Details</h3>
 			<p>
-				Gröndalsvägen 21<br>
-				29336 Kalmar
+				@Model.Address<br>
+				@Model.PostalCode @Model.City
 			</p>
 			<p>
-				<i class="fa fa-envelope-o"></i> <a href="mailto:styrelsen@spiik.com">styrelsen@spiik.com</a>
+				<i class="fa fa-envelope-o"></i> <a href="mailto:@Model.Email">@Model.Email</a>
 			</p>
 			<p>
 				<i class="fa fa-clock-o"></i>
@@ -49,50 +57,34 @@
 				</li>
 			</ul>
 		</div>
+		<!-- Contact Form -->
+		@Html.Partial("_ContactForm", new ContactQuestionViewModel())
 	</div>
 	<!-- /.row -->
 
-	<!-- Contact Form -->
-	<!-- In order to set the email address and subject line for the contact form go to the bin/contact_me.php file. -->
-	<div class="row">
-		<div class="col-md-8">
-			<h3>Send us a Message</h3>
-			<form asp-controller="Home" asp-action="SendContactForm" id="contact-form" data-ajax="true" data-ajax-method="POST" data-ajax-success="success()" novalidate>
-				<div class="control-group form-group">
-					<div class="controls">
-						<label>Full Name:</label>
-						<input asp-for="Name" class="form-control">
-						<p class="help-block"><span asp-validation-for="Name"></span></p>
-					</div>
-				</div>
-				<div class="control-group form-group">
-					<div class="controls">
-						<label>Phone Number:</label>
-						<input asp-for="Phone"class="form-control">
-					</div>
-				</div>
-				<div class="control-group form-group">
-					<div class="controls">
-						<label>Email Address:</label>
-						<input asp-for="Email"class="form-control">
-						<p class="help-block"><span asp-validation-for="Email"></span></p>
-					</div>
-				</div>
-				<div class="control-group form-group">
-					<div class="controls">
-						<label>Message:</label>
-						<textarea asp-for="Message" rows="10" cols="100" class="form-control" style="resize:none"></textarea>
-					</div>
-				</div>
-				<!-- For success/fail messages -->
-				<button type="submit" class="btn btn-primary">Send Message</button>
-				<span id="success" style="display: none;"><i id="fa-checkmark" class="fa fa-check fa-lg" aria-hidden="true"></i></span>
-			</form>
-		</div>
-	</div>
-	<!-- /.row -->
 
 @section Scripts {
 	@{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 	<script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+	<script>
+		// Disable scroll zooming and bind back the click event
+		// http://stackoverflow.com/a/25904582/1695663
+		var onMapMouseleaveHandler = function (event) {
+			var that = $(this);
+			that.on('click', onMapClickHandler);
+			that.off('mouseleave', onMapMouseleaveHandler);
+			that.find('iframe').css("pointer-events", "none");
+		}
+		var onMapClickHandler = function (event) {
+			var that = $(this);
+			// Disable the click handler until the user leaves the map area
+			that.off('click', onMapClickHandler);
+			// Enable scrolling zoom
+			that.find('iframe').css("pointer-events", "auto");
+			// Handle the mouse leave event
+			that.on('mouseleave', onMapMouseleaveHandler);
+		}
+		// Enable map zooming with mouse scroll when the user clicks the map
+		$('.google-maps-container').on('click', onMapClickHandler);
+	</script>
 }

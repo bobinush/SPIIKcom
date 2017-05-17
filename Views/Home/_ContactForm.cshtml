@@ -1,0 +1,31 @@
+@model ContactQuestionViewModel
+
+<div class="col-sm-8">
+	<h3>Send us a Message</h3>
+	<form asp-controller="Home" asp-action="SendContactForm" id="contact-form" data-ajax="true" data-ajax-method="POST" data-ajax-success="success()" novalidate>
+		<div class="control-group form-group">
+			<div class="controls">
+				<label>Full Name:</label>
+				<input asp-for="Name" class="form-control">
+				<p class="help-block"><span asp-validation-for="Name"></span></p>
+			</div>
+		</div>
+		<div class="control-group form-group">
+			<div class="controls">
+				<label>Email Address:</label>
+				<input asp-for="Email" class="form-control">
+				<p class="help-block"><span asp-validation-for="Email"></span></p>
+			</div>
+		</div>
+		<div class="control-group form-group">
+			<div class="controls">
+				<label>Message:</label>
+				<textarea asp-for="Message" rows="10" cols="100" class="form-control" style="resize:none"></textarea>
+				<p class="help-block"><span asp-validation-for="Message"></span></p>
+			</div>
+		</div>
+		<!-- For success/fail messages -->
+		<button type="submit" class="btn btn-primary">Send Message</button>
+		<span id="success" style="display: none;"><i id="fa-checkmark" class="fa fa-check fa-lg" aria-hidden="true"></i></span>
+	</form>
+</div>

@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Primitives;
+using SPIIKcom.Data;
 using SPIIKcom.Filters;
 using SPIIKcom.ViewModels;
 
@@ -8,15 +13,19 @@ namespace SPIIKcom.Controllers
 {
 	public class HomeController : Controller
 	{
+		private readonly ApplicationDbContext db;
+		public HomeController(ApplicationDbContext context)
+		{
+			db = context;
+		}
 		public IActionResult Index()
 		{
 			return View();
 		}
 
-		public IActionResult Kontakt()
+		public async Task<IActionResult> Kontakt()
 		{
-			ViewData["Message"] = "Your contact page.";
-			return View();
+			return View(await db.Organization.FirstOrDefaultAsync());
 		}
 
 		public IActionResult Error()
@@ -26,34 +35,19 @@ namespace SPIIKcom.Controllers
 
 		[HttpPost]
 		//[AjaxOnly]
-		public IActionResult SendContactForm(QuestionViewModel viewModel)
+		public IActionResult SendContactForm(ContactQuestionViewModel viewModel)
 		{
 			string msg = "what what";
 			bool success = false;
 			try
 			{
-				// long size = 0;
-				// var files = Request.Form.Files;
-				// foreach (var file in files)
-				// {
-				// 	var filename = System.Net.Http.Headers.ContentDispositionHeaderValue
-				// 					.Parse(file.ContentDisposition)
-				// 					.FileName
-				// 					.Trim('"');
-				// 	filename = _env.WebRootPath + $@"\{filename}";
-				// 	size += file.Length;
-				// 	using (System.IO.FileStream fs = System.IO.File.Create(filename))
-				// 	{
-				// 		file.CopyTo(fs);
-				// 		fs.Flush();
-				// 	}
-				// }
-				// msg = $"{files.Count} file(s) / {size} bytes uploaded successfully!";
+				// Send email
 				success = true;
 			}
 			catch (Exception ex)
 			{
-				msg = ex.Message;
+				// log ex.Message?
+				msg = "Error while sending.";
 			}
 
 			return Json(msg);
