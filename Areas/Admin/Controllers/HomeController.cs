@@ -24,7 +24,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			return View(await db.Organization.FirstOrDefaultAsync());
 		}
 		[HttpPost]
-		public async Task<IActionResult> Edit(Organization model)
+		public async Task<IActionResult> Index(Organization model)
 		{
 			if (ModelState.IsValid)
 			{

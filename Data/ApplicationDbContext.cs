@@ -18,6 +18,7 @@ namespace SPIIKcom.Data
 		public DbSet<StaticPage> StaticPages { get; set; }
 		public DbSet<UnionMember> UnionMembers { get; set; }
 		public DbSet<Organization> Organization { get; set; }
+		public DbSet<Stadga> Stadgar { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

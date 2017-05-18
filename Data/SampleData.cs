@@ -34,7 +34,7 @@ namespace SPIIKcom.Models
 
 				// Delete and create database
 				// uncomment this below when adding new data to seed.
-				await db.Database.EnsureDeletedAsync();
+				//await db.Database.EnsureDeletedAsync();
 				if (await db.Database.EnsureCreatedAsync())
 				{
 					await InsertTestDataAsync(scopeServiceProvider);
@@ -54,10 +54,14 @@ namespace SPIIKcom.Models
 						new MembershipType { Name = "2 år", Price = 150m, LengthInYears = 2 }
 					);
 				}
+
+				context.StaticPages.Add(
+					new StaticPage { Name = "Stadga", Text1 = "abc", Text2 = "def" }
+				);
 				if (!context.Organization.Any())
 				{
 					context.Organization.Add(
-						new Organization ()
+						new Organization()
 					);
 				}
 				if (!context.Members.Any())

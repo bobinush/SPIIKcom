@@ -36,5 +36,14 @@ namespace SPIIKcom.Controllers
 
 			return View(model);
 		}
+		public async Task<IActionResult> Stadgar()
+		{
+			var model = await db.Stadgar
+				.OrderBy(x => x.Id)
+				.AsNoTracking()
+				.ToListAsync();
+
+			return View(model);
+		}
 	}
 }

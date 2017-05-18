@@ -173,7 +173,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Delete(int id)
 		{
-			var model = await db.Members.FindAsync(id);
+			var model = await db.Members.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
 			if (model == null)
 				return new StatusCodeResult(404);
 

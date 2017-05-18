@@ -3,7 +3,7 @@ namespace SPIIKcom.Models
 	public class StaticPage
 	{
 		public int Id { get; set; }
-		public string Namn { get; set; }
+		public string Name { get; set; }
 		public string Text1 { get; set; }
 		public string Text2 { get; set; }
 		public string Text3 { get; set; }

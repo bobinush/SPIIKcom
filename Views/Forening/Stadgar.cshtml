@@ -1,0 +1,33 @@
+@model List<Stadga>
+
+@{
+	ViewData["Title"] = "Stadgar";
+}
+<div class="row">
+	<div class="col-sm-12">
+		<h1 class="page-header">@ViewData["Title"]</h1>
+	</div>
+	<div class="col-sm-12">
+		<div class="panel-group" id="accordion">
+			@foreach (var stadga in Model)
+			{
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#stadga-@(stadga.Id)" style="display: block">
+								§@stadga.Number @stadga.Name
+							</a>
+						</h4>
+					</div>
+					<div id="stadga-@(stadga.Id)" class="panel-collapse collapse">
+						<div class="panel-body">
+							@stadga.Text
+						</div>
+					</div>
+				</div>
+				<!-- /.panel -->
+			}
+		</div>
+		<!-- /.panel-group -->
+	</div>
+</div>
