@@ -1,0 +1,37 @@
+@model Stadga
+@{
+	ViewData["Title"] = "Ny stadga";
+}
+<div class="col-sm-9">
+	<h2>@ViewData["Title"]</h2>
+	<hr />
+	<form method="post" asp-action="Create" class="form-horizontal" role="form" id="frmToBeValidated">
+		<div asp-validation-summary="All" class="text-error"></div>
+		<input type="hidden" asp-for="@Model.Id">
+		<div class="form-group">
+			<div class="col-sm-12 form-inline">
+				<input asp-for="Number" class="form-control stadga-number" placeholder="§"/>
+				<span asp-validation-for="Number" class="text-danger"></span>
+				<input asp-for="Name" class="form-control" placeholder="Rubrik"/>
+				<span asp-validation-for="Name" class="text-danger"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<textarea asp-for="Text" rows="10" cols="100" class="form-control" placeholder="Text" style="resize:none"></textarea>
+				<span asp-validation-for="Text" class="text-danger"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<a asp-action="Index" class="btn btn-default" role="button">Tillbaka till listan</a>
+				<button type="submit" class="btn btn-success">
+					<i class="fa fa-floppy-o fa-lg"></i>&nbsp; Spara
+				</button>
+			</div>
+		</div>
+	</form>
+</div>
+@section Scripts {
+		@{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

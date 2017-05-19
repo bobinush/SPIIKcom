@@ -1,10 +1,13 @@
-@model StadgaViewModel
+@model IEnumerable<Stadga>
 @{
 	ViewData["Title"] = "Stadga";
 }
 <div class="col-sm-9">
-	<h2>@ViewData["Title"]</h2>
-	<hr />
+	<h2>@ViewData["Title"]
+		<span class="pull-right">
+			<a asp-action="Create" class="btn btn-default">Skapa ny stadga</a>
+		</span>
+	</h2>
 	@if (TempData.ContainsKey("Message"))
 	{
 		<div class="alert alert-info alert-fixed alert-dismissable" role="alert">
@@ -12,64 +15,35 @@
 			<strong>@TempData["Message"]</strong>
 		</div>
 	}
-	<form method="post" asp-action="index" class="form-horizontal" role="form">
-		<div asp-validation-summary="All" class="text-error"></div>
-		<div id="stadga-container">
-			@for (int i = 0; i < Model.Stadgar.Count(); i++)
-			{
-				<input type="hidden" asp-for="Stadgar[i].Id">
-				<div class="form-group">
-					<label asp-for="Stadgar[i].Number" class="col-xs-1 control-label stadga">§@Model.Stadgar[i].Number</label>
-					<div class="col-xs-2">
-						<input asp-for="Stadgar[i].Number" class="form-control" placeholder="§"/>
-						<span asp-validation-for="Stadgar[i].Number" class="text-danger"></span>
-					</div>
-					<div class="col-xs-9">
-						<input asp-for="Stadgar[i].Name" class="form-control" placeholder="Rubrik" />
-						<span asp-validation-for="Stadgar[i].Name" class="text-danger"></span>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="Stadgar[i].Text" class="col-sm-1 control-label"></label>
-					<div class="col-sm-11 col-xs-offset-1">
-						<textarea asp-for="Stadgar[i].Text" rows="10" cols="100" class="form-control" placeholder="Text" style="resize:none"></textarea>
-						<span asp-validation-for="Stadgar[i].Text" class="text-danger"></span>
-					</div>
-				</div>
 
+	<br>
+	<table class="table table-striped table-condensed table-hover table-row-click col-md-12">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.Number)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Name)
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.Number)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Name)
+					</td>
+					<td>
+						<a asp-action="Edit" asp-route-id="@item.Id">Redigera</a>
+					</td>
+				</tr>
 			}
-		</div>
-		<div class="form-group">
-			<div class="col-xs-offset-1 col-sm-11">
-				<button type="button" class="btn btn-default" id="New">
-					Ny stadga
-				</button>
-				<button type="submit" class="btn btn-success">
-					<i class="fa fa-floppy-o fa-lg"></i>&nbsp; Spara
-				</button>
-			</div>
-		</div>
-	</form>
+		</tbody>
+	</table>
 </div>
-@section Scripts {
-	@{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
-	<script>
-		$("#New").click(function () {
-			var itemIndex = $("#stadga-container label.stadga").length;
-			$.ajax({
-				cache: false,
-				type: "GET",
-				url: "/admin/stadga/stadgapartial",
-				data: {index: itemIndex},
-				success: function (partialView) {
-					// data will be the html from the partial view
-					console.log(partialView)
-					$("#stadga-container").append(partialView);
-				},
-				error: function (xhr, ajaxOptions, thrownError) {
-					// Handle the error somehow
-				}
-			}); // end ajax call
-		}); // end AddQualificationElement click event
-	</script>
-}

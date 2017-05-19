@@ -1,12 +1,12 @@
-﻿@model Member
+﻿@model Stadga
 @{
-	ViewData["Title"] = "Radera Medlem";
+	ViewData["Title"] = "Radera stadga";
 }
 <div class="col-sm-9">
 	<h2>@ViewData["Title"]</h2>
 	<hr />
 
-	<h3 class="page-header">@Model.FullName (@Model.PersonalNumber) </h3>
+	<h3 class="page-header">§@Model.Number @Model.Name </h3>
 
 	<form method="post" asp-action="Delete" enctype="multipart/form-data" class="form-horizontal col-md-9" role="form">
 		<div class="form-group">
