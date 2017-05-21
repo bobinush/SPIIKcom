@@ -45,17 +45,17 @@
 		<tbody>
 			@foreach (var member in Model) {
 				{
-					// Visar gul färg på de som håller på att gå ut (1 månad)
 					// Visar röd färg på de som har gått ut
+					// Visar gul färg på de som håller på att gå ut (inom 1 månad)
 					// Måste ha @: nedan annars gnäller compilern
 				}
-				@if (member.ExpireDate < DateTime.Today.AddMonths(-1))
-				{
-					@:<tr class="warning">
-				}
-				else if (member.ExpireDate < DateTime.Today)
+				@if (member.ExpireDate < DateTime.Today)
 				{
 					@:<tr class="danger">
+				}
+				else if (member.ExpireDate < DateTime.Today.AddMonths(1))
+				{
+					@:<tr class="warning">
 				}
 				else
 				{

@@ -110,11 +110,11 @@ namespace SPIIKcom.ViewModels
 		[Display(Name = "Nytt medlemskap")]
 		public int MembershipTypeId { get; set; }
 		public SelectList MembershipTypes { get; set; }
-		[Display(Name="Medlem sedan")]
+		[Display(Name = "Medlem fr.o.m")]
 		[DataType(DataType.Date)]
 		[DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
 		public DateTime JoinDate { get; }
-		[Display(Name="Medlem till")]
+		[Display(Name = "Medlem t.o.m")]
 		[DataType(DataType.Date)]
 		[DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
 		public DateTime ExpireDate { get; }

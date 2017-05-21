@@ -26,8 +26,10 @@ namespace SPIIKcom.Models
 		[Required]
 		public string PersonalNumber { get; set; }
 		[Required]
+		[Display(Name = "Förnamn")]
 		public string FirstName { get; set; }
 		[Required]
+		[Display(Name = "Efternamn")]
 		public string LastName { get; set; }
 		public string Address { get; set; }
 		[DataType(DataType.PostalCode)]
@@ -39,9 +41,13 @@ namespace SPIIKcom.Models
 		[DataType(DataType.PhoneNumber)]
 		public string Phone { get; set; }
 		public string Program { get; set; }
+		[Display(Name = "Medlem fr.o.m")]
 		[DataType(DataType.Date)]
+		[DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
 		public DateTime JoinDate { get; set; }
+		[Display(Name = "Medlem t.o.m")]
 		[DataType(DataType.Date)]
+		[DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
 		public DateTime ExpireDate { get; set; }
 
 		public string FullName { get { return FirstName + " " + LastName; } }
