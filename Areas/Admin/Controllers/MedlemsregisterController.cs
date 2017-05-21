@@ -206,7 +206,8 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			dict.Add(-1, defaultText);
 			for (int i = 0; i < membershipTypes.Count; i++)
 			{
-				dict.Add(membershipTypes[i].Id, membershipTypes[i].Price + ":- | " + membershipTypes[i].Name);
+				dict.Add(membershipTypes[i].Id, membershipTypes[i].Name +
+					" (" + membershipTypes[i].LengthInYears + " år, " + membershipTypes[i].Price + "kr)");
 			}
 			return new SelectList(dict, "Key", "Value", selectedValue: -1);
 		}

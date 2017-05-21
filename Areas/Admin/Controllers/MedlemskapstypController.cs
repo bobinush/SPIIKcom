@@ -7,38 +7,40 @@ using Microsoft.AspNetCore.Authorization;
 using SPIIKcom.Models;
 using System.Collections.Generic;
 using SPIIKcom.ViewModels;
+using System;
 
 namespace SPIIKcom.Areas.Admin.Controllers
 {
 	[Area("Admin")]
 	[Authorize(Roles = "Admin,Styrelse")]
-	public class StadgaController : Controller
+	public class MedlemskapstypController : Controller
 	{
 		private readonly ApplicationDbContext db;
-		public StadgaController(ApplicationDbContext context)
+		public MedlemskapstypController(ApplicationDbContext context)
 		{
 			db = context;
 		}
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
-			return View(await db.Stadgar.OrderBy(x => x.Number).AsNoTracking().ToListAsync());
+			return View(await db.MembershipTypes.AsNoTracking().ToListAsync());
 		}
 
 		[HttpGet]
 		public async Task<IActionResult> Create()
 		{
-			return View(new Stadga());
+			return View(new MembershipType());
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Create(Stadga model)
+		public async Task<IActionResult> Create(MembershipType model)
 		{
 			if (ModelState.IsValid)
 			{
+				model.Price = Math.Round(model.Price, 2, MidpointRounding.AwayFromZero);
 				await db.AddAsync(model);
 				await db.SaveChangesAsync();
-				TempData["Message"] = "Stadga skapad!";
+				TempData["Message"] = "Medlemstyp skapad!";
 				return RedirectToAction("Index");
 			}
 			return View(model);
@@ -47,7 +49,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Edit(int id)
 		{
-			var model = await db.Stadgar.FindAsync(id);
+			var model = await db.MembershipTypes.FindAsync(id);
 			if (model == null)
 				return RedirectToAction("Index");
 
@@ -55,15 +57,16 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Edit(Stadga model)
+		public async Task<IActionResult> Edit(MembershipType model)
 		{
 			if (ModelState.IsValid)
 			{
-				db.Stadgar.Attach(model);
+				model.Price = Math.Round(model.Price, 2, MidpointRounding.AwayFromZero);
+				db.MembershipTypes.Attach(model);
 				db.Entry(model);
 				db.Entry(model).State = EntityState.Modified;
 				await db.SaveChangesAsync();
-				TempData["Message"] = "Stadga uppdaterad!";
+				TempData["Message"] = "Medlemstyp uppdaterad!";
 				return RedirectToAction("Index");
 			}
 			return View(model);
@@ -72,7 +75,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Delete(int id)
 		{
-			var model = await db.Stadgar.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+			var model = await db.MembershipTypes.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
 			if (model == null)
 				return new StatusCodeResult(404);
 
@@ -84,13 +87,13 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var model = await db.Stadgar.FindAsync(id);
+				var model = await db.MembershipTypes.FindAsync(id);
 				if (model == null)
 					return new StatusCodeResult(404);
 
-				db.Stadgar.Remove(model);
+				db.MembershipTypes.Remove(model);
 				await db.SaveChangesAsync();
-				TempData["Message"] = "Stadga raderad!";
+				TempData["Message"] = "stadga raderad!";
 				return RedirectToAction("Index");
 			}
 			return View();

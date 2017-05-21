@@ -5,7 +5,7 @@
 <div class="col-sm-9">
 	<h2>@ViewData["Title"]</h2>
 	<hr />
-	<form method="post" asp-action="Edit" class="form-horizontal" role="form" id="frmToBeValidated">
+	<form method="post" asp-action="Edit" class="form-horizontal" role="form">
 		<div asp-validation-summary="All" class="text-error"></div>
 		<input type="hidden" asp-for="@Model.Id">
 		<div class="form-group">
