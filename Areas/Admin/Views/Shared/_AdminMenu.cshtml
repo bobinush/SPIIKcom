@@ -1,5 +1,8 @@
 <!-- Sidebar -->
-@{var ctrlr = ViewContext.RouteData.Values["Controller"].ToString().ToLower();}
+@{
+	// To get current active controller and show it dynamically
+	var ctrlr = ViewContext.RouteData.Values["Controller"].ToString().ToLower();
+}
 <div class="list-group col-sm-3">
 	<a asp-action="Index" asp-controller="Home" class="list-group-item @(ctrlr == "home" ? "active" : "")">Föreningen</a>
 	<a asp-action="Index" asp-controller="Users" class="list-group-item @(ctrlr == "users" ? "active" : "")">Hantera användare</a>

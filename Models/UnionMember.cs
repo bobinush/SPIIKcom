@@ -16,7 +16,7 @@ namespace SPIIKcom.Models
 			Email = vm.Email;
 			Phone = vm.Phone;
 			Quote = vm.Quote;
-			// PictureSrc = vm.PictureSrc;
+			PictureSrc = vm.PictureSrc;
 		}
 		public int Id { get; set; }
 		[Required]

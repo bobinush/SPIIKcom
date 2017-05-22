@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using SPIIKcom.Data;
 using SPIIKcom.Enums;
 using SPIIKcom.Extensions;
+using SPIIKcom.Filters;
 using SPIIKcom.Models;
 using SPIIKcom.Models.AccountViewModels;
 using SPIIKcom.Services;
@@ -52,8 +53,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Create()
 		{
-			var model = new UnionMemberViewModel();
-			return View(model);
+			return View(new UnionMemberViewModel { PictureSrc = "SPIIK-logga.png" });
 		}
 
 		//
@@ -95,6 +95,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		//
 		// POST: /Users/Edit/5
 		[HttpPost]
+		[RequestFormSizeLimit(2097152)] // Max image size 2 MB
 		public async Task<IActionResult> Edit(UnionMemberViewModel viewModel)
 		{
 			if (ModelState.IsValid)
