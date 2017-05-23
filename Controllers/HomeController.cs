@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,8 +19,9 @@ namespace SPIIKcom.Controllers
 		{
 			db = context;
 		}
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
 		{
+			// TODO : Get Instagram posts.
 			return View();
 		}
 
@@ -51,6 +53,15 @@ namespace SPIIKcom.Controllers
 			}
 
 			return Json(msg);
+		}
+		[HttpPost]
+		public IActionResult FbWebhook()
+		{
+			/*
+			Instead of getting new posts, why not let facebook send us the new posts?
+			https://developers.facebook.com/docs/graph-api/webhooks/
+			*/
+			return null;
 		}
 	}
 }

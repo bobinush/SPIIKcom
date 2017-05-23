@@ -2,13 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using SPIIKcom.Data;
 using SPIIKcom.Enums;
 using SPIIKcom.Extensions;
+using SPIIKcom.Models;
+using SPIIKcom.ViewModels;
 
 namespace SPIIKcom
 {
@@ -61,6 +65,64 @@ namespace SPIIKcom
 				name = Path.GetFileName(filePath);
 			}
 			return name; // Returnerar endast filnamnet om en fil har blivit uppladdad.
+		}
+
+		/// <summary>
+		/// Gets Facebook posts from the specified Facebook page.
+		/// </summary>
+		/// <param name="numberOfPosts">Number of total posts to get. (default/min 20)</param>
+		/// <returns></returns>
+		internal static async Task<List<FacebookPost>> GetFacebookPosts(AppKeyConfig AppConfig, int numberOfPosts = 20)
+		{
+			var fbList = new List<FacebookPost>();
+			FacebookViewModel viewModel = new FacebookViewModel();
+			using (var client = new HttpClient())
+			{
+				try
+				{
+					int numberofFeeds = 20;
+					string PageId = AppConfig.FacebookAPIId;
+					string AccessToken = AppConfig.FacebookAPIKey;
+
+					string FeedRequestUrl = string.Concat("https://graph.facebook.com/" + PageId + "/posts?limit=",
+						numberofFeeds,
+						"&access_token=",
+						AccessToken,
+						@"&fields=
+						full_picture,
+						picture,
+						link,
+						message,
+						created_time,
+						description,
+						id,
+						caption,
+						is_published,
+						name,
+						object_id,
+						type,
+						is_hidden,
+						permalink_url,
+						from"
+					);
+					while (!string.IsNullOrWhiteSpace(FeedRequestUrl) && fbList.Count < numberOfPosts )
+					{
+
+						var response = await client.GetAsync(FeedRequestUrl);
+						response.EnsureSuccessStatusCode(); // Throw in not success
+
+						var stringResponse = await response.Content.ReadAsStringAsync();
+						viewModel = JsonConvert.DeserializeObject<FacebookViewModel>(stringResponse);
+						FeedRequestUrl = viewModel.Paging.Next;
+						fbList.AddRange(viewModel.Data);
+					}
+				}
+				catch (HttpRequestException e)
+				{
+					Console.WriteLine($"Request exception: {e.Message}");
+				}
+			}
+			return fbList;
 		}
 	}
 }

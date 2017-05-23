@@ -1,0 +1,24 @@
+@model List<FacebookPost>
+@foreach (var post in Model)
+{
+	<div class="col-md-4 col-sm-6">
+		<a href="@post.PermalinkUrl" class="panel-heading-link">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4>
+					<i class="fa fa-facebook-square" aria-hidden="true"></i>&nbsp;
+					@post.From.Name
+					<small class="pull-right">@post.CreatedTime.ToString("D")</small>
+				</h4>
+			</div>
+			<div class="panel-body">
+				<img src="@post.Picture" alt="">
+				@{
+					// jQuery.dotdotdot https://github.com/FrDH/jQuery.dotdotdot
+				}
+				<p class="dot-ellipsis dot-height-140 dot-resize-update">@(post.Message ?? post.Description)</p>
+			</div>
+		</div>
+		</a>
+	</div>
+}
