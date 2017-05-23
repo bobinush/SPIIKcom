@@ -170,23 +170,21 @@ textarea {
 	height: 200px;
 }
 
+.panel-default {
+	cursor: pointer;
+}
+
 .panel-heading {
 	padding: 1px 15px;
 }
+
 .panel-heading small {
 	margin-top: 5px;
 }
 
-.panel-heading-link,
-.panel-heading-link:hover {
-	/* No styleing */
-	color: inherit;
-	text-decoration: inherit;
-}
-
 .panel-body img {
 	max-width: 100%;
-	max-height: 100%;
+	max-height: 130px;
 	float: left;
 	padding-right: 1rem;
 }

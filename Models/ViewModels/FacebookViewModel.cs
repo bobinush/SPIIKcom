@@ -10,10 +10,11 @@ namespace SPIIKcom.ViewModels
 	public class FacebookViewModel
 	{
 		[JsonProperty(PropertyName = "data")]
-		public IEnumerable<FacebookPost> Data { get; set; }
+		public IEnumerable<FacebookPost> Posts { get; set; }
 		[JsonProperty(PropertyName = "paging")]
 		public FacebookPaging Paging { get; set; }
 	}
+
 	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
 	public class FacebookPaging
 	{
@@ -23,6 +24,7 @@ namespace SPIIKcom.ViewModels
 		public string Next { get; set; }
 
 	}
+
 	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
 	public class FacebookPost
 	{
@@ -55,14 +57,19 @@ namespace SPIIKcom.ViewModels
 		[JsonProperty(PropertyName = "permalink_url")]
 		public string PermalinkUrl { get; set; }
 		[JsonProperty(PropertyName = "from")]
-		public FacebookPage From { get; set; }
+		public FacebookPage User { get; set; }
+
+
+		public string Text { get { return Message ?? Description; } }
+
 	}
+
 	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
 	public class FacebookPage
 	{
 		[JsonProperty(PropertyName = "id")]
 		public string Id { get; set; }
 		[JsonProperty(PropertyName = "name")]
-		public string Name { get; set; }
+		public string Username { get; set; }
 	}
 }

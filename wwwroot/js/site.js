@@ -38,3 +38,8 @@ $("#Picture").change(function () {
 	$('#spinner').addClass('spinner');
 	readURL(this);
 });
+
+$(".panel-default").click(function () {
+	window.open($(this).data("href"));
+	return false;
+});

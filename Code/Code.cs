@@ -74,8 +74,10 @@ namespace SPIIKcom
 		/// <returns></returns>
 		internal static async Task<List<FacebookPost>> GetFacebookPosts(AppKeyConfig AppConfig, int numberOfPosts = 20)
 		{
+			// https://developers.facebook.com/docs/graph-api
+			// TODO : Webhooks https://developers.facebook.com/docs/graph-api/webhooks
 			var fbList = new List<FacebookPost>();
-			FacebookViewModel viewModel = new FacebookViewModel();
+			var viewModel = new FacebookViewModel();
 			using (var client = new HttpClient())
 			{
 				try
@@ -105,7 +107,7 @@ namespace SPIIKcom
 						permalink_url,
 						from"
 					);
-					while (!string.IsNullOrWhiteSpace(FeedRequestUrl) && fbList.Count < numberOfPosts )
+					while (!string.IsNullOrWhiteSpace(FeedRequestUrl) && fbList.Count < numberOfPosts)
 					{
 
 						var response = await client.GetAsync(FeedRequestUrl);
@@ -114,7 +116,7 @@ namespace SPIIKcom
 						var stringResponse = await response.Content.ReadAsStringAsync();
 						viewModel = JsonConvert.DeserializeObject<FacebookViewModel>(stringResponse);
 						FeedRequestUrl = viewModel.Paging.Next;
-						fbList.AddRange(viewModel.Data);
+						fbList.AddRange(viewModel.Posts);
 					}
 				}
 				catch (HttpRequestException e)
@@ -123,6 +125,34 @@ namespace SPIIKcom
 				}
 			}
 			return fbList;
+		}
+
+		/// <summary>
+		/// Gets Instagram posts from the specified Instagram page.
+		/// </summary>
+		/// <returns></returns>
+		internal static async Task<List<Item>> GetInstagramPosts()
+		{
+			var instagramList = new List<Item>();
+			var viewModel = new IGVM();
+			using (var client = new HttpClient())
+			{
+				try
+				{
+					string FeedRequestUrl = string.Concat("https://www.instagram.com/spiikalmar" + "/media/");
+					var response = await client.GetAsync(FeedRequestUrl);
+					response.EnsureSuccessStatusCode(); // Throw in not success
+
+					var stringResponse = await response.Content.ReadAsStringAsync();
+					viewModel = JsonConvert.DeserializeObject<IGVM>(stringResponse);
+					instagramList.AddRange(viewModel.items);
+				}
+				catch (HttpRequestException e)
+				{
+					Console.WriteLine($"Request exception: {e.Message}");
+				}
+			}
+			return instagramList;
 		}
 	}
 }
