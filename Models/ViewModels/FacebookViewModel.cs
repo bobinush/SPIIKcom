@@ -32,12 +32,12 @@ namespace SPIIKcom.ViewModels
 		public string Id { get; set; }
 		[JsonProperty(PropertyName = "name")]
 		public string Name { get; set; }
-		[JsonProperty(PropertyName = "is_published")]
-		public bool IsPublished { get; set; }
-		[JsonProperty(PropertyName = "is_hidden")]
-		public bool IsHidden { get; set; }
-		[JsonProperty(PropertyName = "full_picture")]
-		public string FullPicture { get; set; }
+		// [JsonProperty(PropertyName = "is_published")]
+		// public bool IsPublished { get; set; }
+		// [JsonProperty(PropertyName = "is_hidden")]
+		// public bool IsHidden { get; set; }
+		// [JsonProperty(PropertyName = "full_picture")]
+		// public string FullPicture { get; set; }
 		[JsonProperty(PropertyName = "picture")]
 		public string Picture { get; set; }
 		[JsonProperty(PropertyName = "link")]
@@ -48,10 +48,10 @@ namespace SPIIKcom.ViewModels
 		public string Description { get; set; }
 		[JsonProperty(PropertyName = "caption")]
 		public string Caption { get; set; }
-		[JsonProperty(PropertyName = "object_id")]
-		public string ObjectId { get; set; }
-		[JsonProperty(PropertyName = "type")]
-		public string Type { get; set; }
+		// [JsonProperty(PropertyName = "object_id")]
+		// public string ObjectId { get; set; }
+		// [JsonProperty(PropertyName = "type")]
+		// public string Type { get; set; }
 		[JsonProperty(PropertyName = "created_time")]
 		public DateTime CreatedTime { get; set; }
 		[JsonProperty(PropertyName = "permalink_url")]

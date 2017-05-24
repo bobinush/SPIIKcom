@@ -29,15 +29,18 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		private readonly ApplicationDbContext db;
 		private readonly ILogger _logger;
 		private IHostingEnvironment _env;
+		private readonly SpiikService _spiikService;
 
 		public UnionMemberController(
 			ApplicationDbContext context,
 			ILoggerFactory loggerFactory,
-			IHostingEnvironment env)
+			IHostingEnvironment env,
+			SpiikService spiikService)
 		{
 			db = context;
 			_logger = loggerFactory.CreateLogger<UnionMemberController>();
 			_env = env;
+			_spiikService = spiikService;
 		}
 
 		//
@@ -67,7 +70,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				var webRoot = _env.WebRootPath;
 				if (viewModel.Picture != null)
 				{
-					var file = await Code.SaveFile(viewModel.Picture, webRoot, viewModel.Name);
+					var file = await _spiikService.SaveFile(viewModel.Picture, webRoot, viewModel.Name);
 					if (!string.IsNullOrWhiteSpace(file)) // Spara endast om en bild har blivit uppladdad.
 						model.PictureSrc = file;
 				}
@@ -115,7 +118,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				var webRoot = _env.WebRootPath;
 				if (viewModel.Picture != null)
 				{
-					var file = await Code.SaveFile(viewModel.Picture, webRoot, "images", viewModel.Name);
+					var file = await _spiikService.SaveFile(viewModel.Picture, webRoot, "images", viewModel.Name);
 					if (!string.IsNullOrWhiteSpace(file)) // Spara endast om en bild har blivit uppladdad.
 						model.PictureSrc = file;
 				}

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SPIIKcom.Data;
 using SPIIKcom.Enums;
@@ -14,31 +15,16 @@ using SPIIKcom.Extensions;
 using SPIIKcom.Models;
 using SPIIKcom.ViewModels;
 
-namespace SPIIKcom
+namespace SPIIKcom.Services
 {
-	public class Code
+	public class SpiikService
 	{
-		private readonly ApplicationDbContext db;
-		private IHostingEnvironment _environment;
-		public Code(ApplicationDbContext context, IHostingEnvironment environment)
+		private ApplicationDbContext db;
+		private IHostingEnvironment env;
+		public SpiikService(ApplicationDbContext context, IHostingEnvironment environment)
 		{
 			db = context;
-			_environment = environment;
-		}
-		/// <summary>
-		///  Get the Enum as a list with SelectListItems
-		/// </summary>
-		/// <returns></returns>
-		public static List<SelectListItem> GetUnionTypeselectList()
-		{
-			return Enum.GetValues(typeof(UnionTypeEnum))
-				.Cast<UnionTypeEnum>()
-				// .Where(x => x != UnionMemberEnum.None)
-				.Select(x => new SelectListItem()
-				{
-					Text = x.GetDisplayName(),
-					Value = ((int)x).ToString()
-				}).ToList();
+			env = environment;
 		}
 
 		/// <summary>
@@ -46,15 +32,16 @@ namespace SPIIKcom
 		/// </summary>
 		/// <param name="file">Filen som skall sparas</param>
 		/// <param name="path">wwwroot</param>
-		/// <param name="fileName">Valfri: Överskrid filnamnet (utan filändelse)</param>
+		/// <param name="fileName">Valfri: Överskrid filnamnet (utan filändelse). Det nya filnamnet kommer bli i Kebab Case.</param>
 		/// <returns>Filnamnet inkl. filändelse</returns>
-		internal static async Task<string> SaveFile(IFormFile file, string path, string folder, string fileName = null)
+		internal async Task<string> SaveFile(IFormFile file, string path, string folder, string fileName = null)
 		{
 			// full path to file in temp location
 			string name = "";
 			if (file.Length > 0)
 			{
-				var filePath = Path.Combine(path, folder, fileName ?? file.FileName);
+				string lowerFileName = (fileName ?? file.FileName).ToLower().Replace(" ", "-");
+				string filePath = Path.Combine(path, folder, lowerFileName);
 				if (!filePath.EndsWith(Path.GetExtension(file.FileName)))
 					filePath += Path.GetExtension(file.FileName);
 
@@ -72,7 +59,7 @@ namespace SPIIKcom
 		/// </summary>
 		/// <param name="numberOfPosts">Number of total posts to get. (default/min 20)</param>
 		/// <returns></returns>
-		internal static async Task<List<FacebookPost>> GetFacebookPosts(AppKeyConfig AppConfig, int numberOfPosts = 20)
+		internal async Task<List<FacebookPost>> GetFacebookPosts(string pageId, string accessToken)
 		{
 			// https://developers.facebook.com/docs/graph-api
 			// TODO : Webhooks https://developers.facebook.com/docs/graph-api/webhooks
@@ -82,14 +69,12 @@ namespace SPIIKcom
 			{
 				try
 				{
-					int numberofFeeds = 20;
-					string PageId = AppConfig.FacebookAPIId;
-					string AccessToken = AppConfig.FacebookAPIKey;
-
-					string FeedRequestUrl = string.Concat("https://graph.facebook.com/" + PageId + "/posts?limit=",
+					int numberofFeeds = 20,
+						numberOfPosts = 20;
+					string FeedRequestUrl = string.Concat("https://graph.facebook.com/" + pageId + "/posts?limit=",
 						numberofFeeds,
 						"&access_token=",
-						AccessToken,
+						accessToken,
 						@"&fields=
 						full_picture,
 						picture,
@@ -131,7 +116,7 @@ namespace SPIIKcom
 		/// Gets Instagram posts from the specified Instagram page.
 		/// </summary>
 		/// <returns></returns>
-		internal static async Task<List<Item>> GetInstagramPosts()
+		internal async Task<List<Item>> GetInstagramPosts()
 		{
 			var instagramList = new List<Item>();
 			var viewModel = new IGVM();

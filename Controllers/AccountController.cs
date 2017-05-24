@@ -45,6 +45,8 @@ namespace SPIIKcom.Controllers
 		[AllowAnonymous]
 		public async Task<IActionResult> Login(string returnUrl = null)
 		{
+			if (_signInManager.IsSignedIn(User))
+				return RedirectToAction("Index", "Home");
 			// Clear the existing external cookie to ensure a clean login process
 			await HttpContext.Authentication.SignOutAsync(_externalCookieScheme);
 

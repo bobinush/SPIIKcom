@@ -69,6 +69,8 @@ namespace SPIIKcom
 
 			// User secrets
 			services.Configure<AppKeyConfig>(Configuration.GetSection("AppKeys"));
+
+			services.AddScoped<SpiikService>();
 			// services.AddTransient(_ => services.Configure<AppKeyConfig>(Configuration.GetSection("AppKeys")));
 
 			services.AddMvc(options =>
@@ -128,6 +130,7 @@ namespace SPIIKcom
 			// {
 			// 	var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
 			// 	context.Database.Migrate();
+
 			SampleData.Seed(app.ApplicationServices).Wait();
 			// }
 		}

@@ -27,5 +27,13 @@ namespace SPIIKcom.Models
 		[Display(Name="Google Maps länk")]
 		[DataType(DataType.Url)]
 		public string GoogleLink { get; set; }
+		public string TwitterAPIKey { get; set; }
+		public string GoogleAPIKey { get; set; }
+		[Display(Name="Facebooksidans namn")]
+		public string FacebookAPIId { get; set; }
+		[Display(Name="Facebook access token")]
+		public string FacebookAPIKey { get; set; }
+		[DataType(DataType.Url)]
+		public string Instagram { get; set; }
 	}
 }
