@@ -9,10 +9,10 @@ namespace SPIIKcom.Controllers
 {
 	public class ForeningController : Controller
 	{
-		private readonly ApplicationDbContext db;
+		private readonly ApplicationDbContext _db;
 		public ForeningController(ApplicationDbContext context)
 		{
-			db = context;
+			_db = context;
 		}
 		public async Task<IActionResult> Om()
 		{
@@ -20,7 +20,7 @@ namespace SPIIKcom.Controllers
 		}
 		public async Task<IActionResult> Styrelse()
 		{
-			var model = await db.UnionMembers
+			var model = await _db.UnionMembers
 				.Where(x => x.UnionTypes.HasFlag(UnionTypeEnum.Styrelse))
 				.AsNoTracking()
 				.ToListAsync();
@@ -29,7 +29,7 @@ namespace SPIIKcom.Controllers
 		}
 		public async Task<IActionResult> Sexmasteri()
 		{
-			var model = await db.UnionMembers
+			var model = await _db.UnionMembers
 				.Where(x => x.UnionTypes.HasFlag(UnionTypeEnum.Sexmasteri))
 				.AsNoTracking()
 				.ToListAsync();
@@ -38,7 +38,7 @@ namespace SPIIKcom.Controllers
 		}
 		public async Task<IActionResult> Stadgar()
 		{
-			var model = await db.Stadgar
+			var model = await _db.Stadgar
 				.OrderBy(x => x.Id)
 				.AsNoTracking()
 				.ToListAsync();

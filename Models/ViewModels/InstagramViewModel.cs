@@ -6,91 +6,132 @@ using Newtonsoft.Json;
 
 namespace SPIIKcom.ViewModels
 {
-	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
-	public class InstagramViewModel
+	public class User
 	{
-		[JsonProperty(PropertyName = "items")]
-		public IEnumerable<InstagramPost> Posts { get; set; }
-		[JsonProperty(PropertyName = "more_available")]
-		public bool MoreAvailable { get; set; }
-		[JsonProperty(PropertyName = "status")]
-		public string Status { get; set; }
-	}
-
-	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
-	public class InstagramPost
-	{
-		[JsonProperty(PropertyName = "id")]
-		public string Id { get; set; }
-		[JsonProperty(PropertyName = "code")]
-		public string Code { get; set; }
-		[JsonProperty(PropertyName = "user")]
-		public InstagramUser User { get; set; }
-		[JsonProperty(PropertyName = "images")]
-		public List<InstagramImages> Images { get; set; }
-		public bool IsHidden { get; set; }
-		[JsonProperty(PropertyName = "created_time")]
-		public DateTime CreatedTime { get; set; }
-		[JsonProperty(PropertyName = "caption")]
-		public InstagramCaption Caption { get; set; }
-		[JsonProperty(PropertyName = "likes")]
-		public InstagramLikes Likes { get; set; }
-		[JsonProperty(PropertyName = "type")]
-		public string Type { get; set; }
-		[JsonProperty(PropertyName = "link")]
-		public string Link { get; set; }
-	}
-
-	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
-	public class InstagramUser
-	{
-		[JsonProperty(PropertyName = "id")]
-		public string Id { get; set; }
-		[JsonProperty(PropertyName = "full_name")]
-		public string Name { get; set; }
-		[JsonProperty(PropertyName = "profile_picture")]
-		public string ProfilePicture { get; set; }
-		[JsonProperty(PropertyName = "username")]
+		public string id { get; set; }
+		public string full_name { get; set; }
+		public string profile_picture { get; set; }
 		public string Username { get; set; }
 	}
 
+	public class Image
+	{
+		public int width { get; set; }
+		public int height { get; set; }
+		public string url { get; set; }
+	}
 
-	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
-	public class InstagramImages
+	public class Images
 	{
-		[JsonProperty(PropertyName = "thumbnail")]
-		public InstagramImage Thumbnail { get; set; }
-		[JsonProperty(PropertyName = "low_resolution")]
-		public InstagramImage LowResolution { get; set; }
-		[JsonProperty(PropertyName = "standard_resolution")]
-		public InstagramImage StandardResolution { get; set; }
+		public Image thumbnail { get; set; }
+		public Image low_resolution { get; set; }
+		public Image standard_resolution { get; set; }
 	}
-	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
-	public class InstagramImage
+
+	public class From
 	{
-		[JsonProperty(PropertyName = "width")]
-		public int Width { get; set; }
-		[JsonProperty(PropertyName = "height")]
-		public int Height { get; set; }
-		[JsonProperty(PropertyName = "url")]
-		public string Url { get; set; }
+		public string id { get; set; }
+		public string full_name { get; set; }
+		public string profile_picture { get; set; }
+		public string username { get; set; }
 	}
-	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
-	public class InstagramCaption
+
+	public class Caption
 	{
-		[JsonProperty(PropertyName = "id")]
-		public string Id { get; set; }
-		[JsonProperty(PropertyName = "test")]
-		public string Test { get; set; }
-		[JsonProperty(PropertyName = "created_time")]
+		public string id { get; set; }
+		public string text { get; set; }
+		public string created_time { get; set; }
+		public From from { get; set; }
+	}
+
+	public class Datum
+	{
+		public string id { get; set; }
+		public string full_name { get; set; }
+		public string profile_picture { get; set; }
+		public string username { get; set; }
+	}
+
+	public class Likes
+	{
+		public List<Datum> data { get; set; }
+		public int count { get; set; }
+	}
+
+	public class Comments
+	{
+		public List<object> data { get; set; }
+		public int count { get; set; }
+	}
+
+	public class Location
+	{
+		public string name { get; set; }
+	}
+
+	public class Video
+	{
+		public int width { get; set; }
+		public int height { get; set; }
+		public string url { get; set; }
+	}
+
+	public class Videos
+	{
+		public Video standard_resolution { get; set; }
+		public Video low_bandwidth { get; set; }
+		public Video low_resolution { get; set; }
+	}
+
+	public class Item
+	{
+		public string id { get; set; }
+		public string code { get; set; }
+		public User User { get; set; }
+		public Images images { get; set; }
+		public string created_time { get; set; }
+		public Caption caption { get; set; }
+		public bool user_has_liked { get; set; }
+		public Likes likes { get; set; }
+		public Comments comments { get; set; }
+		public bool can_view_comments { get; set; }
+		public bool can_delete_comments { get; set; }
+		public string type { get; set; }
+		public string link { get; set; }
+		public Location location { get; set; }
+		public string alt_media_url { get; set; }
+		public Videos videos { get; set; }
+		public int? video_views { get; set; }
+
+
+		public string Picture { get { return images.thumbnail.url; } }
+		public string Text { get { return caption?.text; } }
+		public string PermalinkUrl { get { return link; } }
+		public DateTime CreatedTime
+		{
+			get
+			{
+				DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+				return dtDateTime.AddSeconds(Convert.ToDouble(created_time)).ToLocalTime();
+			}
+		}
+	}
+
+	public class InstagramViewModel
+	{
+		public List<Item> items { get; set; }
+		public bool more_available { get; set; }
+		public string status { get; set; }
+	}
+
+
+	public class SocialMedia
+	{
+		public string PermalinkUrl { get; set; }
+		public string Username { get; set; }
 		public DateTime CreatedTime { get; set; }
-	}
-	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
-	public class InstagramLikes
-	{
-		[JsonProperty(PropertyName = "data")]
-		public List<InstagramUser> Users { get; set; }
-		[JsonProperty(PropertyName = "count")]
-		public int Count { get; set; }
+		public string Picture { get; set; }
+		public string Text { get; set; }
+		public string Type { get; set; }
 	}
 }

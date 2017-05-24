@@ -24,7 +24,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 	[Authorize(Roles = "Admin,Styrelse")]
 	public class UsersController : Controller
 	{
-		private readonly ApplicationDbContext db;
+		private readonly ApplicationDbContext _db;
 		private readonly UserManager<ApplicationUser> _userManager;
 		private readonly RoleManager<IdentityRole> _roleManager;
 		private readonly SignInManager<ApplicationUser> _signInManager;
@@ -41,7 +41,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			ISmsSender smsSender,
 			ILoggerFactory loggerFactory)
 		{
-			db = context;
+			_db = context;
 			_userManager = userManager;
 			_roleManager = roleManager;
 			_signInManager = signInManager;

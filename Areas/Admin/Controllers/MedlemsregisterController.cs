@@ -16,10 +16,10 @@ namespace SPIIKcom.Areas.Admin.Controllers
 	[Authorize(Roles = "Admin,Styrelse")]
 	public class MedlemsregisterController : Controller
 	{
-		private readonly ApplicationDbContext db;
+		private readonly ApplicationDbContext _db;
 		public MedlemsregisterController(ApplicationDbContext context)
 		{
-			db = context;
+			_db = context;
 		}
 
 		public async Task<IActionResult> Index(string sort = "", string name = "")
@@ -30,7 +30,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			ViewData["ExpireDateSort"] = sort == "ExpireDateDesc" ? "ExpireDate" : "ExpireDateDesc";
 			ViewData["CurrentFilterName"] = name;
 
-			var model = db.Members.AsQueryable();
+			var model = _db.Members.AsQueryable();
 
 			// Search on first/lastname
 			if (!string.IsNullOrWhiteSpace(name))
@@ -75,13 +75,13 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var membershipType = await db.MembershipTypes.FindAsync((int)viewModel.MembershipTypeId);
+				var membershipType = await _db.MembershipTypes.FindAsync((int)viewModel.MembershipTypeId);
 				var member = new Member(viewModel);
 
 				member.ExpireDate = member.JoinDate.AddYears(membershipType.LengthInYears);
 
-				await db.AddAsync(member);
-				await db.SaveChangesAsync();
+				await _db.AddAsync(member);
+				await _db.SaveChangesAsync();
 				TempData["Message"] = "Medlem registrerad!";
 				return RedirectToAction("Index");
 
@@ -94,7 +94,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Edit(int id)
 		{
-			var model = await db.Members.FindAsync(id);
+			var model = await _db.Members.FindAsync(id);
 			if (model == null)
 				return RedirectToAction("Index");
 
@@ -108,12 +108,12 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var membershipType = await db.MembershipTypes.FindAsync((int)viewModel.MembershipTypeId);
+				var membershipType = await _db.MembershipTypes.FindAsync((int)viewModel.MembershipTypeId);
 
 
 				// TODO : Postback Selectlist MembershipTypes so we can return the viewmodel if error.
 
-				var model = await db.Members.FindAsync(viewModel.Id);
+				var model = await _db.Members.FindAsync(viewModel.Id);
 				if (model == null)
 					return RedirectToAction("Index");
 
@@ -135,7 +135,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 						model.ExpireDate = model.ExpireDate.AddYears(membershipType.LengthInYears);
 				}
 
-				await db.SaveChangesAsync();
+				await _db.SaveChangesAsync();
 				TempData["Message"] = "Medlem uppdaterad!";
 				return RedirectToAction("Index");
 			}
@@ -146,7 +146,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Delete(int id)
 		{
-			var model = await db.Members.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+			var model = await _db.Members.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
 			if (model == null)
 				return new StatusCodeResult(404);
 
@@ -160,12 +160,12 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var model = await db.Members.FindAsync(id);
+				var model = await _db.Members.FindAsync(id);
 				if (model == null)
 					return new StatusCodeResult(404);
 
-				db.Members.Remove(model);
-				await db.SaveChangesAsync();
+				_db.Members.Remove(model);
+				await _db.SaveChangesAsync();
 				TempData["Message"] = "Medlem raderad!";
 				return RedirectToAction("Index");
 			}
@@ -174,7 +174,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 
 		internal async Task<SelectList> GetMembershipTypes(string defaultText)
 		{
-			var membershipTypes = await db.MembershipTypes.ToListAsync();
+			var membershipTypes = await _db.MembershipTypes.ToListAsync();
 			var dict = new Dictionary<double, string>();
 			dict.Add(-1, defaultText);
 			for (int i = 0; i < membershipTypes.Count; i++)

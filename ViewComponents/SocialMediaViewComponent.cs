@@ -8,37 +8,38 @@ using SPIIKcom.ViewModels;
 using SPIIKcom.Data;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Hosting;
+using SPIIKcom.Services;
 
 namespace SPIIKcom.ViewComponents
 {
 	public class SocialMediaViewComponent : ViewComponent
 	{
-		private readonly ApplicationDbContext db;
-		private IHostingEnvironment env;
-		public AppKeyConfig AppConfig { get; }
+		private readonly ApplicationDbContext _db;
+		private IHostingEnvironment _env;
+		public AppKeyConfig _appConfig { get; }
 		private readonly SpiikService _spiikService;
 		public SocialMediaViewComponent(ApplicationDbContext context,
 			IOptions<AppKeyConfig> appkeys,
 			IHostingEnvironment environment,
 			SpiikService spiikService)
 		{
-			AppConfig = appkeys.Value;
-			db = context;
-			env = environment;
+			_appConfig = appkeys.Value;
+			_db = context;
+			_env = environment;
 			_spiikService = spiikService;
 		}
 
 		public async Task<IViewComponentResult> InvokeAsync()
 		{
 			string PageId, AccessToken;
-			if (env.IsDevelopment())
+			if (_env.IsDevelopment())
 			{
-				PageId = AppConfig.FacebookAPIId;
-				AccessToken = AppConfig.FacebookAPIKey;
+				PageId = _appConfig.FacebookAPIId;
+				AccessToken = _appConfig.FacebookAPIKey;
 			}
 			else
 			{
-				var organization = await db.Organization.FirstOrDefaultAsync();
+				var organization = await _db.Organization.FirstOrDefaultAsync();
 				PageId = organization.FacebookAPIId;
 				AccessToken = organization.FacebookAPIKey;
 			}

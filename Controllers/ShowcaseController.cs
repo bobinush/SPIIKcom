@@ -5,10 +5,10 @@ namespace SPIIKcom.Controllers
 {
 	public class ShowcaseController : Controller
 	{
-		private readonly ApplicationDbContext db;
+		private readonly ApplicationDbContext _db;
 		public ShowcaseController(ApplicationDbContext context)
 		{
-			db = context;
+			_db = context;
 		}
 		public IActionResult Index()
 		{

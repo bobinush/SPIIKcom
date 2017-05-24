@@ -13,24 +13,24 @@ namespace SPIIKcom.Areas.Admin.Controllers
 	[Authorize(Roles = "Admin,Styrelse")]
 	public class HomeController : Controller
 	{
-		private readonly ApplicationDbContext db;
+		private readonly ApplicationDbContext _db;
 		public HomeController(ApplicationDbContext context)
 		{
-			db = context;
+			_db = context;
 		}
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
-			return View(await db.Organization.FirstOrDefaultAsync());
+			return View(await _db.Organization.FirstOrDefaultAsync());
 		}
 		[HttpPost]
 		public async Task<IActionResult> Index(Organization model)
 		{
 			if (ModelState.IsValid)
 			{
-				db.Entry(model).State = EntityState.Modified;
+				_db.Entry(model).State = EntityState.Modified;
 
-				await db.SaveChangesAsync();
+				await _db.SaveChangesAsync();
 				TempData["Message"] = "Uppgifter uppdaterade!";
 				return RedirectToAction("Index");
 			}

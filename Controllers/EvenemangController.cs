@@ -5,10 +5,10 @@ namespace SPIIKcom.Controllers
 {
 	public class EvenemangController : Controller
 	{
-		private readonly ApplicationDbContext db;
+		private readonly ApplicationDbContext _db;
 		public EvenemangController(ApplicationDbContext context)
 		{
-			db = context;
+			_db = context;
 		}
 		public IActionResult Index()
 		{

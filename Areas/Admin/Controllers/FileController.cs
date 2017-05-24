@@ -25,7 +25,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 	[Authorize(Roles = "Admin,Styrelse")]
 	public class FileController : Controller
 	{
-		private readonly ApplicationDbContext db;
+		private readonly ApplicationDbContext _db;
 		private readonly ILogger _logger;
 		private IHostingEnvironment _env;
 
@@ -34,7 +34,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			ILoggerFactory loggerFactory,
 			IHostingEnvironment env)
 		{
-			db = context;
+			_db = context;
 			_logger = loggerFactory.CreateLogger<UnionMemberController>();
 			_env = env;
 		}

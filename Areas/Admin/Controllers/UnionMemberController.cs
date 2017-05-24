@@ -26,7 +26,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 	[Authorize(Roles = "Admin,Styrelse")]
 	public class UnionMemberController : Controller
 	{
-		private readonly ApplicationDbContext db;
+		private readonly ApplicationDbContext _db;
 		private readonly ILogger _logger;
 		private IHostingEnvironment _env;
 		private readonly SpiikService _spiikService;
@@ -37,7 +37,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			IHostingEnvironment env,
 			SpiikService spiikService)
 		{
-			db = context;
+			_db = context;
 			_logger = loggerFactory.CreateLogger<UnionMemberController>();
 			_env = env;
 			_spiikService = spiikService;
@@ -48,7 +48,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
-			return View(await db.UnionMembers.AsNoTracking().ToListAsync());
+			return View(await _db.UnionMembers.AsNoTracking().ToListAsync());
 		}
 
 		//
@@ -74,8 +74,8 @@ namespace SPIIKcom.Areas.Admin.Controllers
 					if (!string.IsNullOrWhiteSpace(file)) // Spara endast om en bild har blivit uppladdad.
 						model.PictureSrc = file;
 				}
-				await db.UnionMembers.AddAsync(model);
-				await db.SaveChangesAsync();
+				await _db.UnionMembers.AddAsync(model);
+				await _db.SaveChangesAsync();
 				TempData["Message"] = "Medlem skapad!";
 				return RedirectToAction("Index");
 			}
@@ -87,7 +87,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Edit(int id)
 		{
-			var model = await db.UnionMembers.FindAsync(id);
+			var model = await _db.UnionMembers.FindAsync(id);
 			if (model == null)
 				return RedirectToAction("Index");
 
@@ -103,7 +103,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var model = await db.UnionMembers.FindAsync(viewModel.Id);
+				var model = await _db.UnionMembers.FindAsync(viewModel.Id);
 				if (model == null)
 					return RedirectToAction("Index");
 
@@ -123,7 +123,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 						model.PictureSrc = file;
 				}
 
-				await db.SaveChangesAsync();
+				await _db.SaveChangesAsync();
 				TempData["Message"] = "Medlem uppdaterad!";
 				return RedirectToAction("Index");
 			}
@@ -134,7 +134,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Delete(int id)
 		{
-			var user = await db.UnionMembers.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+			var user = await _db.UnionMembers.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
 			if (user == null)
 				return RedirectToAction("Index");
 
@@ -148,12 +148,12 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var user = await db.UnionMembers.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+				var user = await _db.UnionMembers.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
 				if (user == null)
 					return RedirectToAction("Index");
 
-				db.UnionMembers.Remove(user);
-				await db.SaveChangesAsync();
+				_db.UnionMembers.Remove(user);
+				await _db.SaveChangesAsync();
 				TempData["Message"] = "Medlem raderad!";
 				return RedirectToAction("Index");
 			}

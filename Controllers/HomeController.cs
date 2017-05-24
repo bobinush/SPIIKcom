@@ -14,10 +14,10 @@ namespace SPIIKcom.Controllers
 {
 	public class HomeController : Controller
 	{
-		private readonly ApplicationDbContext db;
+		private readonly ApplicationDbContext _db;
 		public HomeController(ApplicationDbContext context)
 		{
-			db = context;
+			_db = context;
 		}
 		public async Task<IActionResult> Index()
 		{
@@ -27,7 +27,7 @@ namespace SPIIKcom.Controllers
 
 		public async Task<IActionResult> Kontakt()
 		{
-			return View(await db.Organization.AsNoTracking().FirstOrDefaultAsync());
+			return View(await _db.Organization.AsNoTracking().FirstOrDefaultAsync());
 		}
 
 		public IActionResult Error()

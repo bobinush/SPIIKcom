@@ -19,12 +19,12 @@ namespace SPIIKcom.Services
 {
 	public class SpiikService
 	{
-		private ApplicationDbContext db;
-		private IHostingEnvironment env;
+		private ApplicationDbContext _db;
+		private IHostingEnvironment _env;
 		public SpiikService(ApplicationDbContext context, IHostingEnvironment environment)
 		{
-			db = context;
-			env = environment;
+			_db = context;
+			_env = environment;
 		}
 
 		/// <summary>
@@ -119,7 +119,7 @@ namespace SPIIKcom.Services
 		internal async Task<List<Item>> GetInstagramPosts()
 		{
 			var instagramList = new List<Item>();
-			var viewModel = new IGVM();
+			var viewModel = new InstagramViewModel();
 			using (var client = new HttpClient())
 			{
 				try
@@ -129,7 +129,7 @@ namespace SPIIKcom.Services
 					response.EnsureSuccessStatusCode(); // Throw in not success
 
 					var stringResponse = await response.Content.ReadAsStringAsync();
-					viewModel = JsonConvert.DeserializeObject<IGVM>(stringResponse);
+					viewModel = JsonConvert.DeserializeObject<InstagramViewModel>(stringResponse);
 					instagramList.AddRange(viewModel.items);
 				}
 				catch (HttpRequestException e)

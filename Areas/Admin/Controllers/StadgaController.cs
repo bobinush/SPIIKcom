@@ -14,15 +14,15 @@ namespace SPIIKcom.Areas.Admin.Controllers
 	[Authorize(Roles = "Admin,Styrelse")]
 	public class StadgaController : Controller
 	{
-		private readonly ApplicationDbContext db;
+		private readonly ApplicationDbContext _db;
 		public StadgaController(ApplicationDbContext context)
 		{
-			db = context;
+			_db = context;
 		}
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
-			return View(await db.Stadgar.OrderBy(x => x.Number).AsNoTracking().ToListAsync());
+			return View(await _db.Stadgar.OrderBy(x => x.Number).AsNoTracking().ToListAsync());
 		}
 
 		[HttpGet]
@@ -36,8 +36,8 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				await db.AddAsync(model);
-				await db.SaveChangesAsync();
+				await _db.AddAsync(model);
+				await _db.SaveChangesAsync();
 				TempData["Message"] = "Stadga skapad!";
 				return RedirectToAction("Index");
 			}
@@ -47,7 +47,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Edit(int id)
 		{
-			var model = await db.Stadgar.FindAsync(id);
+			var model = await _db.Stadgar.FindAsync(id);
 			if (model == null)
 				return RedirectToAction("Index");
 
@@ -59,10 +59,10 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				db.Stadgar.Attach(model);
-				db.Entry(model);
-				db.Entry(model).State = EntityState.Modified;
-				await db.SaveChangesAsync();
+				_db.Stadgar.Attach(model);
+				_db.Entry(model);
+				_db.Entry(model).State = EntityState.Modified;
+				await _db.SaveChangesAsync();
 				TempData["Message"] = "Stadga uppdaterad!";
 				return RedirectToAction("Index");
 			}
@@ -72,7 +72,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Delete(int id)
 		{
-			var model = await db.Stadgar.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+			var model = await _db.Stadgar.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
 			if (model == null)
 				return new StatusCodeResult(404);
 
@@ -84,12 +84,12 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var model = await db.Stadgar.FindAsync(id);
+				var model = await _db.Stadgar.FindAsync(id);
 				if (model == null)
 					return new StatusCodeResult(404);
 
-				db.Stadgar.Remove(model);
-				await db.SaveChangesAsync();
+				_db.Stadgar.Remove(model);
+				await _db.SaveChangesAsync();
 				TempData["Message"] = "Stadga raderad!";
 				return RedirectToAction("Index");
 			}
