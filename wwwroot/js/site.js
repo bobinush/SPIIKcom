@@ -34,12 +34,14 @@ function readURL(input) {
 	}
 }
 
+// upload profile picture
 $("#Picture").change(function () {
 	$('#spinner').addClass('spinner');
 	readURL(this);
 });
 
-$(".panel-default").click(function () {
+// Make whole social media post clickable
+$(".social-media-post").click(function () {
 	window.open($(this).data("href"));
 	return false;
 });

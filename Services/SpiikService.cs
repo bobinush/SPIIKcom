@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using SPIIKcom.Data;
 using SPIIKcom.Enums;
@@ -21,27 +22,31 @@ namespace SPIIKcom.Services
 	{
 		private ApplicationDbContext _db;
 		private IHostingEnvironment _env;
-		public SpiikService(ApplicationDbContext context, IHostingEnvironment environment)
+		public readonly AppKeyConfig _appConfig;
+
+		public SpiikService(ApplicationDbContext context,
+			IHostingEnvironment environment,
+			IOptions<AppKeyConfig> appkeys)
 		{
 			_db = context;
 			_env = environment;
 		}
 
 		/// <summary>
-		/// Sparar en fil
+		/// Saves a file
 		/// </summary>
-		/// <param name="file">Filen som skall sparas</param>
+		/// <param name="file">File to be saved</param>
 		/// <param name="path">wwwroot</param>
-		/// <param name="fileName">Valfri: Överskrid filnamnet (utan filändelse). Det nya filnamnet kommer bli i Kebab Case.</param>
-		/// <returns>Filnamnet inkl. filändelse</returns>
+		/// <param name="folder">A folder inside wwwroot</param>
+		/// <param name="fileName">Optional: New filename (without extension). The new filename will be in Kebab Case.</param>
+		/// <returns>Filename with extension</returns>
 		internal async Task<string> SaveFile(IFormFile file, string path, string folder, string fileName = null)
 		{
-			// full path to file in temp location
 			string name = "";
 			if (file.Length > 0)
 			{
-				string lowerFileName = (fileName ?? file.FileName).ToLower().Replace(" ", "-");
-				string filePath = Path.Combine(path, folder, lowerFileName);
+				string fileNameKebabCase = (fileName ?? file.FileName).ToLower().Replace(" ", "-");
+				string filePath = Path.Combine(path, folder, fileNameKebabCase);
 				if (!filePath.EndsWith(Path.GetExtension(file.FileName)))
 					filePath += Path.GetExtension(file.FileName);
 
@@ -51,13 +56,14 @@ namespace SPIIKcom.Services
 				}
 				name = Path.GetFileName(filePath);
 			}
-			return name; // Returnerar endast filnamnet om en fil har blivit uppladdad.
+			return name;
 		}
 
 		/// <summary>
 		/// Gets Facebook posts from the specified Facebook page.
 		/// </summary>
-		/// <param name="numberOfPosts">Number of total posts to get. (default/min 20)</param>
+		/// <param name="pageId">The Facebook page id. (name in url)</param>
+		/// <param name="accessToken">Permanent access token</param>
 		/// <returns></returns>
 		internal async Task<List<FacebookPost>> GetFacebookPosts(string pageId, string accessToken)
 		{
@@ -69,10 +75,12 @@ namespace SPIIKcom.Services
 			{
 				try
 				{
-					int numberofFeeds = 20,
-						numberOfPosts = 20;
+					int numberOfFeeds = 20, // Number of feeds to get per request
+						numberOfPosts = 20; // Number of total posts (numberOfFeeds * n)
+
+					// To add or remove fields below: Add/Remove them to the ViewModel as well.
 					string FeedRequestUrl = string.Concat("https://graph.facebook.com/" + pageId + "/posts?limit=",
-						numberofFeeds,
+						numberOfFeeds,
 						"&access_token=",
 						accessToken,
 						@"&fields=
@@ -115,8 +123,9 @@ namespace SPIIKcom.Services
 		/// <summary>
 		/// Gets Instagram posts from the specified Instagram page.
 		/// </summary>
+		/// <param name="url">Url to the Instagram page</param>
 		/// <returns></returns>
-		internal async Task<List<Item>> GetInstagramPosts()
+		internal async Task<List<Item>> GetInstagramPosts(string url)
 		{
 			var instagramList = new List<Item>();
 			var viewModel = new InstagramViewModel();
@@ -124,7 +133,9 @@ namespace SPIIKcom.Services
 			{
 				try
 				{
-					string FeedRequestUrl = string.Concat("https://www.instagram.com/spiikalmar" + "/media/");
+					// Check for last char.
+					url = (url.Right(1) == "/" ? url.Substring(0, url.Length - 1) : url);
+					string FeedRequestUrl = string.Concat(url + "/media/");
 					var response = await client.GetAsync(FeedRequestUrl);
 					response.EnsureSuccessStatusCode(); // Throw in not success
 

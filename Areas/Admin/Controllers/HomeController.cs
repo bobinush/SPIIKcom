@@ -21,7 +21,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
-			return View(await _db.Organization.FirstOrDefaultAsync());
+			return View(await _db.Organization.AsNoTracking().SingleOrDefaultAsync());
 		}
 		[HttpPost]
 		public async Task<IActionResult> Index(Organization model)

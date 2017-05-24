@@ -22,7 +22,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
-			return View(await _db.Stadgar.OrderBy(x => x.Number).AsNoTracking().ToListAsync());
+			return View(await _db.Stadgar.OrderBy(x => x.Id).AsNoTracking().ToListAsync());
 		}
 
 		[HttpGet]

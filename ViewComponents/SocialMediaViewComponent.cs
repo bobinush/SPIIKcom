@@ -16,7 +16,7 @@ namespace SPIIKcom.ViewComponents
 	{
 		private readonly ApplicationDbContext _db;
 		private IHostingEnvironment _env;
-		public AppKeyConfig _appConfig { get; }
+		public readonly AppKeyConfig _appConfig;
 		private readonly SpiikService _spiikService;
 		public SocialMediaViewComponent(ApplicationDbContext context,
 			IOptions<AppKeyConfig> appkeys,
@@ -31,41 +31,55 @@ namespace SPIIKcom.ViewComponents
 
 		public async Task<IViewComponentResult> InvokeAsync()
 		{
-			string PageId, AccessToken;
+			string fbPageId, fbAccessToken, instagramUrl;
+			var list = new List<SocialMedia>();
+
 			if (_env.IsDevelopment())
 			{
-				PageId = _appConfig.FacebookAPIId;
-				AccessToken = _appConfig.FacebookAPIKey;
+				fbPageId = _appConfig.FacebookAPIId;
+				fbAccessToken = _appConfig.FacebookAPIKey;
+				instagramUrl = _appConfig.Instagram;
 			}
 			else
 			{
-				var organization = await _db.Organization.FirstOrDefaultAsync();
-				PageId = organization.FacebookAPIId;
-				AccessToken = organization.FacebookAPIKey;
+				var organization = await _db.Organization.AsNoTracking().SingleOrDefaultAsync();
+				instagramUrl = organization.Instagram;
+				fbPageId = organization.FacebookAPIId;
+				fbAccessToken = organization.FacebookAPIKey;
 			}
-			List<FacebookPost> fb = await _spiikService.GetFacebookPosts(PageId, AccessToken);
-			List<Item> ig = await _spiikService.GetInstagramPosts();
-			var igList = ig.Select(x => new SocialMedia
+
+			// Get Facebook posts
+			if (!string.IsNullOrWhiteSpace(fbPageId) && !string.IsNullOrWhiteSpace(fbAccessToken))
 			{
-				PermalinkUrl = x.PermalinkUrl,
-				Username = x.User.Username,
-				CreatedTime = x.CreatedTime,
-				Picture = x.Picture,
-				Text = x.Text,
-				Type = "Instagram"
-			});
-			var fbList = fb.Select(x => new SocialMedia
+				List<FacebookPost> fb = await _spiikService.GetFacebookPosts(fbPageId, fbAccessToken);
+				var fbList = fb.Select(x => new SocialMedia
+				{
+					PermalinkUrl = x.PermalinkUrl,
+					Username = x.User.Username,
+					CreatedTime = x.CreatedTime,
+					Picture = x.Picture,
+					Text = x.Text,
+					Type = "Facebook"
+				});
+				list.AddRange(fbList);
+			}
+
+			// Get Instagram posts
+			if (!string.IsNullOrWhiteSpace(instagramUrl))
 			{
-				PermalinkUrl = x.PermalinkUrl,
-				Username = x.User.Username,
-				CreatedTime = x.CreatedTime,
-				Picture = x.Picture,
-				Text = x.Text,
-				Type = "Facebook"
-			});
-			var list = new List<SocialMedia>();
-			list.AddRange(igList);
-			list.AddRange(fbList);
+				List<Item> ig = await _spiikService.GetInstagramPosts(instagramUrl);
+				var igList = ig.Select(x => new SocialMedia
+				{
+					PermalinkUrl = x.PermalinkUrl,
+					Username = x.User.Username,
+					CreatedTime = x.CreatedTime,
+					Picture = x.Picture,
+					Text = x.Text,
+					Type = "Instagram"
+				});
+				list.AddRange(igList);
+			}
+
 			return View(list.OrderByDescending(x => x.CreatedTime).ToList());
 		}
 	}

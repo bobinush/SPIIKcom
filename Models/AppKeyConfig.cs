@@ -8,5 +8,6 @@ namespace SPIIKcom.Models
 		public string GoogleAPIKey { get; set; }
 		public string FacebookAPIId { get; set; }
 		public string FacebookAPIKey { get; set; }
+		public string Instagram { get; set; }
 	}
 }
