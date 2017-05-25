@@ -2,27 +2,33 @@
 @foreach (var post in Model)
 {
 	<div class="col-md-4 col-sm-6">
-		<div class="panel panel-default social-media-post" data-href="@post.PermalinkUrl">
+		<div class="panel panel-default social-media-post" data-href="">
 			<div class="panel-heading">
 				<h4>
-					@if (post.Type == "Instagram")
-					{
-						@:<i class="fa fa-instagram" aria-hidden="true"></i>&nbsp;
-						@:@@@post.Username
-					}
-					else {
-						@:<i class="fa fa-facebook-f" aria-hidden="true"></i>&nbsp;
-						@post.Username
-					}
-					<small class="pull-right">@post.CreatedTime.ToString("D")</small>
+					<a href="@post.PageUrl">
+						@if (post.Type == "Instagram")
+						{
+							@:<i class="fa fa-instagram" aria-hidden="true"></i>&nbsp;
+							@:@@@post.Username
+						}
+						else {
+							@:<i class="fa fa-facebook-f" aria-hidden="true"></i>&nbsp;
+							@post.Username
+						}
+					</a>
+					<a href="@post.PermalinkUrl">
+						<small class="pull-right">@post.CreatedTime.ToString("D")</small>
+					</a>
 				</h4>
 			</div>
 			<div class="panel-body">
-				<img src="@post.Picture" alt="">
-				@{
-					// jQuery.dotdotdot https://github.com/FrDH/jQuery.dotdotdot
-				}
-				<p class="dot-ellipsis dot-height-140 dot-resize-update">@post.Text</p>
+				<a href="@post.PermalinkUrl">
+					<img src="@post.Picture" alt="">
+					@{
+						// jQuery.dotdotdot https://github.com/FrDH/jQuery.dotdotdot
+					}
+					<p class="dot-ellipsis dot-height-140 dot-resize-update">@post.Text</p>
+				</a>
 			</div>
 		</div>
 	</div>

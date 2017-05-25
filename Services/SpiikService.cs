@@ -125,7 +125,7 @@ namespace SPIIKcom.Services
 		/// </summary>
 		/// <param name="url">Url to the Instagram page</param>
 		/// <returns></returns>
-		internal async Task<List<Item>> GetInstagramPosts(string url)
+		internal async Task<List<Item>> GetInstagramPosts(string instagramId)
 		{
 			var instagramList = new List<Item>();
 			var viewModel = new InstagramViewModel();
@@ -133,9 +133,7 @@ namespace SPIIKcom.Services
 			{
 				try
 				{
-					// Check for last char.
-					url = (url.Right(1) == "/" ? url.Substring(0, url.Length - 1) : url);
-					string FeedRequestUrl = string.Concat(url + "/media/");
+					string FeedRequestUrl = string.Concat("https://www.instagram.com/" + instagramId + "/media/");
 					var response = await client.GetAsync(FeedRequestUrl);
 					response.EnsureSuccessStatusCode(); // Throw in not success
 
