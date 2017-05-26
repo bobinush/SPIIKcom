@@ -39,24 +39,32 @@ namespace SPIIKcom.Services
 		/// <param name="path">wwwroot</param>
 		/// <param name="folder">A folder inside wwwroot</param>
 		/// <param name="fileName">Optional: New filename (without extension). The new filename will be in Kebab Case.</param>
-		/// <returns>Filename with extension</returns>
-		internal async Task<string> SaveFile(IFormFile file, string path, string folder, string fileName = null)
+		/// <returns>Filename with extension or errormessage</returns>
+		internal async Task<Tuple<bool, string>> SaveFile(IFormFile file, string path, string folder, string fileName = null)
 		{
-			string name = "";
+			string msg = "";
+			bool success = false;
 			if (file.Length > 0)
 			{
-				string fileNameKebabCase = (fileName ?? file.FileName).ToLower().Replace(" ", "-");
-				string filePath = Path.Combine(path, folder, fileNameKebabCase);
-				if (!filePath.EndsWith(Path.GetExtension(file.FileName)))
-					filePath += Path.GetExtension(file.FileName);
-
-				using (var stream = new FileStream(filePath, FileMode.Create))
+				if (file.Length > 5000000) // 5 MB limit
+					msg = "The picture size cannot exceed 5MB.";
+				else
 				{
-					await file.CopyToAsync(stream);
+
+					string fileNameKebabCase = (fileName ?? file.FileName).ToLower().Replace(" ", "-");
+					string filePath = Path.Combine(path, folder, fileNameKebabCase);
+					if (!filePath.EndsWith(Path.GetExtension(file.FileName)))
+						filePath += Path.GetExtension(file.FileName);
+
+					using (var stream = new FileStream(filePath, FileMode.Create))
+					{
+						await file.CopyToAsync(stream);
+					}
+					msg = Path.GetFileName(filePath);
+					success = true;
 				}
-				name = Path.GetFileName(filePath);
 			}
-			return name;
+			return new Tuple<bool, string>(success, msg);
 		}
 
 		/// <summary>

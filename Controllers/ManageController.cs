@@ -42,6 +42,7 @@ namespace SPIIKcom.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Index(ManageMessageId? message = null)
 		{
+			// TODO : Ändra vad som en användare kan ändra på på sitt konto.
 			ViewData["StatusMessage"] =
 				message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
 				: message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."

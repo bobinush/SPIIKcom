@@ -10,7 +10,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 {
 	[Area("Admin")]
 	[Route("Admin")]
-	[Authorize(Roles = "Admin,Styrelse")]
+	[Authorize(Roles = "Admin, Styrelse")]
 	public class HomeController : Controller
 	{
 		private readonly ApplicationDbContext _db;

@@ -34,5 +34,8 @@ namespace SPIIKcom.Models
 		[Display(Name="Facebook access token")]
 		public string FacebookAPIKey { get; set; }
 		public string Instagram { get; set; }
+
+		// TODO: Lägg till url-länkar till sociala medier
+
 	}
 }

@@ -1,4 +1,4 @@
-﻿@model RegisterViewModel
+﻿@model RegisterUserViewModel
 @{
 	ViewData["Title"] = "Skapa ny användare";
 }
@@ -29,14 +29,7 @@
 			<div class="btn-group" role="group" data-toggle="buttons">
 				@foreach (var item in Model.RolesList)
 				{
-					if(item.Selected)
-					{
-						<label class="btn btn-default active">
-							<input type="checkbox" name="SelectedRoles" value="@item.Value" checked="@item.Selected">
-							@item.Value
-						</label>
-					}
-					else
+					if(item.Text != "Admin" || User.IsInRole("Admin"))
 					{
 						<label class="btn btn-default">
 							<input type="checkbox" name="SelectedRoles" value="@item.Value">

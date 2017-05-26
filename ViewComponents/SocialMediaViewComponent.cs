@@ -36,6 +36,7 @@ namespace SPIIKcom.ViewComponents
 				instagramId = "";
 			var list = new List<SocialMedia>();
 
+			var organization = await _db.Organization.AsNoTracking().SingleOrDefaultAsync();
 			if (_env.IsDevelopment())
 			{
 				fbPageId = _appConfig.FacebookAPIId;
@@ -44,14 +45,10 @@ namespace SPIIKcom.ViewComponents
 			}
 			else
 			{
-				var organization = await _db.Organization.AsNoTracking().SingleOrDefaultAsync();
-				if (organization != null)
-				{
-					instagramId = organization.Instagram;
-					fbPageId = organization.FacebookAPIId;
-					fbAccessToken = organization.FacebookAPIKey;
-				}
+				fbAccessToken = organization.FacebookAPIKey;
 			}
+			fbPageId = organization.FacebookAPIId;
+			instagramId = organization.Instagram;
 
 			// Get Facebook posts
 			if (!string.IsNullOrWhiteSpace(fbPageId) && !string.IsNullOrWhiteSpace(fbAccessToken))
@@ -82,7 +79,7 @@ namespace SPIIKcom.ViewComponents
 					Picture = x.Picture,
 					Text = x.Text,
 					Type = "Instagram",
-					PageUrl = instagramId
+					PageUrl = "https://www.instagram.com/" + instagramId
 				});
 				list.AddRange(igList);
 			}

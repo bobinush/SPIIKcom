@@ -64,7 +64,8 @@
 				</button>
 				@if(User.IsInRole("Admin"))
 				{
-					<a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Radera</a>
+					<a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">
+						<i class="fa fa-trash-o fa-lg"></i>&nbsp; Radera</a>
 				}
 		</div>
 	</form>

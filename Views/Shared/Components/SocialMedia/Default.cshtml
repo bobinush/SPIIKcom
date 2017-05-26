@@ -5,7 +5,7 @@
 		<div class="panel panel-default social-media-post" data-href="">
 			<div class="panel-heading">
 				<h4>
-					<a href="@post.PageUrl">
+					<a href="@post.PageUrl" target="_blank">
 						@if (post.Type == "Instagram")
 						{
 							@:<i class="fa fa-instagram" aria-hidden="true"></i>&nbsp;
@@ -16,13 +16,13 @@
 							@post.Username
 						}
 					</a>
-					<a href="@post.PermalinkUrl">
+					<a href="@post.PermalinkUrl" target="_blank">
 						<small class="pull-right">@post.CreatedTime.ToString("D")</small>
 					</a>
 				</h4>
 			</div>
 			<div class="panel-body">
-				<a href="@post.PermalinkUrl">
+				<a href="@post.PermalinkUrl" target="_blank">
 					<img src="@post.Picture" alt="">
 					@{
 						// jQuery.dotdotdot https://github.com/FrDH/jQuery.dotdotdot

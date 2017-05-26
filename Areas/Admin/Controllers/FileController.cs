@@ -22,7 +22,7 @@ using SPIIKcom.ViewModels;
 namespace SPIIKcom.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	[Authorize(Roles = "Admin,Styrelse")]
+	[Authorize(Roles = "Admin, Styrelse")]
 	public class FileController : Controller
 	{
 		private readonly ApplicationDbContext _db;

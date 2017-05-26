@@ -21,7 +21,7 @@ using SPIIKcom.ViewModels;
 namespace SPIIKcom.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	[Authorize(Roles = "Admin,Styrelse")]
+	[Authorize(Roles = "Admin, Styrelse")]
 	public class UsersController : Controller
 	{
 		private readonly ApplicationDbContext _db;
@@ -62,7 +62,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		// GET: /Users/Create
 		public async Task<IActionResult> Create()
 		{
-			var viewModel = new RegisterViewModel
+			var viewModel = new RegisterUserViewModel
 			{
 				RolesList = _roleManager.Roles.ToList().Select(x => new SelectListItem()
 				{
@@ -76,7 +76,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		//
 		// POST: /Users/Create
 		[HttpPost]
-		public async Task<IActionResult> Create(RegisterViewModel viewModel)
+		public async Task<IActionResult> Create(RegisterUserViewModel viewModel)
 		{
 			viewModel.RolesList = _roleManager.Roles.ToList().Select(x => new SelectListItem()
 			{
@@ -86,7 +86,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			});
 			if (ModelState.IsValid)
 			{
-				var user = new ApplicationUser { UserName = viewModel.Email, Email = viewModel.Email, SignupDate = DateTime.Today };
+				var user = new ApplicationUser { UserName = viewModel.Email, Email = viewModel.Email, SignupDate = DateTime.Today, Name = viewModel.Name };
 				var adminresult = await _userManager.CreateAsync(user, viewModel.Password);
 
 				//Add User to the selected Roles
@@ -160,6 +160,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 
 				user.UserName = viewModel.Email;
 				user.Email = viewModel.Email;
+				user.Name = viewModel.Name;
 				var userRoles = await _userManager.GetRolesAsync(user);
 				if (userRoles.Contains("Admin") && !User.IsInRole("Admin")) // Förhindra att någon annan än admin ändrar admin
 					return new StatusCodeResult(403); // Forbidden

@@ -39,9 +39,3 @@ $("#Picture").change(function () {
 	$('#spinner').addClass('spinner');
 	readURL(this);
 });
-
-// Make whole social media post clickable
-$(".social-media-post").click(function () {
-	window.open($(this).data("href"));
-	return false;
-});

@@ -5,7 +5,7 @@ using SPIIKcom.Enums;
 
 namespace SPIIKcom.Models.AccountViewModels
 {
-	public class RegisterViewModel
+	public class RegisterUserViewModel
 	{
 		[Required]
 		[EmailAddress]

@@ -7,8 +7,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<h1 class="page-header">
-				Contact
-				<small>Subheading</small>
+				@ViewData["Title"]
 			</h1>
 		</div>
 		<!-- Map Column -->
@@ -26,7 +25,9 @@
 		</div>
 		<!-- Contact Details Column -->
 		<div class="col-sm-4 pull-right">
-			<h3>Contact Details</h3>
+			<h3>@Model.Name
+				<small>@Model.Abbreviation </small>
+				</h3>
 			<p>
 				@Model.Address<br>
 				@Model.PostalCode @Model.City

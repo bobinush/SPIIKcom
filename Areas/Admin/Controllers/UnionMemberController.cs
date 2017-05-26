@@ -70,9 +70,17 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				var webRoot = _env.WebRootPath;
 				if (viewModel.Picture != null)
 				{
-					var file = await _spiikService.SaveFile(viewModel.Picture, webRoot, viewModel.Name);
-					if (!string.IsNullOrWhiteSpace(file)) // Spara endast om en bild har blivit uppladdad.
-						model.PictureSrc = file;
+					Tuple<bool, string> result = await _spiikService.SaveFile(viewModel.Picture, webRoot, "images", viewModel.Name);
+					if (result.Item1) // Success saving
+					{
+						if (!string.IsNullOrWhiteSpace(result.Item2)) // Spara endast om en bild har blivit uppladdad.
+							model.PictureSrc = result.Item2;
+					}
+					else
+					{
+						ModelState.AddModelError("Picture", result.Item2);
+						return View();
+					}
 				}
 				await _db.UnionMembers.AddAsync(model);
 				await _db.SaveChangesAsync();
@@ -118,9 +126,17 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				var webRoot = _env.WebRootPath;
 				if (viewModel.Picture != null)
 				{
-					var file = await _spiikService.SaveFile(viewModel.Picture, webRoot, "images", viewModel.Name);
-					if (!string.IsNullOrWhiteSpace(file)) // Spara endast om en bild har blivit uppladdad.
-						model.PictureSrc = file;
+					Tuple<bool, string> result = await _spiikService.SaveFile(viewModel.Picture, webRoot, "images", viewModel.Name);
+					if (result.Item1) // Success saving
+					{
+						if (!string.IsNullOrWhiteSpace(result.Item2)) // Spara endast om en bild har blivit uppladdad.
+							model.PictureSrc = result.Item2;
+					}
+					else
+					{
+						ModelState.AddModelError("Picture", result.Item2);
+						return View(viewModel);
+					}
 				}
 
 				await _db.SaveChangesAsync();
