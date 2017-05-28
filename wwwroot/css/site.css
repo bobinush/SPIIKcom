@@ -202,6 +202,20 @@ textarea {
 	margin-top: -5px;
 }
 
+input.danger {
+	background-color: #d9534f !important;
+	color: #fff !important;
+}
+
+input.warning {
+	background-color: #fcf8e3 !important;
+}
+
+input.normal {
+	background-color: #5cb85c !important;
+	color: #fff !important;
+}
+
 
 /* Hide/rearrange for smaller screens */
 

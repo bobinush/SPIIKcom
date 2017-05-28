@@ -84,6 +84,9 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				Text = x.Name,
 				Value = x.Name
 			});
+			if (viewModel.SelectedRoles.Contains("Admin") && !User.IsInRole("Admin")) // Förhindra att någon annan än admin skapar en ny admin
+				return new StatusCodeResult(403); // Forbidden
+
 			if (ModelState.IsValid)
 			{
 				var user = new ApplicationUser { UserName = viewModel.Email, Email = viewModel.Email, SignupDate = DateTime.Today, Name = viewModel.Name };
@@ -158,27 +161,27 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				if (user == null)
 					return new StatusCodeResult(404);
 
-				user.UserName = viewModel.Email;
-				user.Email = viewModel.Email;
-				user.Name = viewModel.Name;
 				var userRoles = await _userManager.GetRolesAsync(user);
 				if (userRoles.Contains("Admin") && !User.IsInRole("Admin")) // Förhindra att någon annan än admin ändrar admin
 					return new StatusCodeResult(403); // Forbidden
 
+				user.UserName = viewModel.Email;
+				user.Email = viewModel.Email;
+				user.Name = viewModel.Name;
 				viewModel.SelectedRoles = viewModel.SelectedRoles ?? new string[] { };
 				var result = await _userManager.AddToRolesAsync(user, viewModel.SelectedRoles.Except(userRoles).ToList<string>());
 
 				if (!result.Succeeded)
 				{
 					ModelState.AddModelError("", result.Errors.First().Description);
-					return View();
+					return View(viewModel);
 				}
 				result = await _userManager.RemoveFromRolesAsync(user, userRoles.Except(viewModel.SelectedRoles).ToList<string>());
 
 				if (!result.Succeeded)
 				{
 					ModelState.AddModelError("", result.Errors.First().Description);
-					return View();
+					return View(viewModel);
 				}
 				TempData["Message"] = "Användare uppdaterad!";
 				return RedirectToAction("Index");

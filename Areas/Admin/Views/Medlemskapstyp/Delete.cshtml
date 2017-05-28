@@ -6,7 +6,11 @@
 	<h2>@ViewData["Title"]</h2>
 	<hr />
 
-	<h3 class="page-header">@Model.Name @Model.Price</h3>
+	<h3 class="page-header">
+		@Model.Name <br>
+		@Model.Price kr <br>
+		@Model.LengthInYears år
+	</h3>
 
 	<form method="post" asp-action="Delete" enctype="multipart/form-data" class="form-horizontal col-md-9" role="form">
 		<div class="form-group">

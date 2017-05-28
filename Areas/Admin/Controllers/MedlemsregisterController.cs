@@ -24,14 +24,14 @@ namespace SPIIKcom.Areas.Admin.Controllers
 
 		public async Task<IActionResult> Index(string sort = "", string name = "")
 		{
-			ViewData["FirstNameSort"] = string.IsNullOrWhiteSpace(sort) ? "FirstNameDesc" : "";
-			ViewData["LastNameSort"] = sort == "LastNameDesc" ? "LastName" : "LastNameDesc";
-			ViewData["JoinDateSort"] = sort == "JoinDateDesc" ? "JoinDate" : "JoinDateDesc";
-			ViewData["ExpireDateSort"] = sort == "ExpireDateDesc" ? "ExpireDate" : "ExpireDateDesc";
+			ViewData["FirstNameSort"] = string.IsNullOrWhiteSpace(sort) ? "FirstName" : "FirstNameDesc";
+			ViewData["LastNameSort"] = sort == "LastName" ? "LastNameDesc" : "LastName";
+			ViewData["JoinDateSort"] = sort == "JoinDate" ? "JoinDateDesc" : "JoinDate";
+			ViewData["ExpireDateSort"] = sort == "ExpireDate" ? "ExpireDateDesc" : "ExpireDate";
 			ViewData["CurrentFilterName"] = name;
 
+			// TODO : Pagedlist?
 			var model = _db.Members.AsQueryable();
-
 			// Search on first/lastname
 			if (!string.IsNullOrWhiteSpace(name))
 				model = model.Where(m => m.FirstName.IndexOf(name, StringComparison.OrdinalIgnoreCase) > -1
@@ -84,8 +84,6 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				await _db.SaveChangesAsync();
 				TempData["Message"] = "Medlem registrerad!";
 				return RedirectToAction("Index");
-
-				// TODO : Postback Selectlist MembershipTypes so we can return the viewmodel if error.
 			}
 			viewModel.MembershipTypes = await GetMembershipTypes("Välj typ av medlemskap");
 			return View(viewModel);
@@ -100,6 +98,12 @@ namespace SPIIKcom.Areas.Admin.Controllers
 
 			var viewModel = new EditMemberViewModel(model);
 			viewModel.MembershipTypes = await GetMembershipTypes("Uppdatera medlemskapet med");
+			if (viewModel.ExpireDate < DateTime.Today)
+				viewModel.ExpireStatus = "danger";
+			else if (viewModel.ExpireDate < DateTime.Today.AddMonths(1))
+				viewModel.ExpireStatus = "warning";
+			else
+				viewModel.ExpireStatus = "normal";
 			return View(viewModel);
 		}
 
@@ -109,9 +113,6 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			if (ModelState.IsValid)
 			{
 				var membershipType = await _db.MembershipTypes.FindAsync((int)viewModel.MembershipTypeId);
-
-
-				// TODO : Postback Selectlist MembershipTypes so we can return the viewmodel if error.
 
 				var model = await _db.Members.FindAsync(viewModel.Id);
 				if (model == null)
@@ -127,8 +128,11 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				model.Email = viewModel.Email;
 				model.Phone = viewModel.Phone;
 				model.Program = viewModel.Program;
+				// Om förnyelse/öka medlemskapet
 				if (viewModel.MembershipTypeId > 0)
 				{
+					// Har det tidigare medlemskapet gått ut när man lägger till så ta från dagens datum.
+					// Annars så läggs perioden på det redan aktiva medlemskapet.
 					if (model.ExpireDate < DateTime.Today)
 						model.ExpireDate = DateTime.Today.AddYears(membershipType.LengthInYears);
 					else
@@ -139,6 +143,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				TempData["Message"] = "Medlem uppdaterad!";
 				return RedirectToAction("Index");
 			}
+			viewModel.MembershipTypes = await GetMembershipTypes("Uppdatera medlemskapet med");
 			return View(viewModel);
 		}
 		//

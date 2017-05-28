@@ -93,7 +93,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 
 				_db.MembershipTypes.Remove(model);
 				await _db.SaveChangesAsync();
-				TempData["Message"] = "stadga raderad!";
+				TempData["Message"] = "Medlemstyp raderad!";
 				return RedirectToAction("Index");
 			}
 			return View();

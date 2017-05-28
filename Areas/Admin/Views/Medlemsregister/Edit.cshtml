@@ -5,7 +5,7 @@
 <div class="col-sm-9">
 	<h2>@ViewData["Title"]</h2>
 	<hr />
-	<form method="post" class="form-horizontal" role="form">
+	<form method="post" asp-action="Edit" class="form-horizontal" role="form">
 		<div class="form-group">
 			<label asp-for="FirstName" class="col-md-2 control-label"></label>
 			<div class="col-md-10">
@@ -79,7 +79,7 @@
 		<div class="form-group">
 			<label asp-for="ExpireDate" class="col-md-2 control-label"></label>
 			<div class="col-md-10">
-				<input asp-for="ExpireDate" class="form-control" disabled/>
+				<input asp-for="ExpireDate" class="form-control @Model.ExpireStatus" disabled/>
 			</div>
 		</div>
 		<div class="form-group">

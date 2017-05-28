@@ -118,5 +118,6 @@ namespace SPIIKcom.ViewModels
 		[DataType(DataType.Date)]
 		[DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
 		public DateTime ExpireDate { get; }
+		public string ExpireStatus { get; set; }
 	}
 }

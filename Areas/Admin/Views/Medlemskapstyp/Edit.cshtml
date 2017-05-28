@@ -35,17 +35,14 @@
 				<button type="submit" class="btn btn-success">
 					<i class="fa fa-floppy-o fa-lg"></i>&nbsp; Spara
 				</button>
-				@if(User.IsInRole("Admin"))
-				{
-					<a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">
-						<i class="fa fa-trash-o fa-lg"></i>&nbsp; Radera</a>
-				}
+				<a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">
+				<i class="fa fa-trash-o fa-lg"></i>&nbsp; Radera</a>
 			</div>
 		</div>
 	</form>
 </div>
 @section Scripts {
-		@{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+	@{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 	<script>
 		// The field must be a number. Decimalfields with a comma.
 		// Override the validation functions of jquery.validate.js

@@ -39,19 +39,22 @@ namespace SPIIKcom.Controllers
 		//[AjaxOnly]
 		public IActionResult SendContactForm(ContactQuestionViewModel viewModel)
 		{
-			string msg = "what what";
-			bool success = false;
-			try
-			{
-				// Send email
-				success = true;
-			}
-			catch (Exception ex)
-			{
-				// log ex.Message?
-				msg = "Error while sending.";
-			}
 
+			string msg = "what what";
+			if (ModelState.IsValid)
+			{
+				bool success = false;
+				try
+				{
+					// Send email
+					success = true;
+				}
+				catch (Exception ex)
+				{
+					// log ex.Message?
+					msg = "Error while sending.";
+				}
+			}
 			return Json(msg);
 		}
 		[HttpPost]
