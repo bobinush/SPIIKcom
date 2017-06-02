@@ -22,6 +22,7 @@ namespace SPIIKcom.Models.AccountViewModels
 		public string ConfirmPassword { get; set; }
 		public string Name { get; set; }
 		public IEnumerable<SelectListItem> RolesList { get; set; }
+		[Required]
 		[Display(Name = "Användaroller")]
 		public string[] SelectedRoles { get; set; }
 	}

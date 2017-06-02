@@ -13,6 +13,7 @@ namespace SPIIKcom.Models.AccountViewModels
 		[EmailAddress]
 		public string Email { get; set; }
 		public string Name { get; set; }
+		[Required]
 		[Display(Name = "Användaroller")]
 		public string[] SelectedRoles { get; set; }
 		public IEnumerable<SelectListItem> RolesList { get; set; }

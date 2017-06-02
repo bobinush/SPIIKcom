@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
@@ -36,7 +36,9 @@ namespace SPIIKcom.Controllers
 
 		public IActionResult Error()
 		{
-			return View();
+			var statusCode = TempData["Error"].ToString();
+			statusCode += " " + ((HttpStatusCode)int.Parse(statusCode)).ToString(); ;
+			return View("Error", statusCode);
 		}
 
 		[HttpPost]

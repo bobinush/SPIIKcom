@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -152,7 +153,10 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		{
 			var model = await _db.Members.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
 			if (model == null)
-				return new StatusCodeResult(404);
+			{
+				TempData["Error"] = (int)HttpStatusCode.NotFound;
+				return RedirectToAction("Error", "Home", new { area = "" });
+			}
 
 			return View(model);
 		}
@@ -164,7 +168,10 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			{
 				var model = await _db.Members.FindAsync(id);
 				if (model == null)
-					return new StatusCodeResult(404);
+				{
+					TempData["Error"] = (int)HttpStatusCode.NotFound;
+					return RedirectToAction("Error", "Home", new { area = "" });
+				}
 
 				_db.Members.Remove(model);
 				await _db.SaveChangesAsync();

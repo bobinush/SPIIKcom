@@ -1,7 +1,14 @@
-﻿@{
-    ViewData["Title"] = "Error";
+﻿@model string
+@{
+	ViewData["Title"] = "Error";
 }
-<h2>@ViewData["Title"].</h2>
-<h3>@ViewData["Message"]</h3>
 
-<p>Something unexpected happened.</p>
+<h2 class="text-danger">@ViewData["Title"]</h2>
+@if (!string.IsNullOrWhiteSpace(Model))
+{
+	<h2 class="text-danger">@Model</h2>
+}
+else
+{
+	<h2 class="text-danger">An error occurred while processing your request.</h2>
+}

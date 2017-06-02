@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using SPIIKcom.Models;
 using System.Collections.Generic;
 using SPIIKcom.ViewModels;
+using System.Net;
 
 namespace SPIIKcom.Areas.Admin.Controllers
 {
@@ -74,7 +75,10 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		{
 			var model = await _db.Stadgar.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
 			if (model == null)
-				return new StatusCodeResult(404);
+			{
+				TempData["Error"] = (int)HttpStatusCode.NotFound;
+				return RedirectToAction("Error", "Home", new { area = "" });
+			}
 
 			return View(model);
 		}
@@ -86,7 +90,10 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			{
 				var model = await _db.Stadgar.FindAsync(id);
 				if (model == null)
-					return new StatusCodeResult(404);
+				{
+					TempData["Error"] = (int)HttpStatusCode.NotFound;
+					return RedirectToAction("Error", "Home", new { area = "" });
+				}
 
 				_db.Stadgar.Remove(model);
 				await _db.SaveChangesAsync();

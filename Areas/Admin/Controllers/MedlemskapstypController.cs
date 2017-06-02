@@ -8,6 +8,7 @@ using SPIIKcom.Models;
 using System.Collections.Generic;
 using SPIIKcom.ViewModels;
 using System;
+using System.Net;
 
 namespace SPIIKcom.Areas.Admin.Controllers
 {
@@ -77,7 +78,10 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		{
 			var model = await _db.MembershipTypes.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
 			if (model == null)
-				return new StatusCodeResult(404);
+			{
+				TempData["Error"] = (int)HttpStatusCode.NotFound;
+				return RedirectToAction("Error", "Home", new { area = "" });
+			}
 
 			return View(model);
 		}
@@ -89,7 +93,10 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			{
 				var model = await _db.MembershipTypes.FindAsync(id);
 				if (model == null)
-					return new StatusCodeResult(404);
+				{
+					TempData["Error"] = (int)HttpStatusCode.NotFound;
+					return RedirectToAction("Error", "Home", new { area = "" });
+				}
 
 				_db.MembershipTypes.Remove(model);
 				await _db.SaveChangesAsync();

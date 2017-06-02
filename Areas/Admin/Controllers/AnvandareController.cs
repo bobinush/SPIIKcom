@@ -74,15 +74,18 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		{
 			viewModel.RolesList = _roleManager.Roles.ToList().Select(x => new SelectListItem()
 			{
-				Selected = viewModel.SelectedRoles.Contains(x.Name), // För att få de valda roller valda igen.
+				Selected = (viewModel.SelectedRoles?.Contains(x.Name) ?? false), // För att få de valda roller valda igen.
 				Text = x.Name,
 				Value = x.Name
 			});
-			if (viewModel.SelectedRoles.Contains("Admin") && !User.IsInRole("Admin")) // Förhindra att någon annan än admin skapar en ny admin
-				return new StatusCodeResult(403); // Forbidden
-
 			if (ModelState.IsValid)
 			{
+				if ((bool)viewModel.SelectedRoles?.Contains("Admin") && !User.IsInRole("Admin")) // Förhindra att någon annan än admin skapar en ny admin
+				{
+					TempData["Error"] = (int)HttpStatusCode.Forbidden;
+					return RedirectToAction("Error", "Home", new { area = "" });
+				}
+
 				var user = new ApplicationUser { UserName = viewModel.Email, Email = viewModel.Email, SignupDate = DateTime.Today, Name = viewModel.Name };
 				var adminresult = await _userManager.CreateAsync(user, viewModel.Password);
 
@@ -95,29 +98,38 @@ namespace SPIIKcom.Areas.Admin.Controllers
 						if (!result.Succeeded)
 						{
 							ModelState.AddModelError("", result.Errors.First().Description);
-							return View();
+							return View(viewModel);
 						}
 					}
 				}
 				else
 				{
-					ModelState.AddModelError("", adminresult.Errors.First().Description);
-					return View();
+					if (adminresult.Errors.First().Code == "DuplicateUserName")
+						ModelState.AddModelError("", adminresult.Errors.First().Description.Replace("User name", "Email"));
+					else
+						ModelState.AddModelError("", adminresult.Errors.First().Description);
+					return View(viewModel);
 				}
 				TempData["Message"] = "Användare registrerad!";
 				return RedirectToAction("Index");
 			}
-			return View();
+			return View(viewModel);
 		}
 
 		public async Task<IActionResult> Edit(string id)
 		{
 			if (id == null)
-				return new StatusCodeResult(400); // BadRequest
+			{
+				TempData["Error"] = (int)HttpStatusCode.BadRequest;
+				return RedirectToAction("Error", "Home", new { area = "" });
+			}
 
 			var user = await _userManager.FindByIdAsync(id);
 			if (user == null)
-				return new StatusCodeResult(404);
+			{
+				TempData["Error"] = (int)HttpStatusCode.NotFound;
+				return RedirectToAction("Error", "Home", new { area = "" });
+			}
 
 			var userRoles = await _userManager.GetRolesAsync(user);
 			var model = new EditUserViewModel()
@@ -140,7 +152,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		{
 			viewModel.RolesList = _roleManager.Roles.ToList().Select(x => new SelectListItem()
 			{
-				Selected = viewModel.SelectedRoles.Contains(x.Name), // För att få de valda roller valda igen.
+				Selected = (viewModel.SelectedRoles?.Contains(x.Name) ?? false), // För att få de valda roller valda igen.
 				Text = x.Name,
 				Value = x.Name
 			});
@@ -149,11 +161,17 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			{
 				var user = await _userManager.FindByIdAsync(viewModel.Id);
 				if (user == null)
-					return new StatusCodeResult(404);
+				{
+					TempData["Error"] = (int)HttpStatusCode.NotFound;
+					return RedirectToAction("Error", "Home", new { area = "" });
+				}
 
 				var userRoles = await _userManager.GetRolesAsync(user);
 				if (userRoles.Contains("Admin") && !User.IsInRole("Admin")) // Förhindra att någon annan än admin ändrar admin
-					return new StatusCodeResult(403); // Forbidden
+				{
+					TempData["Error"] = (int)HttpStatusCode.Forbidden;
+					return RedirectToAction("Error", "Home", new { area = "" });
+				}
 
 				user.UserName = viewModel.Email;
 				user.Email = viewModel.Email;
@@ -184,11 +202,17 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		public async Task<IActionResult> Delete(string id)
 		{
 			if (id == null)
-				return new StatusCodeResult(400); // BadRequest
+			{
+				TempData["Error"] = (int)HttpStatusCode.BadRequest;
+				return RedirectToAction("Error", "Home", new { area = "" });
+			}
 
 			var user = await _userManager.FindByIdAsync(id);
 			if (user == null)
-				return new StatusCodeResult(404);
+			{
+				TempData["Error"] = (int)HttpStatusCode.NotFound;
+				return RedirectToAction("Error", "Home", new { area = "" });
+			}
 
 			return View(user);
 		}
@@ -200,11 +224,17 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			if (ModelState.IsValid)
 			{
 				if (id == null)
-					return new StatusCodeResult(400); // BadRequest
+				{
+					TempData["Error"] = (int)HttpStatusCode.BadRequest;
+					return RedirectToAction("Error", "Home", new { area = "" });
+				}
 
 				var user = await _userManager.FindByIdAsync(id);
 				if (user == null)
-					return new StatusCodeResult(404);
+				{
+					TempData["Error"] = (int)HttpStatusCode.NotFound;
+					return RedirectToAction("Error", "Home", new { area = "" });
+				}
 
 				var result = await _userManager.DeleteAsync(user);
 				if (!result.Succeeded)
