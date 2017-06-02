@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
 using SPIIKcom.Data;
 using SPIIKcom.Filters;
+using SPIIKcom.Services;
 using SPIIKcom.ViewModels;
 
 namespace SPIIKcom.Controllers
@@ -15,19 +16,22 @@ namespace SPIIKcom.Controllers
 	public class HomeController : Controller
 	{
 		private readonly ApplicationDbContext _db;
-		public HomeController(ApplicationDbContext context)
+		private readonly SpiikService _spiikService;
+		public HomeController(ApplicationDbContext context, SpiikService spiikservice)
 		{
 			_db = context;
+			_spiikService = spiikservice;
 		}
 		public async Task<IActionResult> Index()
 		{
 			// TODO : Get Instagram posts.
-			return View();
+			List<string> model = _spiikService.GetImages("slideshow");
+			return View(model);
 		}
 
 		public async Task<IActionResult> Kontakt()
 		{
-			return View(await _db.Organization.AsNoTracking().FirstOrDefaultAsync());
+			return View(await _db.Organization.AsNoTracking().SingleOrDefaultAsync());
 		}
 
 		public IActionResult Error()

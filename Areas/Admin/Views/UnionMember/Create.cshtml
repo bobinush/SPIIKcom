@@ -1,12 +1,12 @@
 @model UnionMemberViewModel
 @{
-	ViewData["Title"] = "Skapa ny användare";
+	ViewData["Title"] = "Skapa ny föreningsmedlem";
 }
 <div class="col-sm-9">
 	<h2>@ViewData["Title"]</h2>
 	<hr />
 	<div class="col-md-push-7 col-md-5">
-		<img id="profile-picture" class="img-circle img-responsive" src="~/images/@Model.PictureSrc" alt="">
+		<img class="img-circle img-responsive upload-picture-preview-profile" src="~/images/@Model.PictureSrc" alt="">
 	</div>
 	<form method="post" asp-action="Create" enctype="multipart/form-data" class="form-horizontal  col-md-pull-5 col-md-7" role="form">
 		<div asp-validation-summary="All" class="text-error"></div>
@@ -30,7 +30,7 @@
 		</div>
 		<div class="form-group row">
 			<label asp-for="Picture" class="btn btn btn-default"><i class="fa fa-upload fa-lg"></i>&nbsp; Ladda upp en profilbild</label>
-			<input asp-for="Picture" type="file" style="display: none;">
+			<input asp-for="Picture" type="file" style="display: none;" class="upload-picture" data-preview="profile">
 			<span id="spinner"></span>
 		</div>
 		<div class="form-group">

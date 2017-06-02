@@ -146,8 +146,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			viewModel.MembershipTypes = await GetMembershipTypes("Uppdatera medlemskapet med");
 			return View(viewModel);
 		}
-		//
-		// GET: /Users/Delete/5
+
 		[HttpGet]
 		public async Task<IActionResult> Delete(int id)
 		{
@@ -158,8 +157,6 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			return View(model);
 		}
 
-		//
-		// POST: /Users/Delete/5
 		[HttpPost, ActionName("Delete")]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{

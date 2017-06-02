@@ -30,6 +30,12 @@ textarea {
 	padding: 0 15px;
 }
 
+.navbar-logo img {
+	height: 51px;
+	width: 100px;
+	object-fit: cover;
+}
+
 
 /* Carousel */
 
@@ -105,6 +111,20 @@ textarea {
 	-webkit-box-shadow: 0 8px 6px -6px black;
 	-moz-box-shadow: 0 8px 6px -6px black;
 	box-shadow: 0 8px 6px -6px black;
+}
+
+
+/* Previews */
+
+.slideshow-preview img,
+.img-preview img {
+	height: 200px;
+	width: 200px;
+	object-fit: cover;
+}
+
+.img-preview img {
+	border-radius: 50%;
 }
 
 .btn-space-right {

@@ -22,7 +22,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 {
 	[Area("Admin")]
 	[Authorize(Roles = "Admin, Styrelse")]
-	public class UsersController : Controller
+	public class AnvandareController : Controller
 	{
 		private readonly ApplicationDbContext _db;
 		private readonly UserManager<ApplicationUser> _userManager;
@@ -32,7 +32,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		private readonly ISmsSender _smsSender;
 		private readonly ILogger _logger;
 
-		public UsersController(
+		public AnvandareController(
 			ApplicationDbContext context,
 			UserManager<ApplicationUser> userManager,
 			RoleManager<IdentityRole> roleManager,
@@ -50,16 +50,12 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			_logger = loggerFactory.CreateLogger<UnionMemberController>();
 		}
 
-		//
-		// GET: /Users/
 		public async Task<IActionResult> Index()
 		{
 			var model = await _userManager.Users.ToListAsync();
 			return View(model);
 		}
 
-		//
-		// GET: /Users/Create
 		public async Task<IActionResult> Create()
 		{
 			var viewModel = new RegisterUserViewModel
@@ -73,8 +69,6 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			return View(viewModel);
 		}
 
-		//
-		// POST: /Users/Create
 		[HttpPost]
 		public async Task<IActionResult> Create(RegisterUserViewModel viewModel)
 		{
@@ -116,8 +110,6 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			return View();
 		}
 
-		//
-		// GET: /Users/Edit/1
 		public async Task<IActionResult> Edit(string id)
 		{
 			if (id == null)
@@ -143,8 +135,6 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			return View(model);
 		}
 
-		//
-		// POST: /Users/Edit/5
 		[HttpPost]
 		public async Task<IActionResult> Edit(EditUserViewModel viewModel)
 		{
@@ -190,9 +180,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			return View(viewModel);
 		}
 
-		//
-		// GET: /Users/Delete/5
-		[Authorize(Roles = "Admin")] // Förhindra att någon tar bort admin
+		[Authorize(Roles = "Admin")] // Förhindra att någon som inte är admin tar bort en admin
 		public async Task<IActionResult> Delete(string id)
 		{
 			if (id == null)
@@ -205,8 +193,6 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			return View(user);
 		}
 
-		//
-		// POST: /Users/Delete/5
 		[Authorize(Roles = "Admin")] // Förhindra att någon tar bort admin
 		[HttpPost, ActionName("Delete")]
 		public async Task<IActionResult> DeleteConfirmed(string id)

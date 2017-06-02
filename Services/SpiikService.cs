@@ -32,37 +32,64 @@ namespace SPIIKcom.Services
 			_env = environment;
 		}
 
+		internal List<string> GetImages(string folder)
+		{
+			var bildList = new List<string>();
+			folder = Path.Combine("images", folder + "/").Replace("\\", "/");
+			string path = Path.Combine(_env.WebRootPath, folder);
+			if (Directory.Exists(path))
+			{
+				//bildList = Directory.GetFiles(path, "*.*", SearchOption.TopDirectoryOnly)
+				//					.Select(Path.GetFileName).ToList();
+				var allowedExts = new List<string> { ".jpg", ".jpeg", ".gif", ".png", ".bmp" };
+				DirectoryInfo dir = new DirectoryInfo(Path.GetDirectoryName(path));
+				FileInfo[] subFiles = dir.GetFiles().Where(s => allowedExts.Contains(Path.GetExtension(s.Extension))).ToArray();
+
+				bildList.AddRange(subFiles.Select(x => "/" + folder + x.Name));
+			}
+			return bildList;
+		}
+
+		/// <summary>
+		/// Saves multiple files with the fileName + index
+		/// </summary>
+		/// <param name="files">File to be saved</param>
+		/// <param name="folder">A folder inside wwwroot</param>
+		/// <param name="fileName">Optional: New filename (without extension). The new filename will be in Kebab Case.</param>
+		/// <returns>saved: true/false and filename with extension or errormessage</returns>
+		internal async Task SaveFiles(List<IFormFile> files, string folder, string fileName)
+		{
+			for (int i = 0; i < files.Count; i++)
+			{
+				await SaveFile(files[i], folder, fileName + i);
+			}
+		}
 		/// <summary>
 		/// Saves a file
 		/// </summary>
 		/// <param name="file">File to be saved</param>
-		/// <param name="path">wwwroot</param>
 		/// <param name="folder">A folder inside wwwroot</param>
 		/// <param name="fileName">Optional: New filename (without extension). The new filename will be in Kebab Case.</param>
-		/// <returns>Filename with extension or errormessage</returns>
-		internal async Task<Tuple<bool, string>> SaveFile(IFormFile file, string path, string folder, string fileName = null)
+		/// <returns>saved: true/false and filename with extension or errormessage</returns>
+		internal async Task<Tuple<bool, string>> SaveFile(IFormFile file, string folder, string fileName = null)
 		{
 			string msg = "";
 			bool success = false;
-			if (file.Length > 0)
+			if (file.Length > 5000000) // 5 MB limit
+				msg = "The picture size cannot exceed 5MB.";
+			else
 			{
-				if (file.Length > 5000000) // 5 MB limit
-					msg = "The picture size cannot exceed 5MB.";
-				else
+				string fileNameKebabCase = HtmlExtensions.URLFriendly(fileName ?? file.FileName);
+				string filePath = Path.Combine(_env.WebRootPath, folder, fileNameKebabCase);
+				if (!filePath.EndsWith(Path.GetExtension(file.FileName)))
+					filePath += Path.GetExtension(file.FileName);
+
+				using (var stream = new FileStream(filePath, FileMode.Create))
 				{
-
-					string fileNameKebabCase = (fileName ?? file.FileName).ToLower().Replace(" ", "-");
-					string filePath = Path.Combine(path, folder, fileNameKebabCase);
-					if (!filePath.EndsWith(Path.GetExtension(file.FileName)))
-						filePath += Path.GetExtension(file.FileName);
-
-					using (var stream = new FileStream(filePath, FileMode.Create))
-					{
-						await file.CopyToAsync(stream);
-					}
-					msg = Path.GetFileName(filePath);
-					success = true;
+					await file.CopyToAsync(stream);
 				}
+				msg = Path.GetFileName(filePath);
+				success = true;
 			}
 			return new Tuple<bool, string>(success, msg);
 		}

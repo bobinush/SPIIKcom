@@ -1,6 +1,9 @@
-﻿@{
+﻿@model List<string>
+@{
 	ViewData["Title"] = "Home Page";
 }
+@if (Model?.Count > 0)
+{
 <!-- Header Carousel -->
 <!-- TODO : Get Carousel working within a div.container -->
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -13,31 +16,17 @@
 
 	<!-- Wrapper for slides -->
 	<div class="carousel-inner">
-		<div class="item active">
-			<div style="background-image:url(http://placehold.it/1900x1080&text=Slide%20One)" class="slider-size">
-				<div class="carousel-caption">
+		@for (int i = 0; i < Model.Count; i++)
+		{
+		<div class="item @(i == 0 ? "active" : "")">
+			<div style="background-image:url(@Model[i])" class="slider-size">
+				<!--<div class="carousel-caption">
 					<h2>Headline</h2>
 					<p>Content text to go here. </p>
-				</div>
+				</div>-->
 			</div>
 		</div>
-		<div class="item">
-			<div style="background-image:url(http://placehold.it/1900x1080&text=Slide%20Two)" class="slider-size">
-				<div class="carousel-caption">
-					<h2>Headline</h2>
-					<p>Content text to go here. </p>
-				</div>
-			</div>
-		</div>
-		<div class="item">
-			<div style="background-image:url(http://placehold.it/1900x1080&text=Slide%20Three)" class="slider-size">
-				<div class="carousel-caption">
-					<h2>Headline</h2>
-					<p>Content text to go here. </p>
-				</div>
-			</div>
-		</div>
-
+		}
 		<!-- Left and right controls -->
 		<a class="left carousel-control" href="#myCarousel" data-slide="prev">
 			<span class="glyphicon glyphicon-chevron-left"></span>
@@ -49,6 +38,7 @@
 		</a>
 	</div>
 </div>
+}
 <!-- Page Content -->
 <!-- Social Media Section -->
 <div class="row">

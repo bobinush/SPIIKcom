@@ -43,24 +43,18 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			_spiikService = spiikService;
 		}
 
-		//
-		// GET: /Users/
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
 			return View(await _db.UnionMembers.AsNoTracking().ToListAsync());
 		}
 
-		//
-		// GET: /Users/Create
 		[HttpGet]
 		public async Task<IActionResult> Create()
 		{
 			return View(new UnionMemberViewModel { PictureSrc = "SPIIK-logga.png" });
 		}
 
-		//
-		// POST: /Users/Create
 		[HttpPost]
 		public async Task<IActionResult> Create(UnionMemberViewModel viewModel)
 		{
@@ -70,7 +64,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				var webRoot = _env.WebRootPath;
 				if (viewModel.Picture != null)
 				{
-					Tuple<bool, string> result = await _spiikService.SaveFile(viewModel.Picture, webRoot, "images", viewModel.Name);
+					Tuple<bool, string> result = await _spiikService.SaveFile(viewModel.Picture, "images/unionmembers", viewModel.Name);
 					if (result.Item1) // Success saving
 					{
 						if (!string.IsNullOrWhiteSpace(result.Item2)) // Spara endast om en bild har blivit uppladdad.
@@ -90,8 +84,6 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			return View();
 		}
 
-		//
-		// GET: /Users/Edit/1
 		[HttpGet]
 		public async Task<IActionResult> Edit(int id)
 		{
@@ -103,8 +95,6 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			return View(viewModel);
 		}
 
-		//
-		// POST: /Users/Edit/5
 		[HttpPost]
 		[RequestFormSizeLimit(2097152)] // Max image size 2 MB
 		public async Task<IActionResult> Edit(UnionMemberViewModel viewModel)
@@ -123,10 +113,9 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				model.Phone = viewModel.Phone;
 				model.Quote = viewModel.Quote;
 
-				var webRoot = _env.WebRootPath;
-				if (viewModel.Picture != null)
+				if (viewModel.Picture?.Length > 0)
 				{
-					Tuple<bool, string> result = await _spiikService.SaveFile(viewModel.Picture, webRoot, "images", viewModel.Name);
+					Tuple<bool, string> result = await _spiikService.SaveFile(viewModel.Picture, "images/unionmembers", viewModel.Name);
 					if (result.Item1) // Success saving
 					{
 						if (!string.IsNullOrWhiteSpace(result.Item2)) // Spara endast om en bild har blivit uppladdad.
@@ -145,8 +134,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			}
 			return View();
 		}
-		//
-		// GET: /Users/Delete/
+
 		[HttpGet]
 		public async Task<IActionResult> Delete(int id)
 		{
@@ -157,8 +145,6 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			return View(user);
 		}
 
-		//
-		// POST: /Users/Delete/5
 		[HttpPost, ActionName("Delete")]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
