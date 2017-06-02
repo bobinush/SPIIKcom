@@ -23,10 +23,10 @@ function success() {
 setTimeout(() => $(".alert").fadeOut(500), 1000);
 
 // upload profile picture
-function readURL(input, previewId, spinner) {
+function readURL(input, previewName, spinner) {
 	if (input.files) {
 		var count = 0;
-		var selectorSrc = ".upload-picture-preview-" + previewId;
+		var selectorSrc = ".upload-picture-preview-" + previewName;
 		$(selectorSrc).empty();
 		for (var i = 0; i < input.files.length; i++) {
 			var reader = new FileReader();
@@ -45,8 +45,8 @@ function readURL(input, previewId, spinner) {
 
 // upload profile picture
 $(".upload-picture").change(function () {
-	var previewId = $(this).attr("data-preview");
+	var previewName = $(this).attr("data-preview");
 	var spinner = $('#spinner');
 	spinner.addClass('spinner');
-	readURL(this, previewId, spinner);
+	readURL(this, previewName, spinner);
 });

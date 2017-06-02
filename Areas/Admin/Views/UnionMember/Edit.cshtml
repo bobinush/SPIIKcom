@@ -6,8 +6,9 @@
 	<h2>@ViewData["Title"]</h2>
 	<hr />
 	<div class="col-md-push-7 col-md-5">
-		<div class="img-preview img-circle img-responsive  upload-picture-preview-profile"></div>
-		<!--<img class="img-circle img-responsive" src="~/images/@Model.PictureSrc" alt="">-->
+		<div class="img-preview img-circle img-responsive upload-picture-preview-profile">
+			<img src="~/images/unionmembers/@Model.PictureSrc" alt="">
+		</div>
 	</div>
 	<form method="post" asp-action="Edit" enctype="multipart/form-data" class="form-horizontal col-md-pull-5 col-md-7" role="form">
 		<div asp-validation-summary="All" class="text-error"></div>

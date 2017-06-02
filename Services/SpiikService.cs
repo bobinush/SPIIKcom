@@ -80,15 +80,17 @@ namespace SPIIKcom.Services
 			else
 			{
 				string fileNameKebabCase = HtmlExtensions.URLFriendly(fileName ?? file.FileName);
-				string filePath = Path.Combine(_env.WebRootPath, folder, fileNameKebabCase);
-				if (!filePath.EndsWith(Path.GetExtension(file.FileName)))
-					filePath += Path.GetExtension(file.FileName);
+				string filePath = Path.Combine(_env.WebRootPath, folder);
+				string filePathAndName = Path.Combine(filePath, fileNameKebabCase);
+				if (!filePathAndName.EndsWith(Path.GetExtension(file.FileName)))
+					filePathAndName += Path.GetExtension(file.FileName);
 
-				using (var stream = new FileStream(filePath, FileMode.Create))
+				Directory.CreateDirectory(filePath);
+				using (var stream = new FileStream(filePathAndName, FileMode.Create))
 				{
 					await file.CopyToAsync(stream);
 				}
-				msg = Path.GetFileName(filePath);
+				msg = Path.GetFileName(filePathAndName);
 				success = true;
 			}
 			return new Tuple<bool, string>(success, msg);
