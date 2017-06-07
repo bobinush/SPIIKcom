@@ -13,7 +13,7 @@ namespace SPIIKcom.Models
 		public decimal Price { get; set; }
 		[Required]
 		[Display(Name = "Längd (år)")]
-		[Range(0, 10)]
+		[Range(0, 10, ErrorMessage = "{0} måste vara mellan {1} och {2}.")]
 		public int LengthInYears { get; set; }
 	}
 }
