@@ -70,7 +70,7 @@ namespace SPIIKcom.Services
 		/// <param name="file">File to be saved</param>
 		/// <param name="folder">A folder inside wwwroot</param>
 		/// <param name="fileName">Optional: New filename (without extension). The new filename will be in Kebab Case.</param>
-		/// <returns>saved: true/false and filename with extension or errormessage</returns>
+		/// <returns>saved: true/false and relative path+filename with extension or errormessage</returns>
 		internal async Task<Tuple<bool, string>> SaveFile(IFormFile file, string folder, string fileName = null)
 		{
 			string msg = "";
@@ -90,7 +90,7 @@ namespace SPIIKcom.Services
 				{
 					await file.CopyToAsync(stream);
 				}
-				msg = Path.GetFileName(filePathAndName);
+				msg = Path.Combine(folder, Path.GetFileName(filePathAndName));
 				success = true;
 			}
 			return new Tuple<bool, string>(success, msg);
