@@ -39,7 +39,7 @@ namespace SPIIKcom.Controllers
 		public async Task<IActionResult> Stadgar()
 		{
 			var model = await _db.Stadgar
-				.OrderBy(x => x.Id)
+				.OrderBy(x => x.Number)
 				.AsNoTracking()
 				.ToListAsync();
 
