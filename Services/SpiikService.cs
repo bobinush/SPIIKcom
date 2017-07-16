@@ -73,7 +73,7 @@ namespace SPIIKcom.Services
 		/// <returns>saved: true/false and relative path+filename with extension or errormessage</returns>
 		internal async Task<Tuple<bool, string>> SaveFile(IFormFile file, string folder, string fileName = null)
 		{
-			string msg = "";
+			string msg = "An error occured while saving the file.";
 			bool success = false;
 			if (file.Length > 5000000) // 5 MB limit
 				msg = "The picture size cannot exceed 5MB.";
@@ -85,7 +85,10 @@ namespace SPIIKcom.Services
 				if (!filePathAndName.EndsWith(Path.GetExtension(file.FileName)))
 					filePathAndName += Path.GetExtension(file.FileName);
 
-				Directory.CreateDirectory(filePath);
+				if (File.Exists(filePathAndName))
+					filePathAndName.Insert(filePathAndName.Length, DateTime.Now.ToString("yyyyMMddHHmmss"));
+
+				Directory.CreateDirectory(filePath); // Create directory unless it already exists.
 				using (var stream = new FileStream(filePathAndName, FileMode.Create))
 				{
 					await file.CopyToAsync(stream);

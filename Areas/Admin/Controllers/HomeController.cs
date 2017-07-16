@@ -34,7 +34,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			return View(viewModel);
 		}
 		[HttpPost]
-		[RequestFormSizeLimit(2097152)] // Max image size 2 MB
+		[RequestFormSizeLimit(5000000)] // Max image size 5 MB
 		public async Task<IActionResult> Index(ForeningViewModel viewModel)
 		{
 			if (ModelState.IsValid)

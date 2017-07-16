@@ -80,7 +80,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			if (model == null)
 			{
 				TempData["Error"] = (int)HttpStatusCode.NotFound;
-				return RedirectToAction("Error", "Home", new { area = "" });
+				return RedirectToAction(nameof(SPIIKcom.Controllers.HomeController.Error), "Home", new { area = "" });
 			}
 
 			return View(model);
@@ -95,7 +95,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				if (model == null)
 				{
 					TempData["Error"] = (int)HttpStatusCode.NotFound;
-					return RedirectToAction("Error", "Home", new { area = "" });
+					return RedirectToAction(nameof(SPIIKcom.Controllers.HomeController.Error), "Home", new { area = "" });
 				}
 
 				_db.MembershipTypes.Remove(model);

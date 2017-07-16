@@ -96,7 +96,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		[RequestFormSizeLimit(2097152)] // Max image size 2 MB
+		[RequestFormSizeLimit(5000000)] // Max image size 5 MB
 		public async Task<IActionResult> Edit(UnionMemberViewModel viewModel)
 		{
 			if (ModelState.IsValid)
@@ -105,7 +105,6 @@ namespace SPIIKcom.Areas.Admin.Controllers
 				if (model == null)
 					return RedirectToAction("Index");
 
-				model.Id = viewModel.Id;
 				model.Name = viewModel.Name;
 				model.Title = viewModel.Title;
 				model.UnionTypes = viewModel.UnionTypes;

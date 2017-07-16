@@ -70,7 +70,10 @@ namespace SPIIKcom.Controllers
 				if (result.Succeeded)
 				{
 					_logger.LogInformation(1, "User logged in.");
-					return RedirectToLocal(returnUrl);
+					if (!string.IsNullOrWhiteSpace(returnUrl))
+						return RedirectToLocal(returnUrl);
+					else
+						return RedirectToAction(nameof(Areas.Admin.Controllers.HomeController.Index), "Admin");
 				}
 				if (result.RequiresTwoFactor)
 				{
