@@ -19,6 +19,7 @@ namespace SPIIKcom.Data
 		public DbSet<UnionMember> UnionMembers { get; set; }
 		public DbSet<Organization> Organization { get; set; }
 		public DbSet<Stadga> Stadgar { get; set; }
+		public DbSet<IntroPersonal> IntroPersonal { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

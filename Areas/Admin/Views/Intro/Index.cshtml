@@ -1,0 +1,80 @@
+@model IntroViewModel
+@{
+	ViewData["Title"] = "Introduktion";
+}
+<div class="col-sm-9">
+	<h2>@ViewData["Title"]
+	</h2>
+	<h3>Personal
+		<span class="pull-right">
+			<a asp-action="Create" class="btn btn-default">Skapa ny STAB</a>
+			<a asp-action="Create" class="btn btn-default">Skapa ny Fadder</a>
+		</span>
+	</h3>
+	@if (TempData.ContainsKey("Message"))
+	{
+		<div class="alert alert-info alert-fixed alert-dismissable" role="alert">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong>@TempData["Message"]</strong>
+		</div>
+	}
+	<table class="table table-striped table-hover table-row-click">
+		<thead>
+			<tr>
+				<th>
+				</th>
+				<th>
+				</th>
+				<th>
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var user in Model.Personal) {
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => user.Name)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => user.Program)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => user.IntroType)
+					</td>
+					<td>
+						<a asp-action="Edit" asp-route-id="@user.Id">Redigera</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	<br>
+	<h3>Texter
+		<span class="pull-right">
+			<a asp-action="CreateText" class="btn btn-default">Skapa ny text</a>
+		</span>
+	</h3>
+	<table class="table table-striped table-hover table-row-click">
+		<thead>
+			<tr>
+				<th>
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var page in Model.Text) {
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => page.Name)
+					</td>
+					<td>
+						<a asp-action="EditText" asp-route-id="@page.Id">Redigera</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+
+</div>

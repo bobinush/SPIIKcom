@@ -76,7 +76,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 						return View();
 					}
 				}
-				await _db.UnionMembers.AddAsync(model);
+				await _db.AddAsync(model);
 				await _db.SaveChangesAsync();
 				TempData["Message"] = "Medlem skapad!";
 				return RedirectToAction("Index");
@@ -137,11 +137,11 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Delete(int id)
 		{
-			var user = await _db.UnionMembers.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
-			if (user == null)
+			var model = await _db.UnionMembers.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+			if (model == null)
 				return RedirectToAction("Index");
 
-			return View(user);
+			return View(model);
 		}
 
 		[HttpPost, ActionName("Delete")]
@@ -149,11 +149,11 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var user = await _db.UnionMembers.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
-				if (user == null)
+				var model = await _db.UnionMembers.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+				if (model == null)
 					return RedirectToAction("Index");
 
-				_db.UnionMembers.Remove(user);
+				_db.Remove(model);
 				await _db.SaveChangesAsync();
 				TempData["Message"] = "Medlem raderad!";
 				return RedirectToAction("Index");

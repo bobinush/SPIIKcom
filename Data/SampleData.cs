@@ -34,7 +34,7 @@ namespace SPIIKcom.Models
 
 				// Delete and create database
 				// uncomment this below when adding new data to seed.
-				//await db.Database.EnsureDeletedAsync();
+				// await db.Database.EnsureDeletedAsync();
 				if (await db.Database.EnsureCreatedAsync())
 				{
 					await InsertTestDataAsync(scopeServiceProvider);
@@ -68,13 +68,29 @@ namespace SPIIKcom.Models
 					new Member { PersonalNumber = "201701030101", FirstName = "Tjatte", LastName = "Anka", Email = "tjatte@anka.se", JoinDate = DateTime.Today.AddYears(-1), ExpireDate = DateTime.Today.AddMonths(4) }
 				);
 				context.UnionMembers.AddRange(
-					new UnionMember { Name = "Pernilla Johansson", Title = "Ordförande", UnionTypes = UnionTypeEnum.Styrelse, Email = "ordf@spiik.com", Quote = "Quote?", PictureSrc = "SPIIK-logga.png" },
-					new UnionMember { Name = "Didrik Fasth", Title = "Vice Ordförande Studiesocialt", UnionTypes = UnionTypeEnum.Styrelse, Email = "vordfss@spiik.com", Quote = "Quote?", PictureSrc = "SPIIK-logga.png" },
-					new UnionMember { Name = "Sofia Björkesjö", Title = "Vice Ordförande Utbildningsansvarig", UnionTypes = UnionTypeEnum.Styrelse, Email = "vordfuu@spiik.com", Quote = "Quote?", PictureSrc = "SPIIK-logga.png" },
-					new UnionMember { Name = "Robin Nowakowski", Title = "Kassör", UnionTypes = UnionTypeEnum.Styrelse, Email = "kassor@spiik.com", Quote = "Quote?", PictureSrc = "SPIIK-logga.png" },
-					new UnionMember { Name = "Simon Österdahl", Title = "Vice Kassör", UnionTypes = UnionTypeEnum.Styrelse | UnionTypeEnum.Sexmasteri, Email = "vkassor@spiik.com", Quote = "Quote?", PictureSrc = "SPIIK-logga.png" },
-					new UnionMember { Name = "Emma Lövgren", Title = "Sekreterare", UnionTypes = UnionTypeEnum.Styrelse, Email = "sekreterare@spiik.com", Quote = "Quote?", PictureSrc = "SPIIK-logga.png" },
-					new UnionMember { Name = "William Robertsson", Title = "Sexmästare", UnionTypes = UnionTypeEnum.Styrelse | UnionTypeEnum.Sexmasteri, Email = "sexmaster@spiik.com", Quote = "Quote?", PictureSrc = "SPIIK-logga.png" }
+					new UnionMember { Name = "Pernilla Johansson", Title = "Ordförande", UnionTypes = UnionTypeEnum.Styrelse, Email = "ordf@spiik.com", Quote = "Quote?", PictureSrc = "images/SPIIK-logga.png" },
+					new UnionMember { Name = "Didrik Fasth", Title = "Vice Ordförande Studiesocialt", UnionTypes = UnionTypeEnum.Styrelse, Email = "vordfss@spiik.com", Quote = "Quote?", PictureSrc = "images/SPIIK-logga.png" },
+					new UnionMember { Name = "Sofia Björkesjö", Title = "Vice Ordförande Utbildningsansvarig", UnionTypes = UnionTypeEnum.Styrelse, Email = "vordfuu@spiik.com", Quote = "Quote?", PictureSrc = "images/SPIIK-logga.png" },
+					new UnionMember { Name = "Robin Nowakowski", Title = "Kassör", UnionTypes = UnionTypeEnum.Styrelse, Email = "kassor@spiik.com", Quote = "Quote?", PictureSrc = "images/SPIIK-logga.png" },
+					new UnionMember { Name = "Simon Österdahl", Title = "Vice Kassör", UnionTypes = UnionTypeEnum.Styrelse | UnionTypeEnum.Sexmasteri, Email = "vkassor@spiik.com", Quote = "Quote?", PictureSrc = "images/SPIIK-logga.png" },
+					new UnionMember { Name = "Emma Lövgren", Title = "Sekreterare", UnionTypes = UnionTypeEnum.Styrelse, Email = "sekreterare@spiik.com", Quote = "Quote?", PictureSrc = "images/SPIIK-logga.png" },
+					new UnionMember { Name = "William Robertsson", Title = "Sexmästare", UnionTypes = UnionTypeEnum.Styrelse | UnionTypeEnum.Sexmasteri, Email = "sexmaster@spiik.com", Quote = "Quote?", PictureSrc = "images/SPIIK-logga.png" }
+				);
+				context.IntroPersonal.AddRange(
+					new IntroPersonal { Name = "Fadder Faddersson", NickName = "Smeknamn", Age = "1", Program = "WP, år 1", IntroType = IntroTypeEnum.Fadder, PictureSrc = "images/SPIIK-logga.png" },
+					new IntroPersonal { Name = "Fadder Faddersson", NickName = "Smeknamn", Age = "1", Program = "WP, år 1", IntroType = IntroTypeEnum.Fadder, PictureSrc = "images/SPIIK-logga.png" },
+					new IntroPersonal { Name = "Fadder Faddersson", NickName = "Smeknamn", Age = "1", Program = "WP, år 1", IntroType = IntroTypeEnum.Fadder, PictureSrc = "images/SPIIK-logga.png" },
+					new IntroPersonal { Name = "Stab Stabsson", NickName = "Smeknamn", Age = "1", Program = "WP, år 1", Quote = "höhö", Bribe = "Öl, massor av öl!", GoodWord = "Vilket jävla stolpskott!", IntroType = IntroTypeEnum.Stab, PictureSrc = "images/SPIIK-logga.png" },
+					new IntroPersonal { Name = "Stab Stabsson", NickName = "Smeknamn", Age = "1", Program = "WP, år 1", Quote = "höhö", Bribe = "Öl, massor av öl!", GoodWord = "Vilket jävla stolpskott!", IntroType = IntroTypeEnum.Stab, PictureSrc = "images/SPIIK-logga.png" },
+					new IntroPersonal { Name = "Stab Stabsson", NickName = "Smeknamn", Age = "1", Program = "WP, år 1", Quote = "höhö", Bribe = "Öl, massor av öl!", GoodWord = "Vilket jävla stolpskott!", IntroType = IntroTypeEnum.Stab, PictureSrc = "images/SPIIK-logga.png" }
+				);
+				context.StaticPages.AddRange(
+					new StaticPage { Name = "IntroStart", Text1 = "Text start" },
+					new StaticPage { Name = "IntroBraAttVeta", Text1 = "Text bra att veta" },
+					new StaticPage { Name = "IntroSchema", Text1 = "Text schema" },
+					new StaticPage { Name = "IntroStab", Text1 = "Text stab" },
+					new StaticPage { Name = "IntroFaddrar", Text1 = "Text faddrar" },
+					new StaticPage { Name = "IntroKontakt", Text1 = "Text kontakt" }
 				);
 				await context.SaveChangesAsync();
 			}

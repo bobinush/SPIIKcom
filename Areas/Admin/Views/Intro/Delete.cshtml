@@ -1,0 +1,19 @@
+﻿@model IntroPersonal
+@{
+	ViewData["Title"] = "Radera personal";
+}
+<div class="col-sm-9">
+	<h2>@ViewData["Title"]</h2>
+	<hr />
+
+	<h3 class="page-header">@Model.FullName (@Model.IntroType) </h3>
+
+	<form method="post" asp-action="Delete" enctype="multipart/form-data" class="form-horizontal col-md-9" role="form">
+		<div class="form-group">
+				<a asp-action="Index" class="btn btn-default" role="button">Tillbaka till listan</a>
+				<button type="submit" class="btn btn-danger">
+					<i class="fa fa-trash-o fa-lg"></i>&nbsp; Radera
+				</button>
+		</div>
+	</form>
+</div>
