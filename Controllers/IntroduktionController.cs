@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
 using SPIIKcom.Data;
+using SPIIKcom.Enums;
 using SPIIKcom.Filters;
 using SPIIKcom.Services;
 using SPIIKcom.ViewModels;
@@ -39,12 +41,24 @@ namespace SPIIKcom.Controllers
 
 		public async Task<IActionResult> Stab()
 		{
-			return View(await _db.StaticPages.AsNoTracking().SingleOrDefaultAsync(x => x.Name == "IntroStab"));
+			var viewModel = new IntroViewModel
+			{
+				Text = await _db.StaticPages.AsNoTracking().SingleOrDefaultAsync(x => x.Name == "IntroStab"),
+				Personal = await _db.IntroPersonal.AsNoTracking().Where(x => x.IntroType == IntroTypeEnum.Stab).ToListAsync()
+			};
+
+			return View(viewModel);
 		}
 
 		public async Task<IActionResult> Faddrar()
 		{
-			return View(await _db.StaticPages.AsNoTracking().SingleOrDefaultAsync(x => x.Name == "IntroFaddrar"));
+			var viewModel = new IntroViewModel
+			{
+				Text = await _db.StaticPages.AsNoTracking().SingleOrDefaultAsync(x => x.Name == "IntroFaddrar"),
+				Personal = await _db.IntroPersonal.AsNoTracking().Where(x => x.IntroType == IntroTypeEnum.Fadder).ToListAsync()
+			};
+
+			return View(viewModel);
 		}
 
 		public async Task<IActionResult> Kontakt()

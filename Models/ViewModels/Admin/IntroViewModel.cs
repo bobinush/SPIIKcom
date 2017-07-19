@@ -10,13 +10,16 @@ namespace SPIIKcom.ViewModels
 {
 	public class IntroViewModel
 	{
-		// public IntroViewModel()
-		// {
-		// }
+		public List<IntroPersonal> Personal { get; set; }
+		public StaticPage Text { get; set; }
+	}
 
+	public class IntroEditViewModel
+	{
 		public List<IntroPersonal> Personal { get; set; }
 		public List<StaticPage> Text { get; set; }
 	}
+
 	public class IntroPersonalViewModel
 	{
 		public IntroPersonalViewModel()
@@ -41,6 +44,7 @@ namespace SPIIKcom.ViewModels
 		public string Name { get; set; }
 		[Display(Name = "Smeknamn")]
 		public string NickName { get; set; }
+		[Display(Name = "Ålder")]
 		public string Age { get; set; }
 		[Display(Name = "Pluggar")]
 		public string Program { get; set; }

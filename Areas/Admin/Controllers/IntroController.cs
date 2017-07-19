@@ -46,13 +46,15 @@ namespace SPIIKcom.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
-			var viewModel = new IntroViewModel();
-			viewModel.Text = await _db.StaticPages.AsNoTracking().Where(x => x.Name.StartsWith("Intro")).ToListAsync();
-			viewModel.Personal = await _db.IntroPersonal.OrderBy(x => x.IntroType).AsNoTracking().ToListAsync();
+			var viewModel = new IntroEditViewModel
+			{
+				Text = await _db.StaticPages.AsNoTracking().Where(x => x.Name.StartsWith("Intro")).ToListAsync(),
+				Personal = await _db.IntroPersonal.OrderBy(x => x.IntroType).AsNoTracking().ToListAsync()
+			};
 			return View(viewModel);
 		}
 
-	#region Create, edit and delete personel below.
+		#region Create, edit and delete staff below.
 
 		[HttpGet]
 		public async Task<IActionResult> Create()
@@ -168,8 +170,8 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			return View();
 		}
 
-	#endregion
-	#region Create, edit and delete texts below.
+		#endregion
+		#region Create, edit and delete texts below.
 
 		[HttpGet]
 		public async Task<IActionResult> CreateText()
