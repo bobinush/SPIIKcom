@@ -24,33 +24,32 @@ namespace SPIIKcom.Controllers
 		}
 		public async Task<IActionResult> Index()
 		{
-			// TODO : Get Instagram posts.
-			return View();
+			return View(await _db.StaticPages.AsNoTracking().SingleOrDefaultAsync(x => x.Name == "IntroStart"));
 		}
 
 		public async Task<IActionResult> BraAttVeta()
 		{
-			return View(await _db.Organization.AsNoTracking().SingleOrDefaultAsync());
+			return View(await _db.StaticPages.AsNoTracking().SingleOrDefaultAsync(x => x.Name == "IntroBraAttVeta"));
 		}
 
 		public async Task<IActionResult> Schema()
 		{
-			return View(await _db.Organization.AsNoTracking().SingleOrDefaultAsync());
+			return View(await _db.StaticPages.AsNoTracking().SingleOrDefaultAsync(x => x.Name == "IntroSchema"));
 		}
 
 		public async Task<IActionResult> Stab()
 		{
-			return View(await _db.Organization.AsNoTracking().SingleOrDefaultAsync());
+			return View(await _db.StaticPages.AsNoTracking().SingleOrDefaultAsync(x => x.Name == "IntroStab"));
 		}
 
 		public async Task<IActionResult> Faddrar()
 		{
-			return View(await _db.Organization.AsNoTracking().SingleOrDefaultAsync());
+			return View(await _db.StaticPages.AsNoTracking().SingleOrDefaultAsync(x => x.Name == "IntroFaddrar"));
 		}
 
 		public async Task<IActionResult> Kontakt()
 		{
-			return View(await _db.Organization.AsNoTracking().SingleOrDefaultAsync());
+			return View(await _db.StaticPages.AsNoTracking().SingleOrDefaultAsync(x => x.Name == "IntroKontakt"));
 		}
 	}
 }

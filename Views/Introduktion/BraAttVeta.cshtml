@@ -1,0 +1,8 @@
+@model StaticPage
+@{
+    ViewData["Title"] = "Bra att veta";
+}
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+@Html.Raw(Model.Text1)
