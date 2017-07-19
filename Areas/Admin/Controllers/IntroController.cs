@@ -49,7 +49,7 @@ namespace SPIIKcom.Areas.Admin.Controllers
 			var viewModel = new IntroEditViewModel
 			{
 				Text = await _db.StaticPages.AsNoTracking().Where(x => x.Name.StartsWith("Intro")).ToListAsync(),
-				Personal = await _db.IntroPersonal.OrderBy(x => x.IntroType).AsNoTracking().ToListAsync()
+				Staff = await _db.IntroPersonal.OrderBy(x => x.IntroType).AsNoTracking().ToListAsync()
 			};
 			return View(viewModel);
 		}

@@ -10,13 +10,13 @@ namespace SPIIKcom.ViewModels
 {
 	public class IntroViewModel
 	{
-		public List<IntroPersonal> Personal { get; set; }
+		public List<IntroPersonal> Staff { get; set; }
 		public StaticPage Text { get; set; }
 	}
 
 	public class IntroEditViewModel
 	{
-		public List<IntroPersonal> Personal { get; set; }
+		public List<IntroPersonal> Staff { get; set; }
 		public List<StaticPage> Text { get; set; }
 	}
 

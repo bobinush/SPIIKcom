@@ -44,7 +44,7 @@ namespace SPIIKcom.Controllers
 			var viewModel = new IntroViewModel
 			{
 				Text = await _db.StaticPages.AsNoTracking().SingleOrDefaultAsync(x => x.Name == "IntroStab"),
-				Personal = await _db.IntroPersonal.AsNoTracking().Where(x => x.IntroType == IntroTypeEnum.Stab).ToListAsync()
+				Staff = await _db.IntroPersonal.AsNoTracking().Where(x => x.IntroType == IntroTypeEnum.Stab).ToListAsync()
 			};
 
 			return View(viewModel);
@@ -55,7 +55,7 @@ namespace SPIIKcom.Controllers
 			var viewModel = new IntroViewModel
 			{
 				Text = await _db.StaticPages.AsNoTracking().SingleOrDefaultAsync(x => x.Name == "IntroFaddrar"),
-				Personal = await _db.IntroPersonal.AsNoTracking().Where(x => x.IntroType == IntroTypeEnum.Fadder).ToListAsync()
+				Staff = await _db.IntroPersonal.AsNoTracking().Where(x => x.IntroType == IntroTypeEnum.Fadder).ToListAsync()
 			};
 
 			return View(viewModel);

@@ -7,22 +7,20 @@
 		<h1 class="page-header">@ViewData["Title"]</h1>
 		@Html.Raw(Model.Text.Text1)
 	</div>
-	@foreach (var personal in Model.Personal)
+	@foreach (var staff in Model.Staff)
 	{
 		 <div class="col-md-6 col-sm-12 profile-spacing">
 			<div class="col-md-6 col-sm-6">
-				<img class="img-circle img-responsive img-center" src="~/@personal.PictureSrc" alt="">
+				<img class="img-circle img-responsive img-center" src="~/@staff.PictureSrc" alt="">
 			</div>
 			<div class="col-md-6 col-sm-6">
-				<h3>@personal.FullName</h3>
-				<label asp-for="Personal.FirstOrDefault().Age" class="control-label"></label>
-				@personal.Age
+				<h3>@staff.FullName</h3>
+				<label asp-for="staff.FirstOrDefault().Age" class="control-label"></label>
+				@staff.Age
 				<br>
-				<label asp-for="Personal.FirstOrDefault().Program" class="control-label"></label>
-				@personal.Program
+				<label asp-for="staff.FirstOrDefault().Program" class="control-label"></label>
+				@staff.Program
 			</div>
 		 </div>
-		<!-- <div class="col-lg-3 col-md-4 col-xs-6 text-center">
-		</div> -->
 	}
 </div>
