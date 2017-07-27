@@ -1,9 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web" DefaultTargets="Publish">
   <PropertyGroup>
     <!--<NoWarn>8019</NoWarn>  VSCode: Do not warn about unused 'using's -->
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <UserSecretsId>aspnet-SPIIKcom-999521C6-D3D0-4313-A932-43F2AB7F65F3</UserSecretsId>
 	<!--<PreserveCompilationContext>true</PreserveCompilationContext>-->
+	<!-- Below is for AppHarbor -->
+	<PublishDir>$(OutDir)_PublishedWebsites\SPIIKcom\</PublishDir>
   </PropertyGroup>
   <ItemGroup>
     <None Update="SPIIKcom.db" CopyToOutputDirectory="PreserveNewest" />
