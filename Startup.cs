@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -44,13 +45,14 @@ namespace SPIIKcom
 			services.AddSingleton<IConfiguration>(Configuration);
 
 			// Add framework services.
-			services.AddDbContext<ApplicationDbContext>(options =>
-				options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+			//services.AddDbContext<ApplicationDbContext>(options =>
+			//	options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
-			// services.AddEntityFramework()
-			// 	.AddEntityFrameworkSqlServer()
-			// 	.AddDbContext<ApplicationDbContext>(options =>
-			// 		options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+			services.AddEntityFramework()
+				.AddEntityFrameworkSqlServer()
+				.AddDbContext<ApplicationDbContext>(options =>
+					//options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+					options.UseSqlServer(Environment.GetEnvironmentVariable("SQLSERVER_CONNECTION_STRING")));
 
 			services.AddIdentity<ApplicationUser, IdentityRole>(x =>
 				{
