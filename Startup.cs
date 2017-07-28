@@ -17,8 +17,12 @@ namespace SPIIKcom
 {
 	public class Startup
 	{
+		public IConfigurationRoot Configuration { get; }
+		public IHostingEnvironment _env;
+
 		public Startup(IHostingEnvironment env)
 		{
+			_env = env;
 			var builder = new ConfigurationBuilder()
 				.SetBasePath(env.ContentRootPath)
 				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -35,8 +39,6 @@ namespace SPIIKcom
 
 		}
 
-		public IConfigurationRoot Configuration { get; }
-
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
@@ -44,15 +46,26 @@ namespace SPIIKcom
 			// https://joonasw.net/view/asp-net-core-1-configuration-deep-dive
 			services.AddSingleton<IConfiguration>(Configuration);
 
+			// User secrets
+			services.Configure<AppKeyConfig>(Configuration.GetSection("AppKeys"));
+
 			// Add framework services.
 			//services.AddDbContext<ApplicationDbContext>(options =>
 			//	options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-
-			services.AddEntityFramework()
-				.AddEntityFrameworkSqlServer()
-				.AddDbContext<ApplicationDbContext>(options =>
-					//options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-					options.UseSqlServer(Environment.GetEnvironmentVariable("SQLSERVER_CONNECTION_STRING")));
+			if (_env.IsDevelopment())
+			{
+				services.AddEntityFramework()
+					.AddEntityFrameworkSqlServer()
+					.AddDbContext<ApplicationDbContext>(options =>
+						options.UseSqlServer(Configuration["AppKeys:SQLSERVER_CONNECTION_STRING"]));
+			}
+			else
+			{
+				services.AddEntityFramework()
+					.AddEntityFrameworkSqlServer()
+					.AddDbContext<ApplicationDbContext>(options =>
+						options.UseSqlServer(Environment.GetEnvironmentVariable("SQLSERVER_CONNECTION_STRING")));
+			}
 
 			services.AddIdentity<ApplicationUser, IdentityRole>(x =>
 				{
@@ -68,9 +81,6 @@ namespace SPIIKcom
 			services.AddMemoryCache();
 			services.AddSession();
 			// services.AddDistributedMemoryCache();
-
-			// User secrets
-			services.Configure<AppKeyConfig>(Configuration.GetSection("AppKeys"));
 
 			services.AddScoped<SpiikService>();
 			// services.AddTransient(_ => services.Configure<AppKeyConfig>(Configuration.GetSection("AppKeys")));
@@ -133,7 +143,7 @@ namespace SPIIKcom
 			// 	var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
 			// 	context.Database.Migrate();
 
-			SampleData.Seed(app.ApplicationServices).Wait();
+			SampleData.Seed(app.ApplicationServices, Configuration).Wait();
 			// }
 		}
 	}

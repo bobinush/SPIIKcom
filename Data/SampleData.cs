@@ -25,7 +25,7 @@ namespace SPIIKcom.Models
 		/// <param name="config"></param>
 		/// <param name="serviceProvider"></param>
 		/// <returns></returns>
-		public static async Task Seed(IServiceProvider serviceProvider)
+		public static async Task Seed(IServiceProvider serviceProvider, IConfigurationRoot configuration)
 		{
 			using (var serviceScope = serviceProvider.CreateScope())
 			{
@@ -34,11 +34,11 @@ namespace SPIIKcom.Models
 
 				// Delete and create database
 				// uncomment this below when adding new data to seed.
-				// await db.Database.EnsureDeletedAsync();
+				await db.Database.EnsureDeletedAsync();
 				if (await db.Database.EnsureCreatedAsync())
 				{
 					await InsertTestDataAsync(scopeServiceProvider);
-					await CreateAdminUserAsync(scopeServiceProvider);
+					await CreateAdminUserAsync(scopeServiceProvider, configuration);
 				}
 			}
 		}
@@ -95,16 +95,16 @@ namespace SPIIKcom.Models
 				await context.SaveChangesAsync();
 			}
 		}
-		private static async Task CreateAdminUserAsync(IServiceProvider serviceProvider)
+		private static async Task CreateAdminUserAsync(IServiceProvider serviceProvider, IConfigurationRoot configuration)
 		{
 			var env = serviceProvider.GetService<IHostingEnvironment>();
 
-			var builder = new ConfigurationBuilder()
-				.SetBasePath(env.ContentRootPath)
-				.AddUserSecrets<Startup>();
+			// var builder = new ConfigurationBuilder()
+			// 	.SetBasePath(env.ContentRootPath)
+			// 	.AddUserSecrets<Startup>();
 			// For more details on using the user secret store see https://go.microsoft.com/fwlink/?LinkID=532709
 
-			var configuration = builder.Build();
+			// var configuration = builder.Build();
 			var userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
 			string adminName = configuration["AppKeys:AdminEmail"];
 			string adminPass = configuration["AppKeys:AdminPass"];
