@@ -30,6 +30,7 @@ namespace SPIIKcom.Models
 		public string Name { get; set; }
 		[Display(Name = "Smeknamn")]
 		public string NickName { get; set; }
+		[Display(Name = "Ålder")]
 		public string Age { get; set; }
 		[Display(Name = "Pluggar")]
 		public string Program { get; set; }

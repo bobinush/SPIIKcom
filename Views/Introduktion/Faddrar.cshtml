@@ -1,10 +1,10 @@
 @model IntroViewModel
 @{
-    ViewData["Title"] = "Faddrar";
+	ViewData["Title"] = "Faddrar";
 }
 <div class="row">
 	<div class="col-sm-12">
-		<h1 class="page-header">@ViewData["Title"]</h1>
+		<h2 class="page-header">@ViewData["Title"]</h2>
 		@Html.Raw(Model.Text.Text1)
 	</div>
 	@foreach (var staff in Model.Staff)
@@ -15,10 +15,10 @@
 			</div>
 			<div class="col-md-6 col-sm-6">
 				<h3>@staff.FullName</h3>
-				<label asp-for="staff.FirstOrDefault().Age" class="control-label"></label>
+				<label asp-for="@Model.Staff.FirstOrDefault().Age" class="control-label"></label>
 				@staff.Age
 				<br>
-				<label asp-for="staff.FirstOrDefault().Program" class="control-label"></label>
+				<label asp-for="@Model.Staff.FirstOrDefault().Program" class="control-label"></label>
 				@staff.Program
 			</div>
 		 </div>
