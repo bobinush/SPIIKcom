@@ -26,7 +26,8 @@ namespace SPIIKcom
 			var builder = new ConfigurationBuilder()
 				.SetBasePath(env.ContentRootPath)
 				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-				.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+				.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+				.AddEnvironmentVariables();
 
 			if (env.IsDevelopment())
 			{
@@ -34,9 +35,7 @@ namespace SPIIKcom
 				builder.AddUserSecrets<Startup>();
 			}
 
-			builder.AddEnvironmentVariables();
 			Configuration = builder.Build();
-
 		}
 
 		// This method gets called by the runtime. Use this method to add services to the container.
@@ -46,14 +45,14 @@ namespace SPIIKcom
 			// https://joonasw.net/view/asp-net-core-1-configuration-deep-dive
 			services.AddSingleton<IConfiguration>(Configuration);
 
-			// User secrets
-			services.Configure<AppKeyConfig>(Configuration.GetSection("AppKeys"));
-
 			// Add framework services.
 			//services.AddDbContext<ApplicationDbContext>(options =>
 			//	options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 			if (_env.IsDevelopment())
 			{
+				// User secrets
+				services.Configure<AppKeyConfig>(Configuration.GetSection("AppKeys"));
+				// SQL Connection string
 				services.AddEntityFramework()
 					.AddEntityFrameworkSqlServer()
 					.AddDbContext<ApplicationDbContext>(options =>
