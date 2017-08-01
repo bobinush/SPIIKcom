@@ -106,8 +106,8 @@ namespace SPIIKcom.Models
 
 			// var configuration = builder.Build();
 			var userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
-			string adminName = configuration["AppKeys:AdminEmail"] ?? Environment.GetEnvironmentVariable("ADMIN_EMAIL");
-			string adminPass = configuration["AppKeys:AdminPass"] ?? Environment.GetEnvironmentVariable("ADMIN_PASS"); ;
+			string adminName = Environment.GetEnvironmentVariable("ADMIN_EMAIL") ?? configuration["AppKeys:AdminEmail"];
+			string adminPass = Environment.GetEnvironmentVariable("ADMIN_PASS") ?? configuration["AppKeys:AdminPass"];
 			// Login roles
 			string[] roles = { "Admin", "Styrelse" };
 			string styrelseName = "rn222hk@student.lnu.se";
